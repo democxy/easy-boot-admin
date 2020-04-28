@@ -20,8 +20,9 @@ public class AccountController {
     @ResponseBody
     @RequestMapping(value = "user",method = RequestMethod.POST)
     public ResponeData<String> addUser(@Valid Account account){
-        System.out.println(account.getAccountNo());
-        int i = 5/0;
+
+        //调用业务逻辑，处理业务
+
         return new ResponeData<>("操作成功");
     }
 

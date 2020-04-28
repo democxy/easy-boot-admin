@@ -29,7 +29,7 @@ public class ExceptionControllerAdvice {
     public ResponeData<String> BindExceptionHandler(BindException e) {
         ObjectError objectError = e.getAllErrors().get(0);
         // 注意哦，这里传递的响应码枚举
-        logger.info("表单验证异常处理");
+        logger.error("表单数据校验异常",e);
         return new ResponeData<String>(ResultCode.VALIDATE_FAILED, objectError.getDefaultMessage());
     }
 
@@ -40,8 +40,8 @@ public class ExceptionControllerAdvice {
      */
     @ExceptionHandler(CustomException.class)
     public ResponeData<String> CustomExceptionHandler(CustomException e) {
+        logger.error("自定义异常",e);
         // 注意哦，这里传递的响应码枚举
-        logger.info("自定义异常处理");
         return new ResponeData<String>(ResultCode.FAILED, e.getMsg());
     }
 
@@ -52,8 +52,9 @@ public class ExceptionControllerAdvice {
      */
     @ExceptionHandler(Exception.class)
     public ResponeData<String> ExceptionHandler(Exception e) {
+        //记录日志信息
+        logger.error("服务异常",e);
         // 注意哦，这里传递的响应码枚举
-        logger.info("自定义异常处理，异常信息:【"+e.getMessage()+"】");
         return new ResponeData<String>(ResultCode.FAILED, "服务异常！");
     }
 
