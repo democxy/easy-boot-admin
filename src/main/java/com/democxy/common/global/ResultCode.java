@@ -13,7 +13,9 @@ public enum ResultCode {
 
     FAILED(500, "响应失败"),
 
-    NOT_FOUND(404, "未知请求");
+    NOT_FOUND(404, "未知请求"),
+
+    LOGIN_FAILED(4040, "登录失败！");
 
     private int code;
     private String msg;

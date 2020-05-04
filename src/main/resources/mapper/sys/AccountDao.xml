@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.democxy.modules.sys.dao.AccountDao">
+
+    <sql id="accountColumns">
+        a.account_id AS "accountId",
+        a.account_no AS "accountNo",
+        a.password AS "password",
+        a.role AS "role"
+    </sql>
+
+    <sql id="accountJoins">
+    </sql>
+
+    <select id="getById" resultType="com.democxy.modules.sys.entity.Account">
+        SELECT
+        <include refid="accountColumns"/>
+        FROM sys_account a
+        <include refid="accountJoins"/>
+        WHERE a.account_id = #{accountId}
+    </select>
+
+    <select id="login" resultType="com.democxy.modules.sys.entity.Account">
+        SELECT
+        <include refid="accountColumns"/>
+        FROM sys_account a
+        <include refid="accountJoins"/>
+        WHERE a.account_no = #{accountNo} and a.password = #{password}
+    </select>
+
+
+    <select id="findList" resultType="com.democxy.modules.sys.entity.Account">
+        SELECT
+        <include refid="accountColumns"/>
+        FROM sys_account a
+        <include refid="accountJoins"/>
+        <where>
+            a.account_id != '1'
+            <if test="role != null and role != ''">
+                AND a.role = #{role}
+            </if>
+        </where>
+        <choose>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sys_account(
+        account_id,
+        account_no,
+        password,
+        role
+        ) VALUES (
+        #{accountId},
+        #{accountNo},
+        #{password},
+        #{role}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE sys_account SET
+        account_no = #{accountNo},
+        password = #{password},
+        role = #{role}
+        WHERE account_id = #{accountId}
+    </update>
+
+    <update id="delete">
+        DELETE FROM sys_account
+        WHERE account_id = #{accountId}
+    </update>
+
+
+</mapper>
