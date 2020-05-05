@@ -30,7 +30,7 @@ public class ExceptionControllerAdvice {
         ObjectError objectError = e.getAllErrors().get(0);
         // 注意哦，这里传递的响应码枚举
         logger.error("表单数据校验异常",e);
-        return new ResponeData<String>(ResultCode.VALIDATE_FAILED, objectError.getDefaultMessage());
+        return new ResponeData<>(ResultCode.VALIDATE_FAILED, objectError.getDefaultMessage());
     }
 
     /**
@@ -42,7 +42,11 @@ public class ExceptionControllerAdvice {
     public ResponeData<String> CustomExceptionHandler(CustomException e) {
         logger.error("自定义异常",e);
         // 注意哦，这里传递的响应码枚举
-        return new ResponeData<String>(ResultCode.FAILED, e.getMsg());
+        if (4040 == e.getCode()){
+            return new ResponeData<>(ResultCode.LOGIN_FAILED, e.getMsg());
+        }else {
+            return new ResponeData<>(ResultCode.FAILED, e.getMsg());
+        }
     }
 
     /**
@@ -55,7 +59,7 @@ public class ExceptionControllerAdvice {
         //记录日志信息
         logger.error("服务异常",e);
         // 注意哦，这里传递的响应码枚举
-        return new ResponeData<String>(ResultCode.FAILED, "服务异常！");
+        return new ResponeData<>(ResultCode.FAILED, "服务异常！");
     }
 
 
