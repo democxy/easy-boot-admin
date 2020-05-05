@@ -17,7 +17,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 从 http 请求头中取出 token
         String token = request.getHeader("token");
-        System.out.println(token);
+//        System.out.println(token);
         boolean verity = JwtUtil.validateToken(token);
         if (!verity){
             throw new CustomException(4040,"token过期，请重新登录");
