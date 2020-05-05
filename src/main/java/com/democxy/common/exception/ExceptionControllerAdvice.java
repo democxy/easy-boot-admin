@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -21,7 +23,7 @@ public class ExceptionControllerAdvice {
     Logger logger = LoggerFactory.getLogger(ExceptionControllerAdvice.class);
 
     /**
-     * 表单验证异常处理
+     * 表单验证异常处理（json字符串方式走的是这个异常处理）
      * @param e
      * @return
      */
@@ -31,6 +33,19 @@ public class ExceptionControllerAdvice {
         // 注意哦，这里传递的响应码枚举
         logger.error("表单数据校验异常",e);
         return new ResponeData<>(ResultCode.VALIDATE_FAILED, objectError.getDefaultMessage());
+    }
+
+    /**
+     * 表单验证异常（json对象提交方式走的是这个异常处理）
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponeData<String> BindExceptionHandler(MethodArgumentNotValidException e) {
+        logger.error("表单数据校验异常",e);
+        String message = e.getBindingResult().getFieldError().getDefaultMessage();
+        // 注意哦，这里传递的响应码枚举
+        return new ResponeData<>(ResultCode.VALIDATE_FAILED, message);
     }
 
     /**
@@ -56,10 +71,14 @@ public class ExceptionControllerAdvice {
      */
     @ExceptionHandler(Exception.class)
     public ResponeData<String> ExceptionHandler(Exception e) {
+        String data = "服务异常";
         //记录日志信息
         logger.error("服务异常",e);
         // 注意哦，这里传递的响应码枚举
-        return new ResponeData<>(ResultCode.FAILED, "服务异常！");
+        if (e instanceof HttpRequestMethodNotSupportedException){
+            data = "请求方式错误，请注意区分GET请求，POST请求";
+        }
+        return new ResponeData<>(ResultCode.FAILED, data);
     }
 
 

@@ -1,10 +1,7 @@
 package com.democxy.common.global;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -21,10 +18,10 @@ public class BaseController<S extends BaseService<T>,T> {
      */
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
-    public ResponeData<String> addUser(@Valid T t ){
+    public ResponeData<String> addUser(@Valid @RequestBody T t ){
         //调用业务逻辑，处理业务
         service.insert(t);
-        return new ResponeData<>("更新成功");
+        return new ResponeData<>("添加成功");
     }
 
     @ResponseBody
@@ -36,7 +33,7 @@ public class BaseController<S extends BaseService<T>,T> {
 
     @ResponseBody
     @RequestMapping(value = "update",method = RequestMethod.POST)
-    public ResponeData<String> update(@Valid T t){
+    public ResponeData<String> update(@Valid @RequestBody T t){
         //调用业务逻辑，处理业务
         service.update(t);
         return new ResponeData<>("更新成功");

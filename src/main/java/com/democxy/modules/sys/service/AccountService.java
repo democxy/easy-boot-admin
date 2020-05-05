@@ -5,6 +5,6 @@ import com.democxy.modules.sys.entity.Account;
 
 public interface AccountService extends BaseService<Account> {
 
-    public Account login(Account account);
+    Account login(Account account);
 
 }
