@@ -2,16 +2,16 @@ package com.democxy.common.global;
 
 import java.util.List;
 
-public interface BaseService<T> {
+public interface BaseService<T,F> {
 
-    int insert(T entity);
+    int insert(F entity);
 
     int delete(String id);
 
-    int update(T entity);
+    int update(F entity);
 
     T getById(String id);
 
-    List<T> findList(T entity);
+    List<T> findList(F entity);
 
 }

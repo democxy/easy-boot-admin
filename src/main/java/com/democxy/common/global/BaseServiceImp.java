@@ -4,13 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class BaseServiceImp<D extends BaseDao<T>, T> implements BaseService<T> {
+public class BaseServiceImp<D extends BaseDao<T,F>, T,F> implements BaseService<T,F> {
 
     @Autowired
     public D dao;
 
+
     @Override
-    public int insert(T entity) {
+    public int insert(F entity) {
         return dao.insert(entity);
     }
 
@@ -20,7 +21,7 @@ public class BaseServiceImp<D extends BaseDao<T>, T> implements BaseService<T> {
     }
 
     @Override
-    public int update(T entity) {
+    public int update(F entity) {
         return dao.update(entity);
     }
 
@@ -30,7 +31,7 @@ public class BaseServiceImp<D extends BaseDao<T>, T> implements BaseService<T> {
     }
 
     @Override
-    public List<T> findList(T entity) {
+    public List<T> findList(F entity) {
         return dao.findList(entity);
     }
 }

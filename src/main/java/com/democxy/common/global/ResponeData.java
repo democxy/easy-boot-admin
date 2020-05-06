@@ -1,5 +1,6 @@
 package com.democxy.common.global;
 
+import com.democxy.common.enums.ResultEnum;
 import lombok.Data;
 
 /**
@@ -15,12 +16,12 @@ public class ResponeData<T> {
     private T data;
 
     public ResponeData(T data) {
-        this(ResultCode.SUCCESS,data);
+        this(ResultEnum.SUCCESS,data);
     }
 
-    public ResponeData(ResultCode resultCode, T data) {
-        this.code = resultCode.getCode();
-        this.msg = resultCode.getMsg();
+    public ResponeData(ResultEnum resultEnum, T data) {
+        this.code = resultEnum.getCode();
+        this.msg = resultEnum.getMsg();
         this.data = data;
     }
 }
