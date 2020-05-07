@@ -9,7 +9,6 @@ import com.democxy.common.utils.JwtUtil;
 import com.democxy.modules.sys.entity.Account;
 import com.democxy.modules.sys.entity.AccountField;
 import com.democxy.modules.sys.service.AccountService;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.jsonwebtoken.Claims;
@@ -24,7 +23,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin/account")
-public class AccountController extends BaseController<AccountService, AccountField, Account> {
+public class AccountController extends BaseController<AccountService, Account,AccountField > {
 
     @Override
     @ResponseBody
