@@ -1,5 +1,6 @@
 package com.democxy.common.global;
 
+import com.democxy.common.annotation.LoginRequired;
 import com.democxy.common.enums.ResultEnum;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-public class BaseController<S extends BaseService<T, F>, F, T> {
+public class BaseController<S extends BaseService<T, F>, T, F> {
 
     @Autowired
     public S service;
@@ -21,6 +22,7 @@ public class BaseController<S extends BaseService<T, F>, F, T> {
      */
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
+    @LoginRequired
     public ResponeData<String> addUser(@Valid @RequestBody F f ){
         //调用业务逻辑，处理业务
         service.insert(f);
@@ -29,6 +31,7 @@ public class BaseController<S extends BaseService<T, F>, F, T> {
 
     @ResponseBody
     @RequestMapping(value = "del/{id}",method = RequestMethod.GET)
+    @LoginRequired
     public ResponeData<String> delById(@PathVariable("id") String id){
         service.delete(id);
         return new ResponeData<>(ResultEnum.SUCCESS,"删除成功");
@@ -36,6 +39,7 @@ public class BaseController<S extends BaseService<T, F>, F, T> {
 
     @ResponseBody
     @RequestMapping(value = "update",method = RequestMethod.POST)
+    @LoginRequired
     public ResponeData<String> update(@Valid @RequestBody F f){
         //调用业务逻辑，处理业务
         service.update(f);
@@ -45,6 +49,7 @@ public class BaseController<S extends BaseService<T, F>, F, T> {
 
     @ResponseBody
     @RequestMapping(value = "list",method = RequestMethod.POST)
+    @LoginRequired
     public ResponeData<List> findList(F f){
         //调用业务逻辑，处理业务
         List<T> list = service.findList(f);
@@ -53,6 +58,7 @@ public class BaseController<S extends BaseService<T, F>, F, T> {
 
     @ResponseBody
     @RequestMapping(value = "get/{id}",method = RequestMethod.GET)
+    @LoginRequired
     public ResponeData<T> getById(@PathVariable("id") String id){
         T account = service.getById(id);
         return new ResponeData<T>(ResultEnum.SUCCESS,account);

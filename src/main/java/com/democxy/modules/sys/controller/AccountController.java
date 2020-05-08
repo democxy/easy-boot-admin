@@ -1,6 +1,7 @@
 package com.democxy.modules.sys.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.democxy.common.annotation.LoginRequired;
 import com.democxy.common.global.BaseController;
 import com.democxy.common.global.ResponeData;
 import com.democxy.common.enums.ResultEnum;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -37,6 +39,7 @@ public class AccountController extends BaseController<AccountService, Account,Ac
 
     @ResponseBody
     @RequestMapping(value = "page",method = RequestMethod.POST)
+    @LoginRequired
     public ResponeData<PageInfo> findPage( @RequestBody AccountField accountField){
         //调用业务逻辑，处理业务
         PageHelper.startPage(accountField.getPageNo(), accountField.getPageSize());
@@ -61,8 +64,9 @@ public class AccountController extends BaseController<AccountService, Account,Ac
 
     @ResponseBody
     @RequestMapping(value = "getAccount",method = RequestMethod.POST)
-    public ResponeData<String> getAccountByToken(String token) {
-        Claims claims = JwtUtil.parseToken(token);
+    @LoginRequired
+    public ResponeData<String> getAccountByToken(HttpServletRequest request) {
+        Claims claims = JwtUtil.parseToken(request.getHeader("token"));
         String subject = claims.getSubject();
         return new ResponeData<>(ResultEnum.SUCCESS,subject);
     }
