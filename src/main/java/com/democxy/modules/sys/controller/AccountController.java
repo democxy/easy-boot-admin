@@ -2,6 +2,7 @@ package com.democxy.modules.sys.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.democxy.common.annotation.LoginRequired;
+import com.democxy.common.annotation.SysLog;
 import com.democxy.common.global.BaseController;
 import com.democxy.common.global.ResponeData;
 import com.democxy.common.enums.ResultEnum;
@@ -40,6 +41,7 @@ public class AccountController extends BaseController<AccountService, Account,Ac
     @ResponseBody
     @RequestMapping(value = "page",method = RequestMethod.POST)
     @LoginRequired
+    @SysLog(title = "账户分页查询")
     public ResponeData<PageInfo> findPage( @RequestBody AccountField accountField){
         //调用业务逻辑，处理业务
         PageHelper.startPage(accountField.getPageNo(), accountField.getPageSize());
@@ -50,6 +52,7 @@ public class AccountController extends BaseController<AccountService, Account,Ac
 
     @ResponseBody
     @RequestMapping(value = "login",method = RequestMethod.POST)
+
     public ResponeData<String> login(@Valid @RequestBody AccountField accountField){
         //调用业务逻辑，处理业务
         Account login= service.login(accountField);

@@ -89,6 +89,12 @@
             <version>1.16.10</version>
         </dependency>
 
+        <!--引入切面支持-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
 
     </dependencies>
 
