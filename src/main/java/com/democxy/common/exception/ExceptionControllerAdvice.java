@@ -1,7 +1,7 @@
 package com.democxy.common.exception;
 
 import com.democxy.common.global.ResponeData;
-import com.democxy.common.global.ResultCode;
+import com.democxy.common.enums.ResultEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
@@ -32,7 +32,7 @@ public class ExceptionControllerAdvice {
         ObjectError objectError = e.getAllErrors().get(0);
         // 注意哦，这里传递的响应码枚举
         logger.error("表单数据校验异常",e);
-        return new ResponeData<>(ResultCode.VALIDATE_FAILED, objectError.getDefaultMessage());
+        return new ResponeData<>(ResultEnum.VALIDATE_FAILED, objectError.getDefaultMessage());
     }
 
     /**
@@ -45,7 +45,7 @@ public class ExceptionControllerAdvice {
         logger.error("表单数据校验异常",e);
         String message = e.getBindingResult().getFieldError().getDefaultMessage();
         // 注意哦，这里传递的响应码枚举
-        return new ResponeData<>(ResultCode.VALIDATE_FAILED, message);
+        return new ResponeData<>(ResultEnum.VALIDATE_FAILED, message);
     }
 
     /**
@@ -58,9 +58,9 @@ public class ExceptionControllerAdvice {
         logger.error("自定义异常",e);
         // 注意哦，这里传递的响应码枚举
         if (4040 == e.getCode()){
-            return new ResponeData<>(ResultCode.LOGIN_FAILED, e.getMsg());
+            return new ResponeData<>(ResultEnum.LOGIN_FAILED, e.getMsg());
         }else {
-            return new ResponeData<>(ResultCode.FAILED, e.getMsg());
+            return new ResponeData<>(ResultEnum.FAILED, e.getMsg());
         }
     }
 
@@ -78,7 +78,7 @@ public class ExceptionControllerAdvice {
         if (e instanceof HttpRequestMethodNotSupportedException){
             data = "请求方式错误，请注意区分GET请求，POST请求";
         }
-        return new ResponeData<>(ResultCode.FAILED, data);
+        return new ResponeData<>(ResultEnum.FAILED, data);
     }
 
 

@@ -1,11 +1,11 @@
-package com.democxy.common.global;
+package com.democxy.common.enums;
 
 /**
  * 响应枚举类
  * @author shiling
  * @version 2020-04-28
  */
-public enum ResultCode {
+public enum ResultEnum {
 
     VALIDATE_FAILED(1002, "参数校验失败"),
 
@@ -28,7 +28,7 @@ public enum ResultCode {
         return msg;
     }
 
-    ResultCode(int code, String msg) {
+    ResultEnum(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }

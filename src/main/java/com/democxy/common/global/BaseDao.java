@@ -2,15 +2,15 @@ package com.democxy.common.global;
 
 import java.util.List;
 
-public interface BaseDao<T> {
+public interface BaseDao<T,F> {
 
-    int insert(T entity);
+    int insert(F entity);
 
     int delete(String id);
 
-    int update(T entity);
+    int update(F entity);
 
     T getById(String id);
 
-    List<T> findList(T entity);
+    List<T> findList(F entity);
 }

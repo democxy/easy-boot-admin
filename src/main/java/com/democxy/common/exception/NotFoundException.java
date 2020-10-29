@@ -1,7 +1,7 @@
 package com.democxy.common.exception;
 
 import com.democxy.common.global.ResponeData;
-import com.democxy.common.global.ResultCode;
+import com.democxy.common.enums.ResultEnum;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +24,6 @@ public class NotFoundException implements ErrorController {
 
     @RequestMapping(value = "/error")
     public ResponeData error(HttpServletRequest request, HttpServletResponse response){
-        return new ResponeData(ResultCode.NOT_FOUND,"链接不存在");
+        return new ResponeData(ResultEnum.NOT_FOUND,"链接不存在");
     }
 }

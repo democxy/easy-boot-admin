@@ -38,6 +38,9 @@
         <include refid="accountJoins"/>
         <where>
             a.account_id != '1'
+            <if test="accountNo != null and accountNo != ''">
+                AND a.account_no like concat('%', #{accountNo}, '%')
+            </if>
             <if test="role != null and role != ''">
                 AND a.role = #{role}
             </if>

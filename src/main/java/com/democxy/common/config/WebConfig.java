@@ -11,9 +11,12 @@ public class WebConfig implements WebMvcConfigurer {
     // 这个方法用来注册拦截器，我们自己写好的拦截器需要通过这里添加注册才能生效
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AuthenticationInterceptor())
-                .addPathPatterns("/","/admin/**")
-                .excludePathPatterns("/admin/account/login","/admin/account/logout");
+//        registry.addInterceptor(new AuthenticationInterceptor())
+//                .addPathPatterns("/","/admin/**")
+//                .excludePathPatterns("/admin/account/login","/admin/account/logout");
+
+        //基于注解配置拦截，只需要注册拦截器，不在需要指定拦截方法
+        registry.addInterceptor(new AuthenticationInterceptor());
     }
 
 }
