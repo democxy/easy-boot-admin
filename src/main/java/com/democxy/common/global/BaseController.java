@@ -2,8 +2,8 @@ package com.democxy.common.global;
 
 import com.democxy.common.annotation.LoginRequired;
 import com.democxy.common.enums.ResultEnum;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,6 +54,17 @@ public class BaseController<S extends BaseService<T, F>, T, F> {
         //调用业务逻辑，处理业务
         List<T> list = service.findList(f);
         return new ResponeData<List>(ResultEnum.SUCCESS,list);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "page",method = RequestMethod.POST)
+    @LoginRequired
+    public ResponeData<PageInfo> findPage( @RequestBody BasePageQuery<F> basePageQuery){
+        //调用业务逻辑，处理业务
+        PageHelper.startPage(basePageQuery.getPageNum(), basePageQuery.getPageSize());
+        List<T> list = service.findList(basePageQuery.getEntity());
+        PageInfo<T> pageInfo = new PageInfo<T>(list,5);
+        return new ResponeData<>(ResultEnum.SUCCESS, pageInfo);
     }
 
     @ResponseBody

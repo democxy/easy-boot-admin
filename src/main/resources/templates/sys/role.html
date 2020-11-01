@@ -19,9 +19,9 @@
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label">登录名</label>
+                            <label class="layui-form-label">角色名</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="username" v-model="accountNo" autocomplete="off" class="layui-input">
+                                <input type="text" name="roleName" v-model="roleName" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -37,20 +37,22 @@
             <table class="layui-table" >
                 <thead>
                 <tr>
-                    <th>账户ID</th>
-                    <th>登录名</th>
-                    <th>角色</th>
+                    <th>角色名称</th>
+                    <th>角色标识</th>
+                    <th>数据范围</th>
+                    <th>校色状态</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="item in page.list">
-                    <td>{{item.accountId}}</td>
-                    <td>{{item.accountNo}}</td>
-                    <td>{{item.role}}</td>
+                    <td>{{item.roleName}}</td>
+                    <td>{{item.roleFlag}}</td>
+                    <td>{{item.dataScope}}</td>
+                    <td>{{item.status}}</td>
                     <td style="word-break: keep-all;white-space:nowrap;">
-                        <a href="javascript:void(0)" @click="edit(item.accountId);" class="layui-btn layui-btn-sm">编辑</a>
-                        <a href="javascript:void(0)" @click="del(item.accountId)" class="layui-btn layui-btn-sm layui-btn-danger">删除</a>
+                        <a href="javascript:void(0)" @click="edit(item.id);" class="layui-btn layui-btn-sm">编辑</a>
+                        <a href="javascript:void(0)" @click="del(item.id)" class="layui-btn layui-btn-sm layui-btn-danger">删除</a>
                     </td>
                 </tr>
                 </tbody>
@@ -84,7 +86,7 @@
                 page:{},
                 pageNum:1,
                 pageSize:5,
-                accountNo:""
+                roleName:""
             },
             methods: {
                 getData: function (pageNum,pageSize) {
@@ -92,11 +94,10 @@
                         "pageNum":pageNum,
                         "pageSize":pageSize,
                         "entity":{
-                            "accountNo": app.$data.accountNo
+                            "roleName": app.$data.roleName
                         }
-
                     };
-                    $.operate.post( "/admin/account/page", baseQuery,function (callData) {
+                    $.operate.post( "/admin/role/page", baseQuery,function (callData) {
                         app.page = callData.data
                         app.pageNum = app.$data.page.pageNum
                         app.pageSize = app.$data.page.pageSize
@@ -104,14 +105,14 @@
                     });
                 },
                 add: function () {
-                    $.modal.open("新增用户",'/admin/sys/accountForm')
+                    $.modal.open("新增角色",'/admin/sys/roleForm')
                 },
                 edit: function (id) {
-                    $.modal.open("编辑用户",'/admin/sys/accountForm?id='+id)
+                    $.modal.open("编辑角色",'/admin/sys/roleForm?id='+id)
                 },
                 del:function (id) {
                     layer.confirm('真的删除行么', function (index) {
-                        $.get('/admin/account/del/'+id,function (data) {
+                        $.get('/admin/role/del/'+id,function (data) {
                             if (app.$data.pageNum!=1){
                                 var lastSize = app.$data.page.total-(app.$data.pageNum-1)*app.$data.pageSize;
                                 if (lastSize == 1){

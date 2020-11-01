@@ -26,6 +26,12 @@
               "href": "admin/sys/account",
               "icon": "fa fa-tachometer",
               "target": "_self"
+            },
+            {
+              "title": "角色管理",
+              "href": "admin/sys/role",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
             }
           ]
         }

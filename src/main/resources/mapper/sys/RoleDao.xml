@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.democxy.modules.sys.dao.RoleDao">
+
+    <sql id="roleColumns">
+        a.id AS "id",
+        a.role_name AS "roleName",
+        a.role_flag AS "roleFlag",
+        a.data_scope AS "dataScope",
+        a.status AS "status"
+    </sql>
+
+    <sql id="roleJoins">
+    </sql>
+
+    <select id="getById" resultType="com.democxy.modules.sys.entity.Role">
+        SELECT
+        <include refid="roleColumns"/>
+        FROM sys_role a
+        <include refid="roleJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="com.democxy.modules.sys.entity.Role">
+        SELECT
+        <include refid="roleColumns"/>
+        FROM sys_role a
+        <include refid="roleJoins"/>
+        <where>
+            a.id != '1'
+            <if test="roleName != null and roleName != ''">
+                AND a.role_name like concat('%', #{roleName}, '%')
+            </if>
+            <if test="roleFlag != null and roleFlag != ''">
+                AND a.role_flag = #{roleFlag}
+            </if>
+        </where>
+        <choose>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sys_role(
+        role_name,
+        role_flag,
+        data_scope,
+        status
+        ) VALUES (
+        #{roleName},
+        #{roleFlag},
+        #{dataScope},
+        #{status}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE sys_role SET
+        role_name = #{roleName},
+        role_flag = #{roleFlag},
+        data_scope = #{dataScope},
+        status = #{status}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM sys_role
+        WHERE id = #{id}
+    </update>
+
+
+</mapper>

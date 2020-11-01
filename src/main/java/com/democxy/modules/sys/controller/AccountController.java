@@ -44,18 +44,6 @@ public class AccountController extends BaseController<AccountService, Account,Ac
     }
 
     @ResponseBody
-    @RequestMapping(value = "page",method = RequestMethod.POST)
-//    @LoginRequired
-    @SysLog(title = "账户分页查询")
-    public ResponeData<PageInfo> findPage( @RequestBody AccountField accountField){
-        //调用业务逻辑，处理业务
-        PageHelper.startPage(accountField.getPageNum(), accountField.getPageSize());
-        List<Account> list = service.findList(accountField);
-        PageInfo<Account> pageInfo = new PageInfo<Account>(list,5);
-        return new ResponeData<>(ResultEnum.SUCCESS, pageInfo);
-    }
-
-    @ResponseBody
     @RequestMapping(value = "login",method = RequestMethod.POST)
 
     public ResponeData<String> login(@Valid @RequestBody AccountField accountField){
