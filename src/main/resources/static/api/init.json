@@ -10,6 +10,28 @@
   },
   "menuInfo": [
     {
+      "title": "系统管理",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "系统管理",
+          "href": "",
+          "icon": "fa fa-home",
+          "target": "_self",
+          "child": [
+            {
+              "title": "账号管理",
+              "href": "admin/sys/account",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "常规管理",
       "icon": "fa fa-address-book",
       "href": "",

@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class BaseFiled {
 
-    private Integer pageNo;
+    private Integer pageNum;
 
     private Integer pageSize;
 }

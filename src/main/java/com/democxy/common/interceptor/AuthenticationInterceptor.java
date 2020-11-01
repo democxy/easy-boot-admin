@@ -26,21 +26,21 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 //        }
 
         //基于注解配置登录拦截
-        if (handler instanceof  HandlerMethod){
-            HandlerMethod handlerMethod = (HandlerMethod) handler;
-            Method method = handlerMethod.getMethod();
-            // 接口是否有@LoginRequired注解, 有则需要判断是否登录
-            boolean annotationPresent = method.isAnnotationPresent(LoginRequired.class);
-            if (annotationPresent) {
-                // 验证token
-                String token = request.getHeader("token");
-                boolean verity = JwtUtil.validateToken(token);
-                if (!verity) {
-                    throw new CustomException(4040, "token过期，请重新登录");
-                }
-                return true;
-            }
-        }
+//        if (handler instanceof  HandlerMethod){
+//            HandlerMethod handlerMethod = (HandlerMethod) handler;
+//            Method method = handlerMethod.getMethod();
+//            // 接口是否有@LoginRequired注解, 有则需要判断是否登录
+//            boolean annotationPresent = method.isAnnotationPresent(LoginRequired.class);
+//            if (annotationPresent) {
+//                // 验证token
+//                String token = request.getHeader("token");
+//                boolean verity = JwtUtil.validateToken(token);
+//                if (!verity) {
+//                    throw new CustomException(4040, "token过期，请重新登录");
+//                }
+//                return true;
+//            }
+//        }
 
 
 

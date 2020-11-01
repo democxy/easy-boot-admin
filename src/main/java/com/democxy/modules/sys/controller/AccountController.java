@@ -8,6 +8,7 @@ import com.democxy.common.global.ResponeData;
 import com.democxy.common.enums.ResultEnum;
 import com.democxy.common.utils.IdGenUtil;
 import com.democxy.common.utils.JwtUtil;
+import com.democxy.common.utils.StringUtils;
 import com.democxy.modules.sys.entity.Account;
 import com.democxy.modules.sys.entity.AccountField;
 import com.democxy.modules.sys.service.AccountService;
@@ -26,23 +27,29 @@ import java.util.List;
 @RequestMapping("/admin/account")
 public class AccountController extends BaseController<AccountService, Account,AccountField > {
 
-    @Override
     @ResponseBody
-    @RequestMapping(value = "add",method = RequestMethod.POST)
+    @RequestMapping(value = "save",method = RequestMethod.POST)
     public ResponeData<String> addUser(@Valid @RequestBody AccountField accountField){
         //调用业务逻辑，处理业务
-        accountField.setAccountId(IdGenUtil.getUUID());
-        service.insert(accountField);
-        return new ResponeData<>("添加成功");
+        if (StringUtils.isEmpty(accountField.getAccountId())){
+            accountField.setAccountId(IdGenUtil.getUUID());
+            service.insert(accountField);
+            return new ResponeData<>("添加成功");
+        }else {
+            service.update(accountField);
+            return new ResponeData<>("更新成功成功");
+        }
+
+
     }
 
     @ResponseBody
     @RequestMapping(value = "page",method = RequestMethod.POST)
-    @LoginRequired
+//    @LoginRequired
     @SysLog(title = "账户分页查询")
     public ResponeData<PageInfo> findPage( @RequestBody AccountField accountField){
         //调用业务逻辑，处理业务
-        PageHelper.startPage(accountField.getPageNo(), accountField.getPageSize());
+        PageHelper.startPage(accountField.getPageNum(), accountField.getPageSize());
         List<Account> list = service.findList(accountField);
         PageInfo<Account> pageInfo = new PageInfo<Account>(list,5);
         return new ResponeData<>(ResultEnum.SUCCESS, pageInfo);

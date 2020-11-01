@@ -40,8 +40,8 @@ public class SysLogAspect {
         Method method = signature.getMethod();
         SysLog sysLog = method.getAnnotation(SysLog.class);
         logger.info(sysLog.title());
-        String token = ServletUtils.getRequest().getHeader("token");
-        logger.info("操作用户ID："+ JwtUtil.parseToken(token).getId());
+//        String token = ServletUtils.getRequest().getHeader("token");
+//        logger.info("操作用户ID："+ JwtUtil.parseToken(token).getId());
         //在此处获取一系列信息 存入数据库日志表....
 
 

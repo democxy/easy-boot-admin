@@ -328,12 +328,32 @@
         },
         operate: {
             // 保存信息 刷新表格
-            save: function(url, data, callback) {
+            post: function(url, data, callback) {
                 var config = {
                     url: url,
                     type: "post",
                     dataType: "json",
-                    data: data,
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    // beforeSend: function () {
+                    //     $.modal.loading("正在处理中，请稍后...");
+                    //     $.modal.disable();
+                    // },
+                    success: function(result) {
+                        if (typeof callback == "function") {
+                            callback(result);
+                        }
+                    }
+                };
+                $.ajax(config)
+            },
+            submit: function(url, data, callback) {
+                var config = {
+                    url: url,
+                    type: "post",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
                     // beforeSend: function () {
                     //     $.modal.loading("正在处理中，请稍后...");
                     //     $.modal.disable();
