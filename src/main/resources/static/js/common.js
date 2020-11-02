@@ -369,9 +369,17 @@
             },
             // 成功回调执行事件（父窗体静默更新）
             successCallback: function(result) {
-                var parent = window.parent;
-                parent.flashData();
-                $.modal.close();
+                if (result.code == 200){
+                    $.modal.msgSuccess("操作成功")
+                    var parent = window.parent;
+                    parent.flashData();
+                    $.modal.close();
+                }else {
+                    $.modal.msgError(result.msg+","+result.data);
+                    return;
+                }
+
+
             },
         }
     })

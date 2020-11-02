@@ -1,4 +1,4 @@
-package com.democxy.modules.sys.entity;
+package com.democxy.modules.sys.entity.field;
 
 import com.democxy.common.global.BaseFiled;
 import lombok.Data;
@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
  * @version 2020-04-28
  */
 @Data
-public class AccountField extends BaseFiled {
+public class AccountField extends BaseFiled<AccountField> {
 
     //账号ID 计划使用UUID，方便跟各用户之间进行一对一关联
     private String accountId;

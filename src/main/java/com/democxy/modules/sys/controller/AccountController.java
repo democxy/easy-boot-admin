@@ -2,7 +2,6 @@ package com.democxy.modules.sys.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.democxy.common.annotation.LoginRequired;
-import com.democxy.common.annotation.SysLog;
 import com.democxy.common.global.BaseController;
 import com.democxy.common.global.ResponeData;
 import com.democxy.common.enums.ResultEnum;
@@ -10,26 +9,24 @@ import com.democxy.common.utils.IdGenUtil;
 import com.democxy.common.utils.JwtUtil;
 import com.democxy.common.utils.StringUtils;
 import com.democxy.modules.sys.entity.Account;
-import com.democxy.modules.sys.entity.AccountField;
+import com.democxy.modules.sys.entity.field.AccountField;
 import com.democxy.modules.sys.service.AccountService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import io.jsonwebtoken.Claims;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.List;
 
 @CrossOrigin
 @Controller
 @RequestMapping("/admin/account")
 public class AccountController extends BaseController<AccountService, Account,AccountField > {
 
+    @Override
     @ResponseBody
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    public ResponeData<String> addUser(@Valid @RequestBody AccountField accountField){
+    public ResponeData<String> save(@Valid @RequestBody AccountField accountField){
         //调用业务逻辑，处理业务
         if (StringUtils.isEmpty(accountField.getAccountId())){
             accountField.setAccountId(IdGenUtil.getUUID());
@@ -45,7 +42,6 @@ public class AccountController extends BaseController<AccountService, Account,Ac
 
     @ResponseBody
     @RequestMapping(value = "login",method = RequestMethod.POST)
-
     public ResponeData<String> login(@Valid @RequestBody AccountField accountField){
         //调用业务逻辑，处理业务
         Account login= service.login(accountField);

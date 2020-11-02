@@ -10,10 +10,24 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-public class BaseController<S extends BaseService<T, F>, T, F> {
+public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<F>> {
 
     @Autowired
     public S service;
+
+    /**
+     * 添加用户
+     * @param f
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "save",method = RequestMethod.POST)
+    @LoginRequired
+    public ResponeData<String> save(@Valid @RequestBody F f ){
+        //调用业务逻辑，处理业务
+        service.save(f);
+        return new ResponeData<>("添加成功");
+    }
 
     /**
      * 添加用户

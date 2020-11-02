@@ -37,6 +37,7 @@
             <table class="layui-table" >
                 <thead>
                 <tr>
+                    <th>序号</th>
                     <th>角色名称</th>
                     <th>角色标识</th>
                     <th>数据范围</th>
@@ -45,7 +46,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="item in page.list">
+                <tr v-for="(item,index) in page.list">
+                    <td>{{(index+1)+(pageNum-1)*pageSize}}</td>
                     <td>{{item.roleName}}</td>
                     <td>{{item.roleFlag}}</td>
                     <td>{{item.dataScope}}</td>

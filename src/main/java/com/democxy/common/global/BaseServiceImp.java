@@ -1,14 +1,26 @@
 package com.democxy.common.global;
 
+import com.democxy.common.utils.IdGenUtil;
+import com.democxy.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class BaseServiceImp<D extends BaseDao<T,F>, T,F> implements BaseService<T,F> {
+public class BaseServiceImp<D extends BaseDao<T,F>, T,F extends BaseFiled<F>> implements BaseService<T,F> {
 
     @Autowired
     public D dao;
 
+    @Override
+    public int save(F entity){
+        if (StringUtils.isEmpty(entity.getId())){
+            entity.setId(IdGenUtil.getUUID());
+            dao.insert(entity);
+        }else {
+            dao.update(entity);
+        }
+        return 0;
+    }
 
     @Override
     public int insert(F entity) {

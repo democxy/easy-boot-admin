@@ -2,7 +2,9 @@ package com.democxy.common.global;
 
 import java.util.List;
 
-public interface BaseService<T,F> {
+public interface BaseService<T,F extends BaseFiled<F>> {
+
+    int save(F entity);
 
     int insert(F entity);
 

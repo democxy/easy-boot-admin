@@ -37,15 +37,15 @@
             <table class="layui-table" >
                 <thead>
                 <tr>
-                    <th>账户ID</th>
+                    <th>序号</th>
                     <th>登录名</th>
                     <th>角色</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="item in page.list">
-                    <td>{{item.accountId}}</td>
+                <tr v-for="(item,index) in page.list">
+                    <td>{{(index+1)+(pageNum-1)*pageSize}}</td>
                     <td>{{item.accountNo}}</td>
                     <td>{{item.role}}</td>
                     <td style="word-break: keep-all;white-space:nowrap;">

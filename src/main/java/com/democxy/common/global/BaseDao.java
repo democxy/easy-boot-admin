@@ -2,7 +2,7 @@ package com.democxy.common.global;
 
 import java.util.List;
 
-public interface BaseDao<T,F> {
+public interface BaseDao<T,F extends BaseFiled<F>> {
 
     int insert(F entity);
 

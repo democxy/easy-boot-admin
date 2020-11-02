@@ -2,8 +2,12 @@ package com.democxy.common.global;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class BaseFiled {
+public abstract class BaseFiled<T> implements Serializable {
+
+    protected String id;
 
     private Integer pageNum;
 
