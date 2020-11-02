@@ -32,6 +32,12 @@
               "href": "admin/sys/role",
               "icon": "fa fa-tachometer",
               "target": "_self"
+            },
+            {
+              "title": "菜单管理",
+              "href": "admin/sys/menu",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
             }
           ]
         }

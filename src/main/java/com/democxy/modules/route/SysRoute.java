@@ -63,4 +63,9 @@ public class SysRoute {
         }
         return PREFIX+"roleForm";
     }
+
+    @RequestMapping("menu")
+    public String menuList(){
+        return PREFIX+"menu";
+    }
 }

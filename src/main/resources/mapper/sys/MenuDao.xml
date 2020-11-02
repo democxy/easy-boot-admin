@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.democxy.modules.sys.dao.MenuDao">
+
+    <sql id="menuColumns">
+        a.id AS "id",
+        a.menu_name AS "menuName",
+        a.parent_id AS "parentId",
+        a.order_num AS "orderNum",
+        a.url AS "url",
+        a.target AS "target",
+        a.menu_type AS "menuType",
+        a.visible AS "visible",
+        ifnull(a.perms,'') as "perms",
+        a.icon AS "icon",
+        a.create_by AS "createBy",
+        a.create_time AS "createTime"
+    </sql>
+
+    <sql id="menuJoins">
+    </sql>
+
+    <select id="getById" resultType="com.democxy.modules.sys.entity.Menu">
+        SELECT
+        <include refid="menuColumns"/>
+        FROM sys_menu a
+        <include refid="menuJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="com.democxy.modules.sys.entity.Menu">
+        SELECT
+        <include refid="menuColumns"/>
+        FROM sys_menu a
+        <include refid="menuJoins"/>
+        <where>
+            <if test="menuName != null and menuName != ''">
+                AND a.menu_name like concat('%', #{menuName}, '%')
+            </if>
+        </where>
+        <choose>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sys_menu(
+            menu_name,
+            parent_id,
+            order_num,
+            url,
+            target,
+            menu_type,
+            visible,
+            perms,
+            icon,
+            create_by
+            create_time
+        ) VALUES (
+            #{menuName},
+            #{parentId},
+            #{orderNum},
+            #{url},
+            #{target},
+            #{menuType},
+            #{visible},
+            #{perms},
+            #{icon},
+            #{createBy},
+            sysdate()
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE sys_menu SET
+            menu_name = #{menuName},
+            parent_id = #{parentId},
+            order_num = #{orderNum},
+            url = #{url},
+            target = #{target},
+            menu_type = #{menuType},
+            visible = #{visible},
+            perms = #{perms},
+            icon = #{icon},
+            remark = #{remark},
+            update_by = #{updateBy},
+            update_time = sysdate()
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM sys_menu
+        WHERE id = #{id}
+    </update>
+
+
+</mapper>
