@@ -57,7 +57,7 @@
             visible,
             perms,
             icon,
-            create_by
+            create_by,
             create_time
         ) VALUES (
             #{menuName},

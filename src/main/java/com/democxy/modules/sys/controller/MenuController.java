@@ -4,6 +4,8 @@ import com.democxy.common.annotation.LoginRequired;
 import com.democxy.common.enums.ResultEnum;
 import com.democxy.common.global.BaseController;
 import com.democxy.common.global.ResponeData;
+import com.democxy.common.global.TreeEntity;
+import com.democxy.common.utils.TreeUtils;
 import com.democxy.modules.sys.entity.Menu;
 import com.democxy.modules.sys.entity.field.MenuField;
 import com.democxy.modules.sys.service.MenuService;
@@ -25,5 +27,21 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
         //调用业务逻辑，处理业务
         List<Menu> list = service.findList(menuField);
         return new ResponeData<List>(ResultEnum.SUCCESS,list);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "tree",method = RequestMethod.GET)
+    @LoginRequired
+    public List<Menu> treeMenu(){
+        List<Menu> list = service.findList(new MenuField());
+        return TreeUtils.getChildPerms(list,"0");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "treeSelect",method = RequestMethod.GET)
+    @LoginRequired
+    public List<TreeEntity> treeLayUi(){
+        List<Menu> list = service.findList(new MenuField());
+        return new TreeEntity().sortMenuList(TreeUtils.getChildPerms(list,"0"));
     }
 }
