@@ -92,4 +92,17 @@ public class SysRoute {
         model.addAttribute("treeDatas",treeDatas);
         return PREFIX+"menuForm";
     }
+
+    @RequestMapping("addChildren")
+    public String addChildren(String id, Model model){
+        Menu byId = menuService.getById(id);
+        Menu menu = new Menu();
+        menu.setParentId(byId.getId());
+        menu.setParentName(byId.getMenuName());
+        model.addAttribute("menu",menu);
+        List<Menu> list = menuService.findList(new MenuField());
+        List<TreeEntity> treeDatas = new TreeEntity().sortMenuList(TreeUtils.getChildPerms(list, "0"));
+        model.addAttribute("treeDatas",treeDatas);
+        return PREFIX+"menuForm";
+    }
 }

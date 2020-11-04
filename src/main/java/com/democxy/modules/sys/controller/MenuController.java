@@ -9,10 +9,7 @@ import com.democxy.common.utils.TreeUtils;
 import com.democxy.modules.sys.entity.Menu;
 import com.democxy.modules.sys.entity.field.MenuField;
 import com.democxy.modules.sys.service.MenuService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,7 +18,7 @@ import java.util.List;
 public class MenuController extends BaseController<MenuService, Menu, MenuField> {
 
     @ResponseBody
-    @RequestMapping(value = "list",method = RequestMethod.GET)
+    @RequestMapping(value = "list",method = RequestMethod.POST)
     @LoginRequired
     public ResponeData<List> findList(MenuField menuField){
         //调用业务逻辑，处理业务
@@ -43,5 +40,13 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
     public List<TreeEntity> treeLayUi(){
         List<Menu> list = service.findList(new MenuField());
         return new TreeEntity().sortMenuList(TreeUtils.getChildPerms(list,"0"));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "delByPid/{id}",method = RequestMethod.GET)
+    @LoginRequired
+    public ResponeData<String> delById(@PathVariable("id") String id){
+        service.delMore(id);
+        return new ResponeData<>(ResultEnum.SUCCESS,"删除成功");
     }
 }

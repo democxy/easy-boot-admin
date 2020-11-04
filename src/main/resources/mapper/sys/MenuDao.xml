@@ -8,8 +8,9 @@
         a.id AS "id",
         a.menu_name AS "menuName",
         a.parent_id AS "parentId",
+        b.menu_name AS "parentName",
         a.order_num AS "orderNum",
-        a.url AS "url",
+        a.href AS "href",
         a.target AS "target",
         a.menu_type AS "menuType",
         a.visible AS "visible",
@@ -20,6 +21,7 @@
     </sql>
 
     <sql id="menuJoins">
+        left join sys_menu b on b.id = a.parent_id
     </sql>
 
     <select id="getById" resultType="com.democxy.modules.sys.entity.Menu">
@@ -51,7 +53,7 @@
             menu_name,
             parent_id,
             order_num,
-            url,
+            href,
             target,
             menu_type,
             visible,
@@ -63,7 +65,7 @@
             #{menuName},
             #{parentId},
             #{orderNum},
-            #{url},
+            #{href},
             #{target},
             #{menuType},
             #{visible},
@@ -79,7 +81,7 @@
             menu_name = #{menuName},
             parent_id = #{parentId},
             order_num = #{orderNum},
-            url = #{url},
+            href = #{href},
             target = #{target},
             menu_type = #{menuType},
             visible = #{visible},

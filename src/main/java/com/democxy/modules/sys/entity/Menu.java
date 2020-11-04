@@ -23,7 +23,7 @@ public class Menu {
     private String orderNum;
 
     /** 菜单URL */
-    private String url;
+    private String href;
 
     /** 打开方式：menuItem页签 menuBlank新窗口 */
     private String target;

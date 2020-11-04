@@ -335,14 +335,27 @@
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(data),
+                    headers: {
+                        'token': sessionStorage.getItem("token")
+                    },
                     // beforeSend: function () {
                     //     $.modal.loading("正在处理中，请稍后...");
                     //     $.modal.disable();
                     // },
                     success: function(result) {
-                        if (typeof callback == "function") {
-                            callback(result);
+                        if (result.code == 4040){
+                            $.modal.confirm(result.msg,function () {
+                                window.parent.location.href = "/"
+                            })
+                        }else if (result.code != 200){
+                            $.modal.msgError(result.msg)
+                            return;
+                        }else {
+                            if (typeof callback == "function") {
+                                callback(result);
+                            }
                         }
+
                     }
                 };
                 $.ajax(config)
@@ -354,15 +367,28 @@
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(data),
+                    headers: {
+                        'token': sessionStorage.getItem("token")
+                    },
                     // beforeSend: function () {
                     //     $.modal.loading("正在处理中，请稍后...");
                     //     $.modal.disable();
                     // },
                     success: function(result) {
-                        if (typeof callback == "function") {
-                            callback(result);
+                        if (result.code == 4040){
+                            $.modal.confirm(result.msg,function () {
+                                window.parent.location.href = "/"
+                            })
+                        }else if (result.code != 200){
+                            $.modal.msgError(result.msg)
+                            return;
+                        }else {
+                            if (typeof callback == "function") {
+                                callback(result);
+                            }
+                            $.operate.successCallback(result);
                         }
-                        $.operate.successCallback(result);
+
                     }
                 };
                 $.ajax(config)
