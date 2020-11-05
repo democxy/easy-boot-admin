@@ -44,6 +44,15 @@
         </div>
 
         <div class="layui-form-item">
+            <label class="layui-form-label">资源权限</label>
+            <div class="layui-input-block">
+                <div id="tree" ></div>
+            </div>
+        </div>
+
+
+
+        <div class="layui-form-item">
             <div class="layui-input-block">
                 <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
             </div>
@@ -60,15 +69,55 @@
         el: '#app',
         data: {
             role: [[${role}]],
+            treeDatas: [[${treeDatas}]]
         }
     })
-    layui.use(['form'], function () {
+
+
+
+    layui.use(['form','tree'], function () {
         var form = layui.form,
             layer = layui.layer,
+            tree = layui.tree,
             $ = layui.jquery;
+
+        var inst1 = tree.render({
+            elem: '#tree'  //绑定元素
+            ,data: app.$data.treeDatas
+            ,showCheckbox: true
+            ,id: "demoId"
+            ,click: function(obj){
+                console.log(obj.data); //得到当前点击的节点数据
+                console.log(obj.state); //得到当前节点的展开状态：open、close、normal
+                console.log(obj.elem); //得到当前节点元素
+                console.log(obj.data.children); //当前节点下是否有子节点
+
+            },
+            oncheck: function(obj){
+                console.log(obj.data); //得到当前点击的节点数据
+                console.log(obj.checked); //得到当前节点的展开状态：open、close、normal
+                console.log(obj.elem); //得到当前节点元素
+                if (obj.data.children){
+                    obj.data.checked = false
+                }
+            }
+        });
+
+        function getIds(checkData,ids){
+            $.each(checkData,function(index,value){
+                ids.push(value.id)
+                if (value.children){
+                    getIds(value.children,ids)
+                }
+            });
+        }
 
         //监听提交
         form.on('submit(saveBtn)', function (data) {
+            var checkData = tree.getChecked('demoId');
+            var ids = [];
+            getIds(checkData,ids)
+            app.$data.role.menuIds = ids
             $.operate.submit("/admin/role/save", app.$data.role);
             return false;
         });

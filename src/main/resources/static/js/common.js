@@ -327,6 +327,32 @@
             },
         },
         operate: {
+            get: function(url,callback){
+                var config = {
+                    url: url,
+                    type: "get",
+                    dataType: "json",
+                    headers: {
+                        'token': sessionStorage.getItem("token")
+                    },
+                    success: function(result) {
+                        if (result.code == 4040){
+                            $.modal.confirm(result.msg,function () {
+                                window.parent.location.href = "/admin/sys/login"
+                            })
+                        }else if (result.code != 200){
+                            $.modal.msgError(result.msg)
+                            return;
+                        }else {
+                            if (typeof callback == "function") {
+                                callback(result);
+                            }
+                        }
+
+                    }
+                };
+                $.ajax(config)
+            },
             // 保存信息 刷新表格
             post: function(url, data, callback) {
                 var config = {

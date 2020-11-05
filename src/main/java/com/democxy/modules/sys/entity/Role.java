@@ -2,6 +2,9 @@ package com.democxy.modules.sys.entity;
 
 import lombok.Data;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * 系统角色实体类
  * @author shiling_deng
@@ -24,4 +27,6 @@ public class Role {
 
     // 角色状态
     private String status;
+
+    private Set<String> menuIds;
 }

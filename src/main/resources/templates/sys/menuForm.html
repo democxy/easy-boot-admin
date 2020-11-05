@@ -22,7 +22,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label required">父级目录</label>
             <div class="layui-input-block">
-                <input type="text" readonly id="parentName" name="parentName" v-model="menu.parentName" lay-reqtext="父级目录不能为空" placeholder="请选择父级目录" value="" class="layui-input">
+                <input type="text" readonly id="parentName" name="parentName" v-model="menu.parentName" lay-reqtext="父级目录不能为空" placeholder="请选择父级目录" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -34,7 +34,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label required">菜单名</label>
             <div class="layui-input-block">
-                <input type="text" name="menuName" v-model="menu.menuName" lay-verify="required" lay-reqtext="菜单名称不能为空" placeholder="请输入名称" value="" class="layui-input">
+                <input type="text" name="menuName" v-model="menu.menuName" lay-verify="required" lay-reqtext="菜单名称不能为空" placeholder="请输入名称"  class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -102,6 +102,7 @@
                 console.log(obj.data.children); //当前节点下是否有子节点
                 $("#parentName").val(obj.data.title)
                 app.$data.menu.parentId = obj.data.id
+                app.$data.menu.parentName = obj.data.title
                 layer.close()
             }
         });

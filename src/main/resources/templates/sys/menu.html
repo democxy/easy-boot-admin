@@ -123,7 +123,7 @@
 
             if (layEvent === 'del') {
                 layer.confirm('删除会删除所包含的所有子资源，确定删除？', function (index) {
-                    $.get('/admin/menu/delByPid/'+data.id,function (data) {
+                    $.operate.get('/admin/menu/delByPid/'+data.id,function (data) {
                         if (data.code == 200) {
                             layer.close(index);
                             loadTableData();

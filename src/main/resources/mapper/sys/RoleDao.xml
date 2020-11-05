@@ -43,7 +43,7 @@
         </choose>
     </select>
 
-    <insert id="insert">
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO sys_role(
         role_name,
         role_flag,
@@ -72,4 +72,21 @@
     </update>
 
 
+    <insert id="insertMenuRole">
+        INSERT INTO sys_menu_role(
+            menu_id,
+            role_id
+        ) VALUES (
+            #{menuId},
+            #{roleId}
+        )
+    </insert>
+
+    <select id="selectMenuIdByRole" resultType="java.lang.String">
+        select menu_id from sys_menu_role where role_id = #{roleId}
+    </select>
+
+    <delete id="delMenuIdByRole">
+        delete from sys_menu_role where role_id = #{roleId}
+    </delete>
 </mapper>

@@ -73,9 +73,17 @@ public class SysRoute {
     public String roleForm(String id, Model model){
         if (StringUtils.isEmpty(id)){
             model.addAttribute("role",new Role());
+            List<Menu> list = menuService.findList(new MenuField());
+            List<TreeEntity> treeDatas = new TreeEntity().sortMenuList(TreeUtils.getChildPerms(list, "0"));
+            model.addAttribute("treeDatas",treeDatas);
         }else {
-            model.addAttribute("role",roleService.getById(id));
+            Role byId = roleService.getById(id);
+            model.addAttribute("role", byId);
+            List<Menu> list = menuService.findList(new MenuField());
+            List<TreeEntity> treeDatas = new TreeEntity().sortMenuList(TreeUtils.getChildPerms(list, "0"),byId.getMenuIds());
+            model.addAttribute("treeDatas",treeDatas);
         }
+
         return PREFIX+"roleForm";
     }
 

@@ -114,7 +114,8 @@
                 },
                 del:function (id) {
                     layer.confirm('真的删除行么', function (index) {
-                        $.get('/admin/role/del/'+id,function (data) {
+                        $.operate.get('/admin/role/del/'+id,
+                            function (data) {
                             if (app.$data.pageNum!=1){
                                 var lastSize = app.$data.page.total-(app.$data.pageNum-1)*app.$data.pageSize;
                                 if (lastSize == 1){

@@ -5,6 +5,8 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 系统角色实体类
@@ -28,4 +30,6 @@ public class RoleField extends BaseFiled<RoleField> {
 
     // 角色状态
     private String status;
+
+    private Set<String> menuIds;
 }
