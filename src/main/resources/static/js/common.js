@@ -345,7 +345,7 @@
                     success: function(result) {
                         if (result.code == 4040){
                             $.modal.confirm(result.msg,function () {
-                                window.parent.location.href = "/"
+                                window.parent.location.href = "/admin/sys/login"
                             })
                         }else if (result.code != 200){
                             $.modal.msgError(result.msg)
@@ -377,7 +377,7 @@
                     success: function(result) {
                         if (result.code == 4040){
                             $.modal.confirm(result.msg,function () {
-                                window.parent.location.href = "/"
+                                window.parent.location.href = "/admin/sys/login"
                             })
                         }else if (result.code != 200){
                             $.modal.msgError(result.msg)

@@ -35,6 +35,12 @@ public class SysRoute {
     @Autowired
     MenuService menuService;
 
+    @RequestMapping("login")
+    public String login(){
+        System.out.println("login");
+        return PREFIX+"login";
+    }
+
     /**
      * 跳转到系统账户列表界面
      * @return
