@@ -25,4 +25,11 @@ public class MenuServiceImp extends BaseServiceImp<MenuDao, Menu, MenuField> imp
         dao.delete(id);
         return 0;
     }
+
+    @Override
+    public List<Menu> findByRoleId(int roleId) {
+        return dao.findByRoleId(roleId);
+    }
+
+
 }

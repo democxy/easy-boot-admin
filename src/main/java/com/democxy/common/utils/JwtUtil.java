@@ -96,8 +96,9 @@ public class JwtUtil {
     }
 
     public static void main(String[] args){
-//        String token = signToken("1", "admin", EXPIRE_TIME);
-//        System.out.println(token);
-//        System.out.println(validateToken(token));
+        String token = signToken("1", "admin", EXPIRE_TIME);
+        System.out.println(token);
+        System.out.println(validateToken(token));
+        System.out.println(parseToken(token).getSubject());
     }
 }
