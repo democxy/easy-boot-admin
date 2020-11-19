@@ -23,6 +23,7 @@ public class Account {
     private String password;
     //用户身份
     private String role;
-
+    //用户角色名称
+    private String roleName;
 
 }

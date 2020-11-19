@@ -105,7 +105,8 @@
             }
 
             $.operate.post("/admin/account/login", data,function (res) {
-                sessionStorage.setItem("token",res.data)
+                sessionStorage.setItem("token",res.data.token);
+                sessionStorage.setItem("login",res.data.login);
                 window.location = '/';
             });
 

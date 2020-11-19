@@ -47,10 +47,10 @@
                 <tr v-for="(item,index) in page.list">
                     <td>{{(index+1)+(pageNum-1)*pageSize}}</td>
                     <td>{{item.accountNo}}</td>
-                    <td>{{item.role}}</td>
+                    <td>{{item.roleName}}</td>
                     <td style="word-break: keep-all;white-space:nowrap;">
-                        <a href="javascript:void(0)" @click="edit(item.accountId);" class="layui-btn layui-btn-sm">编辑</a>
-                        <a href="javascript:void(0)" @click="del(item.accountId)" class="layui-btn layui-btn-sm layui-btn-danger">删除</a>
+                        <a href="javascript:void(0)" th:if="${@permission.check('sys:account:edit')}" @click="edit(item.accountId);" class="layui-btn layui-btn-sm">编辑</a>
+                        <a href="javascript:void(0)" th:if="${@permission.check('sys:account:del')}" @click="del(item.accountId)" class="layui-btn layui-btn-sm layui-btn-danger">删除</a>
                     </td>
                 </tr>
                 </tbody>

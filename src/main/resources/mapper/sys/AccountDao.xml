@@ -8,10 +8,12 @@
         a.account_id AS "accountId",
         a.account_no AS "accountNo",
         a.password AS "password",
-        a.role AS "role"
+        a.role AS "role",
+        r.role_name AS "roleName"
     </sql>
 
     <sql id="accountJoins">
+        left join sys_role r on r.id = a.role
     </sql>
 
     <select id="getById" resultType="com.democxy.modules.sys.entity.Account">

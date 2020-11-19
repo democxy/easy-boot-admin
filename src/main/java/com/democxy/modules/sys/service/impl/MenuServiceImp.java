@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class MenuServiceImp extends BaseServiceImp<MenuDao, Menu, MenuField> implements MenuService {
@@ -31,5 +32,9 @@ public class MenuServiceImp extends BaseServiceImp<MenuDao, Menu, MenuField> imp
         return dao.findByRoleId(roleId);
     }
 
+    @Override
+    public Set<String> getPermsForRole(int roleId){
+        return dao.getPermsForRole(roleId);
+    }
 
 }
