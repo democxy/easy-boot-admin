@@ -1,6 +1,7 @@
 package com.democxy.common.global;
 
 import com.democxy.common.annotation.LoginRequired;
+import com.democxy.common.annotation.Permission;
 import com.democxy.common.enums.ResultEnum;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -23,6 +24,7 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
     @ResponseBody
     @RequestMapping(value = "save",method = RequestMethod.POST)
     @LoginRequired
+//    @Permission(value = "#{f.permission}",func = "add")
     public ResponeData<String> save(@Valid @RequestBody F f ){
         //调用业务逻辑，处理业务
         service.save(f);
@@ -37,6 +39,7 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
     @LoginRequired
+    @Permission(value = "#{f.permission}",func = "add")
     public ResponeData<String> addUser(@Valid @RequestBody F f ){
         //调用业务逻辑，处理业务
         service.insert(f);
@@ -46,6 +49,7 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
     @ResponseBody
     @RequestMapping(value = "del/{id}",method = RequestMethod.GET)
     @LoginRequired
+    @Permission(value = "#{f.permission}",func = "del")
     public ResponeData<String> delById(@PathVariable("id") String id){
         service.delete(id);
         return new ResponeData<>(ResultEnum.SUCCESS,"删除成功");
@@ -54,6 +58,7 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
     @ResponseBody
     @RequestMapping(value = "update",method = RequestMethod.POST)
     @LoginRequired
+    @Permission(value = "#{f.permission}",func = "edit")
     public ResponeData<String> update(@Valid @RequestBody F f){
         //调用业务逻辑，处理业务
         service.update(f);
@@ -84,6 +89,7 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
     @ResponseBody
     @RequestMapping(value = "get/{id}",method = RequestMethod.GET)
     @LoginRequired
+    @Permission(value = "#{f.permission}",func = "view")
     public ResponeData<T> getById(@PathVariable("id") String id){
         T account = service.getById(id);
         return new ResponeData<T>(ResultEnum.SUCCESS,account);

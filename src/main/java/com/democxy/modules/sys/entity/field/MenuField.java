@@ -10,6 +10,8 @@ import java.util.List;
 @Data
 public class MenuField extends BaseFiled<MenuField> {
 
+    private String permission = "sys:menu"; // 权限字段标识
+
     /** 菜单名称 */
     @NotNull(message = "角色名不能为空")
     private String menuName;

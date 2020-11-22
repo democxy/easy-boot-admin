@@ -15,7 +15,9 @@ public enum ResultEnum {
 
     NOT_FOUND(404, "未知请求"),
 
-    LOGIN_FAILED(4040, "用户验证失败或长时间未操作身份已过期，请重新登录！");
+    LOGIN_FAILED(4040, "用户验证失败或长时间未操作身份已过期，请重新登录！"),
+
+    NO_PERMISSION(4041, "对不起！您无操作权限！");
 
     private int code;
     private String msg;

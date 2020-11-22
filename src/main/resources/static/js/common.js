@@ -345,9 +345,7 @@
                             $.modal.msgError(result.msg)
                             return;
                         }else {
-                            console.info("进入else")
                             if (typeof callback == "function") {
-                                console.info("进入回调")
                                 callback(result);
                             }
                         }

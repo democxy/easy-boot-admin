@@ -16,6 +16,7 @@ import java.util.Set;
 @Data
 public class RoleField extends BaseFiled<RoleField> {
 
+    private String permission = "sys:role"; // 权限字段标识
     // 角色名称
     @NotNull(message = "角色名不能为空")
     private String roleName;

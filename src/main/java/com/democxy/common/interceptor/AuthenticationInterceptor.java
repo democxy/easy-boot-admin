@@ -2,6 +2,7 @@ package com.democxy.common.interceptor;
 
 import com.alibaba.fastjson.JSON;
 import com.democxy.common.annotation.LoginRequired;
+import com.democxy.common.annotation.Permission;
 import com.democxy.common.exception.CustomException;
 import com.democxy.common.utils.JwtUtil;
 import com.democxy.common.utils.ServletUtils;
@@ -50,8 +51,23 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                     Set<String> permsForRole = menuService.getPermsForRole(Integer.parseInt(account.getRole()));
                     ServletUtils.getSession().setAttribute("perms",permsForRole);
                 }
-                return true;
+//                return true;
             }
+            // 验证是否有操作权限
+//            boolean permisson = method.isAnnotationPresent(Permission.class);
+//            if (permisson){
+//                // 存在注解
+//                Permission annotation = method.getAnnotation(Permission.class);
+//                String value = annotation.value();
+//                System.out.println("权限注解值：" + value);
+//                Object perms = ServletUtils.getSession().getAttribute("perms");
+//                if (perms!=null && perms instanceof Set){
+//                    Set<String> permsSet = (Set<String>) perms;
+//                    if (!permsSet.contains(value)){
+//                        throw new CustomException(4041, "您无权限操作此项！");
+//                    }
+//                }
+//            }
         }
         return true;
     }

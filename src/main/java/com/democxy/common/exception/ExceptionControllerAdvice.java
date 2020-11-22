@@ -59,6 +59,8 @@ public class ExceptionControllerAdvice {
         // 注意哦，这里传递的响应码枚举
         if (4040 == e.getCode()){
             return new ResponeData<>(ResultEnum.LOGIN_FAILED, e.getMsg());
+        }else if (4041 == e.getCode()){
+            return new ResponeData<>(ResultEnum.NO_PERMISSION, e.getMsg());
         }else {
             return new ResponeData<>(ResultEnum.FAILED, e.getMsg());
         }

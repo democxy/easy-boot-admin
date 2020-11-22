@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 @Data
 public class AccountField extends BaseFiled<AccountField> {
 
+    private String permission = "sys:account"; // 权限字段标识
     //账号ID 计划使用UUID，方便跟各用户之间进行一对一关联
     private String accountId;
     //登录账号

@@ -29,9 +29,21 @@
             <label class="layui-form-label required">角色</label>
             <div class="layui-input-block">
                 <select id="role" name="role" v-model="account.role">
-                    <option value="1">管理员</option>
+                    <option v-for="role in roleList" :key="role.id">[[role.roleName]]</option>
                     <option value="2">普通用户</option>
                 </select>
+                <table>
+                    <tr v-for="(item,index) in roleList">
+                        <td>{{item.roleName}}</td>
+                        <td>{{item.roleFlag}}</td>
+                        <td>{{item.dataScope}}</td>
+                        <td>{{item.status}}</td>
+                        <td style="word-break: keep-all;white-space:nowrap;">
+                            <a href="javascript:void(0)" @click="edit(item.id);" class="layui-btn layui-btn-sm">编辑</a>
+                            <a href="javascript:void(0)" @click="del(item.id)" class="layui-btn layui-btn-sm layui-btn-danger">删除</a>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
         <div class="layui-form-item">
@@ -58,6 +70,10 @@
         el: '#app',
         data: {
             account: [[${account}]],
+            roleList: [{
+                "id":"1",
+                "roleName":"dd"
+            }]
         }
     })
     layui.use(['form'], function () {
@@ -71,6 +87,14 @@
             $.operate.submit("/admin/account/save", app.$data.account);
             return false;
         });
+
+        layer.ready(function () {
+            console.info("ready")
+            $.operate.post( "/admin/role/list", {},function (callData) {
+                // app.$data.roleList = callData.data
+                console.info("test:::"+JSON.stringify(app.$data.roleList))
+            });
+        })
 
     });
 </script>
