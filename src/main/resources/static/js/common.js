@@ -336,7 +336,6 @@
                         'token': sessionStorage.getItem("token")
                     },
                     success: function(result) {
-                        console.info("get::"+JSON.stringify(result))
                         if (result.code == 4040){
                             $.modal.confirm(result.msg,function () {
                                 window.parent.location.href = "/admin/sys/login"

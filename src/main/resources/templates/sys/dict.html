@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/lib/layui-v2.5.5/css/layui.css}" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" th:href="@{/css/public.css}" href="../css/public.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main" id="app">
+
+        <fieldset class="table-search-fieldset">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">字典类型</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="type" v-model="type" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="button" class="layui-btn layui-btn-primary" v-on:click="getData(1,pageSize)"><i class="layui-icon"></i> 搜 索</button>
+                            <button type="button" class="layui-btn" v-on:click="add()"><i class="layui-icon"></i> 添 加</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <div style="overflow-x: auto">
+            <table class="layui-table" >
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>字典类型</th>
+                    <th>字典值</th>
+                    <th>字典标签</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(item,index) in page.list">
+                    <td>{{(index+1)+(pageNum-1)*pageSize}}</td>
+                    <td>{{item.type}}</td>
+                    <td>{{item.value}}</td>
+                    <td>{{item.label}}</td>
+                    <td style="word-break: keep-all;white-space:nowrap;">
+                        <a href="javascript:void(0)" th:if="${@permission.check('sys:dict:edit')}" @click="edit(item.accountId);" class="layui-btn layui-btn-sm">编辑</a>
+                        <a href="javascript:void(0)" th:if="${@permission.check('sys:dict:del')}" @click="del(item.accountId)" class="layui-btn layui-btn-sm layui-btn-danger">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <span id="page"></span>
+
+    </div>
+</div>
+
+<script th:src="@{/lib/jquery-3.4.1/jquery-3.4.1.min.js}"></script>
+<script th:src="@{/lib/layui-v2.5.5/layui.js}" src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script th:src="@{/js/vue.js}"></script>
+<script th:src="@{/js/common.js}"></script>
+
+<script>
+    var app;
+    function flashData(){
+        app.getData(app.$data.pageNum,app.$data.pageSize)
+    };
+
+    layui.use(['laypage','layer'], function(){
+        var $ = layui.jquery;
+        var laypage = layui.laypage;
+        var layer = layui.layer;
+        app = new Vue({
+            el: '#app',
+            data: {
+                page:{},
+                pageNum:1,
+                pageSize:5,
+                type:""
+            },
+            methods: {
+                getData: function (pageNum,pageSize) {
+                    var baseQuery = {
+                        "pageNum":pageNum,
+                        "pageSize":pageSize,
+                        "entity":{
+                            "type": app.$data.type
+                        }
+
+                    };
+                    $.operate.post( "/admin/dict/page", baseQuery,function (callData) {
+                        app.page = callData.data
+                        app.pageNum = app.$data.page.pageNum
+                        app.pageSize = app.$data.page.pageSize
+                        setPage();
+                    });
+                },
+                add: function () {
+                    $.modal.open("新增字典",'/admin/sys/dictForm')
+                },
+                edit: function (id) {
+                    $.modal.open("编辑字典",'/admin/sys/dictForm?id='+id)
+                },
+                del:function (id) {
+                    layer.confirm('真的删除行么', function (index) {
+                        $.operate.get('/admin/dict/del/'+id,function (data) {
+                            if (app.$data.pageNum!=1){
+                                var lastSize = app.$data.page.total-(app.$data.pageNum-1)*app.$data.pageSize;
+                                if (lastSize == 1){
+                                    app.$data.pageNum --;
+                                }
+                            }
+                            layer.close(index);
+                            app.getData(app.$data.pageNum,app.$data.pageSize)
+                        })
+                    });
+                }
+            }
+        });
+
+        layer.ready(function(){
+            app.getData(app.$data.pageNum,app.$data.pageSize)
+        });
+
+
+
+        function setPage(){
+            //执行一个laypage实例
+            laypage.render({
+                elem: 'page' //注意，这里的 test1 是 ID，不用加 # 号
+                ,curr: app.$data.page.pageNum
+                ,count: app.$data.page.total //数据总数，从服务端得到
+                ,layout: [ 'prev', 'page', 'next', 'limit', 'limits']
+                ,limits:[5,10,20,50]
+                ,limit:app.$data.page.pageSize
+                ,jump: function(obj, first){
+                    //obj包含了当前分页的所有参数，比如：
+                    // console.info(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                    // console.info(obj.limit); //得到每页显示的条数
+                    //首次不执行
+                    if(!first){
+                        app.getData(obj.curr,obj.limit)
+                    }
+                }
+            });
+        }
+
+    });
+</script>
+
+</body>
+
+</html>

@@ -4,10 +4,12 @@ import com.democxy.common.global.TreeEntity;
 import com.democxy.common.utils.StringUtils;
 import com.democxy.common.utils.TreeUtils;
 import com.democxy.modules.sys.entity.Account;
+import com.democxy.modules.sys.entity.Dict;
 import com.democxy.modules.sys.entity.Menu;
 import com.democxy.modules.sys.entity.Role;
 import com.democxy.modules.sys.entity.field.MenuField;
 import com.democxy.modules.sys.service.AccountService;
+import com.democxy.modules.sys.service.DictService;
 import com.democxy.modules.sys.service.MenuService;
 import com.democxy.modules.sys.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,8 @@ public class SysRoute {
     RoleService roleService;
     @Autowired
     MenuService menuService;
+    @Autowired
+    DictService dictService;
 
     @RequestMapping("login")
     public String login(){
@@ -58,6 +62,22 @@ public class SysRoute {
             model.addAttribute("account",accountService.getById(id));
         }
         return PREFIX+"accountForm";
+    }
+
+    @RequestMapping("dict")
+    public String dict(){
+        return PREFIX+"dict";
+    }
+
+    @RequestMapping("dictForm")
+    public String dictForm(String id, Model model){
+        if (StringUtils.isEmpty(id)){
+            model.addAttribute("dict",new Dict());
+        }else {
+            Dict byId = dictService.getById(id);
+            model.addAttribute("dict", byId);
+        }
+        return PREFIX+"dictForm";
     }
 
     /**
