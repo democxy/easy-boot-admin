@@ -10,8 +10,8 @@
 		a.description AS "description",
 		a.sort AS "sort",
 		a.update_by AS "updateBy",
-		a.update_date AS "updateDate",
-		a.remarks AS "remarks"
+		a.update_date AS "updateTime",
+		a.remarks AS "remark"
     </sql>
 
 	<select id="getById" resultType="com.democxy.modules.sys.entity.Dict">
@@ -38,8 +38,7 @@
 
 	<insert id="insert">
 		INSERT INTO sys_dict(
-			id, 
-			value, 
+			value,
 			label, 
 			type, 
 			description, 
@@ -50,17 +49,16 @@
 			update_date, 
 			remarks
 		) VALUES (
-			#{id}, 
-			#{value}, 
+			#{value},
 			#{label}, 
 			#{type}, 
 			#{description}, 
 			#{sort}, 
 			#{createBy},
-			#{createDate}, 
+			#{createTime},
 			#{updateBy},
-			#{updateDate}, 
-			#{remarks}
+			#{updateTime},
+			#{remark}
 		)
 	</insert>
 	
@@ -72,8 +70,8 @@
 			description = #{description}, 
 			sort = #{sort}, 
 			update_by = #{updateBy},
-			update_date = #{updateDate}, 
-			remarks = #{remarks}
+			update_date = sysdate(),
+			remarks = #{remark}
 		WHERE id = #{id}
 	</update>
 	

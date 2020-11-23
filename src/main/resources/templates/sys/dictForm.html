@@ -25,6 +25,18 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label required">描述</label>
+            <div class="layui-input-block">
+                <input type="text" name="description" v-model="dict.description" lay-verify="required" lay-reqtext="字典类型不能为空" placeholder="请输入字典类型" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">排序</label>
+            <div class="layui-input-block">
+                <input type="text" name="sort" v-model="dict.sort" lay-verify="required" lay-reqtext="字典类型不能为空" placeholder="请输入字典类型" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label required">字典值</label>
             <div class="layui-input-block">
                 <input type="text" name="value" v-model="dict.value" lay-verify="required" lay-reqtext="字典值不能为空" placeholder="请输入字典值" value="" class="layui-input">
@@ -64,8 +76,7 @@
 
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-            app.$data.account.role = $("#role").val() // 下拉框无法选择 暂时用这种方式
-            $.operate.submit("/admin/dict/save", app.$data.account);
+            $.operate.submit("/admin/dict/save", app.$data.dict);
             return false;
         });
 

@@ -42,10 +42,10 @@ public class PermissionAspect {
         Permission annotation = signature.getMethod().getAnnotation(Permission.class);
         // 获取注解中的参数
         String resourceId = getAnnotationValue(joinPoint, annotation.value());
-        System.out.println("value:" + resourceId);
         String annotationValue = getAnnotationValue(joinPoint, annotation.func());
         // 将注解中测参数值保存到数据库，实现记录接口调用日志的功能(以下内容省略...)
         String permission = resourceId+annotationValue;
+        System.out.println("permission:" + permission);
         Object perms = ServletUtils.getSession().getAttribute("perms");
         if (perms!=null && perms instanceof Set){
             Set<String> permsSet = (Set<String>) perms;

@@ -8,8 +8,6 @@ import java.util.Date;
 @Data
 public abstract class BaseFiled<T> implements Serializable {
 
-    protected String permission;
-
     protected String id;
 
     protected String createBy;
