@@ -29,21 +29,8 @@
             <label class="layui-form-label required">角色</label>
             <div class="layui-input-block">
                 <select id="role" name="role" v-model="account.role">
-                    <option v-for="role in roleList" :key="role.id">[[role.roleName]]</option>
-                    <option value="2">普通用户</option>
+                    <option th:each="role:${@role.findList(null)}" th:text="${role.roleName}" th:value="${role.id}"></option>
                 </select>
-                <table>
-                    <tr v-for="(item,index) in roleList">
-                        <td>{{item.roleName}}</td>
-                        <td>{{item.roleFlag}}</td>
-                        <td>{{item.dataScope}}</td>
-                        <td>{{item.status}}</td>
-                        <td style="word-break: keep-all;white-space:nowrap;">
-                            <a href="javascript:void(0)" @click="edit(item.id);" class="layui-btn layui-btn-sm">编辑</a>
-                            <a href="javascript:void(0)" @click="del(item.id)" class="layui-btn layui-btn-sm layui-btn-danger">删除</a>
-                        </td>
-                    </tr>
-                </table>
             </div>
         </div>
         <div class="layui-form-item">
@@ -77,6 +64,7 @@
         }
     })
     layui.use(['form'], function () {
+
         var form = layui.form,
             layer = layui.layer,
             $ = layui.jquery;

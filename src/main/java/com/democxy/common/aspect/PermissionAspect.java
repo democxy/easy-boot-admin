@@ -8,6 +8,7 @@ import com.democxy.common.utils.ServletUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
@@ -34,7 +35,7 @@ public class PermissionAspect {
     public void permissionPoint(){
     }
 
-    @AfterReturning(pointcut = "permissionPoint()")
+    @Before("permissionPoint()")
     public void recordLog(JoinPoint joinPoint) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         // 获取方法上的指定注解
@@ -44,7 +45,7 @@ public class PermissionAspect {
         System.out.println("value:" + resourceId);
         String annotationValue = getAnnotationValue(joinPoint, annotation.func());
         // 将注解中测参数值保存到数据库，实现记录接口调用日志的功能(以下内容省略...)
-        String permission = resourceId+":"+annotationValue;
+        String permission = resourceId+annotationValue;
         Object perms = ServletUtils.getSession().getAttribute("perms");
         if (perms!=null && perms instanceof Set){
             Set<String> permsSet = (Set<String>) perms;

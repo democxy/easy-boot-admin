@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Set;
 
-@Service
+@Service("role")
 public class RoleServiceImp extends BaseServiceImp<RoleDao, Role, RoleField> implements RoleService {
 
     @Override

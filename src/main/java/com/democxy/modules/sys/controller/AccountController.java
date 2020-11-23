@@ -2,6 +2,7 @@ package com.democxy.modules.sys.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.democxy.common.annotation.LoginRequired;
+import com.democxy.common.annotation.Permission;
 import com.democxy.common.global.BaseController;
 import com.democxy.common.global.ResponeData;
 import com.democxy.common.enums.ResultEnum;
@@ -29,6 +30,7 @@ public class AccountController extends BaseController<AccountService, Account,Ac
     @Override
     @ResponseBody
     @RequestMapping(value = "save",method = RequestMethod.POST)
+    @Permission(value = "sys:account",func = ":add")
     public ResponeData<String> save(@Valid @RequestBody AccountField accountField){
         //调用业务逻辑，处理业务
         if (StringUtils.isEmpty(accountField.getAccountId())){
