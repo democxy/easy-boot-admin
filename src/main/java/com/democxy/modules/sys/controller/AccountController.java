@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.democxy.common.annotation.LoginRequired;
 import com.democxy.common.annotation.Permission;
 import com.democxy.common.global.BaseController;
+import com.democxy.common.global.BasePageQuery;
 import com.democxy.common.global.ResponeData;
 import com.democxy.common.enums.ResultEnum;
 import com.democxy.common.utils.IdGenUtil;
@@ -13,6 +14,7 @@ import com.democxy.common.utils.StringUtils;
 import com.democxy.modules.sys.entity.Account;
 import com.democxy.modules.sys.entity.field.AccountField;
 import com.democxy.modules.sys.service.AccountService;
+import com.github.pagehelper.PageInfo;
 import io.jsonwebtoken.Claims;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin
@@ -30,7 +33,7 @@ public class AccountController extends BaseController<AccountService, Account,Ac
     @Override
     @ResponseBody
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    @Permission(value = "sys:account",func = ":add")
+    @Permission(value = "sys:account:add")
     public ResponeData<String> save(@Valid @RequestBody AccountField accountField){
         //调用业务逻辑，处理业务
         if (StringUtils.isEmpty(accountField.getAccountId())){
@@ -70,6 +73,59 @@ public class AccountController extends BaseController<AccountService, Account,Ac
         Claims claims = JwtUtil.parseToken(request.getHeader("token"));
         String subject = claims.getSubject();
         return new ResponeData<>(ResultEnum.SUCCESS,subject);
+    }
+
+
+    /**
+     * 添加用户
+     * @param f
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "add",method = RequestMethod.POST)
+    @LoginRequired
+    @Permission(value = "sys:dict:add")
+    public ResponeData<String> addUser(@Valid @RequestBody AccountField f ){
+        return super.addUser(f);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "del/{id}",method = RequestMethod.GET)
+    @LoginRequired
+    @Permission(value = "sys:dict:del")
+    public ResponeData<String> delById(@PathVariable("id") String id){
+        return super.delById(id);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "update",method = RequestMethod.POST)
+    @LoginRequired
+    @Permission(value = "sys:dict:edit")
+    public ResponeData<String> update(@Valid @RequestBody AccountField f){
+        return super.update(f);
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "list",method = RequestMethod.POST)
+    @LoginRequired
+    public ResponeData<List> findList(AccountField f){
+        return super.findList(f);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "page",method = RequestMethod.POST)
+    @LoginRequired
+    public ResponeData<PageInfo> findPage(@RequestBody BasePageQuery<AccountField> basePageQuery){
+        return super.findPage(basePageQuery);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "get/{id}",method = RequestMethod.GET)
+    @LoginRequired
+    @Permission(value = "sys:dict:view")
+    public ResponeData<Account> getById(@PathVariable("id") String id){
+        return super.getById(id);
     }
 
 }

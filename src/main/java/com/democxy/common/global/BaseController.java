@@ -24,7 +24,7 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
     @ResponseBody
     @RequestMapping(value = "save",method = RequestMethod.POST)
     @LoginRequired
-    @Permission(value = "#{f.permission}",func = ":add")
+    @Permission(value = "permission")
     public ResponeData<String> save(@Valid @RequestBody F f ){
         //调用业务逻辑，处理业务
         service.save(f);
@@ -39,7 +39,7 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
     @LoginRequired
-    @Permission(value = "#{f.permission}",func = ":add")
+    @Permission(value = "permission")
     public ResponeData<String> addUser(@Valid @RequestBody F f ){
         //调用业务逻辑，处理业务
         service.insert(f);
@@ -49,7 +49,7 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
     @ResponseBody
     @RequestMapping(value = "del/{id}",method = RequestMethod.GET)
     @LoginRequired
-    @Permission(value = "#{f.permission}",func = ":del")
+    @Permission(value = "permission")
     public ResponeData<String> delById(@PathVariable("id") String id){
         service.delete(id);
         return new ResponeData<>(ResultEnum.SUCCESS,"删除成功");
@@ -58,7 +58,7 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
     @ResponseBody
     @RequestMapping(value = "update",method = RequestMethod.POST)
     @LoginRequired
-    @Permission(value = "#{f.permission}",func = ":edit")
+    @Permission(value = "permission")
     public ResponeData<String> update(@Valid @RequestBody F f){
         //调用业务逻辑，处理业务
         service.update(f);
@@ -89,7 +89,7 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
     @ResponseBody
     @RequestMapping(value = "get/{id}",method = RequestMethod.GET)
     @LoginRequired
-    @Permission(value = "#{f.permission}",func = ":view")
+    @Permission(value = "permission")
     public ResponeData<T> getById(@PathVariable("id") String id){
         T account = service.getById(id);
         return new ResponeData<T>(ResultEnum.SUCCESS,account);
