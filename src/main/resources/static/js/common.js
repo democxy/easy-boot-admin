@@ -386,6 +386,7 @@
                 };
                 $.ajax(config)
             },
+            // 共用提交表单事件
             submit: function(url, data, callback) {
                 var config = {
                     url: url,
@@ -433,6 +434,60 @@
 
 
             },
+            // 共用分页事件
+            setPage:function (laypage,app) {
+                laypage.render({
+                    elem: 'page' //注意，这里的 test1 是 ID，不用加 # 号
+                    ,curr: app.$data.page.pageNum
+                    ,count: app.$data.page.total //数据总数，从服务端得到
+                    ,layout: [ 'prev', 'page', 'next', 'limit', 'limits']
+                    ,limits:[5,10,20,50]
+                    ,limit:app.$data.page.pageSize
+                    ,jump: function(obj, first){
+                        //obj包含了当前分页的所有参数，比如：
+                        // console.info(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                        // console.info(obj.limit); //得到每页显示的条数
+                        //首次不执行
+                        app.pageNum = obj.curr
+                        app.pageSize = obj.limit
+                        if(!first){
+                            $.operate.getPageData(laypage,app);
+                        }
+                    }
+                });
+            },
+            // 共用获取分页数据事件
+            getPageData:function (laypage,app) {
+                var baseQuery = {
+                    "pageNum":app.$data.pageNum,
+                    "pageSize":app.$data.pageSize,
+                    "entity":app.$data.entity
+                };
+                $.operate.post( app.$data.pageUrl, baseQuery,function (callData) {
+                    app.page = callData.data
+                    app.pageNum = app.$data.page.pageNum
+                    app.pageSize = app.$data.page.pageSize
+                    $.operate.setPage(laypage,app);
+                });
+            },
+            // 共用删除事件
+            del:function (url,laypage,layer,app,msg) {
+                if ($.common.isEmpty(msg)){
+                    msg = "确定要删除吗？"
+                }
+                layer.confirm(msg, function (index) {
+                    $.operate.get(url,function (data) {
+                        if (app.$data.pageNum!=1){
+                            var lastSize = app.$data.page.total-(app.$data.pageNum-1)*app.$data.pageSize;
+                            if (lastSize == 1){
+                                app.$data.pageNum --;
+                            }
+                        }
+                        $.operate.getPageData(laypage,app);
+                        layer.close(index);
+                    })
+                });
+            }
         }
     })
 })(jQuery);

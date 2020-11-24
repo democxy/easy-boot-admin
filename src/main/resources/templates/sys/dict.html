@@ -21,7 +21,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">字典类型</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="type" v-model="type" autocomplete="off" class="layui-input">
+                                <input type="text" name="type" v-model="entity.type" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -73,7 +73,7 @@
 <script>
     var app;
     function flashData(){
-        app.getData(app.$data.pageNum,app.$data.pageSize)
+        app.getData()
     };
 
     layui.use(['laypage','layer'], function(){
@@ -83,27 +83,18 @@
         app = new Vue({
             el: '#app',
             data: {
+                pageUrl:"/admin/dict/page",
                 page:{},
                 pageNum:1,
                 pageSize:5,
-                type:""
+                entity:{
+                    "type":""
+                }
+
             },
             methods: {
-                getData: function (pageNum,pageSize) {
-                    var baseQuery = {
-                        "pageNum":pageNum,
-                        "pageSize":pageSize,
-                        "entity":{
-                            "type": app.$data.type
-                        }
-
-                    };
-                    $.operate.post( "/admin/dict/page", baseQuery,function (callData) {
-                        app.page = callData.data
-                        app.pageNum = app.$data.page.pageNum
-                        app.pageSize = app.$data.page.pageSize
-                        setPage();
-                    });
+                getData: function () {
+                    $.operate.getPageData(laypage,app);
                 },
                 add: function () {
                     $.modal.open("新增字典",'/admin/sys/dictForm')
@@ -112,48 +103,14 @@
                     $.modal.open("编辑字典",'/admin/sys/dictForm?id='+id)
                 },
                 del:function (id) {
-                    layer.confirm('真的删除行么', function (index) {
-                        $.operate.get('/admin/dict/del/'+id,function (data) {
-                            if (app.$data.pageNum!=1){
-                                var lastSize = app.$data.page.total-(app.$data.pageNum-1)*app.$data.pageSize;
-                                if (lastSize == 1){
-                                    app.$data.pageNum --;
-                                }
-                            }
-                            layer.close(index);
-                            app.getData(app.$data.pageNum,app.$data.pageSize)
-                        })
-                    });
+                    $.operate.del('/admin/dict/del/'+id,laypage,layer,app);
                 }
             }
         });
 
         layer.ready(function(){
-            app.getData(app.$data.pageNum,app.$data.pageSize)
+            app.getData()
         });
-
-
-
-        function setPage(){
-            //执行一个laypage实例
-            laypage.render({
-                elem: 'page' //注意，这里的 test1 是 ID，不用加 # 号
-                ,curr: app.$data.page.pageNum
-                ,count: app.$data.page.total //数据总数，从服务端得到
-                ,layout: [ 'prev', 'page', 'next', 'limit', 'limits']
-                ,limits:[5,10,20,50]
-                ,limit:app.$data.page.pageSize
-                ,jump: function(obj, first){
-                    //obj包含了当前分页的所有参数，比如：
-                    // console.info(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-                    // console.info(obj.limit); //得到每页显示的条数
-                    //首次不执行
-                    if(!first){
-                        app.getData(obj.curr,obj.limit)
-                    }
-                }
-            });
-        }
 
     });
 </script>
