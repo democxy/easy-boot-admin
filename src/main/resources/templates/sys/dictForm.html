@@ -16,35 +16,44 @@
 <body>
 <div class="layui-row" id="app">
     <form class="layui-form" id="form-member-add">
-        <input type="hidden" name="id" v-model="dict.id">
         <div class="layui-form-item">
             <label class="layui-form-label required">字典类型</label>
             <div class="layui-input-block">
-                <input type="text" name="type" v-model="dict.type" lay-verify="required" lay-reqtext="字典类型不能为空" placeholder="请输入字典类型" value="" class="layui-input">
+                <input type="text" name="type" v-model="type" lay-verify="required" lay-reqtext="字典类型不能为空" placeholder="请输入字典类型" value="" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label required">描述</label>
             <div class="layui-input-block">
-                <input type="text" name="description" v-model="dict.description" lay-verify="required" lay-reqtext="字典类型不能为空" placeholder="请输入字典类型" value="" class="layui-input">
+                <input type="text" name="description" v-model="description" lay-verify="required" lay-reqtext="字典类型不能为空" placeholder="请输入字典类型" value="" class="layui-input">
             </div>
         </div>
+
         <div class="layui-form-item">
-            <label class="layui-form-label required">排序</label>
+            <label class="layui-form-label required">键值</label>
             <div class="layui-input-block">
-                <input type="text" name="sort" v-model="dict.sort" lay-verify="required" lay-reqtext="字典类型不能为空" placeholder="请输入字典类型" value="" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label required">字典值</label>
-            <div class="layui-input-block">
-                <input type="text" name="value" v-model="dict.value" lay-verify="required" lay-reqtext="字典值不能为空" placeholder="请输入字典值" value="" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">标签</label>
-            <div class="layui-input-block">
-                <input type="text" name="label" v-model="dict.label" lay-verify="required" lay-reqtext="字典标签不能为空" placeholder="请输入字典标签" value="" class="layui-input">
+                <table class="layui-table">
+                    <thead>
+                    <tr>
+                        <th>标签</th>
+                        <th>键值</th>
+                        <th>排序</th>
+                        <th>
+                            <a href="javascript:void(0)" @click="add();" class="layui-btn layui-btn-sm">新增</a>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr  v-for="(item,index) in dictList">
+                        <td><input type="text" v-model="item.label" class="layui-input"></td>
+                        <td><input type="text" v-model="item.value" class="layui-input"></td>
+                        <td><input type="text" v-model="item.sort" class="layui-input"></td>
+                        <td style="word-break: keep-all;white-space:nowrap;">
+                            <a href="javascript:void(0)" th:if="${@permission.check('sys:dict:del')}" @click="del(index,item.id)" class="layui-btn layui-btn-sm layui-btn-danger">删除</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -61,7 +70,28 @@
     var app = new Vue({
         el: '#app',
         data: {
-            dict: [[${dict}]]
+            delIds: [],
+            dictList: [[${dictList}]],
+            type: [[${type}]],
+            description: [[${description}]]
+        },
+        methods:{
+            add: function () {
+                var dict = {
+                    "id": "",
+                    "label":"",
+                    "value":"",
+                    "sort":""
+                };
+                app.$data.dictList.push(dict);
+            },
+            del: function (index,id) {
+                app.$data.dictList.splice(index,1); //删除数组元素
+                if ($.common.isNotEmpty(id)){
+                    app.$data.delIds.push(id);
+                    console.info(JSON.stringify(app.$data.delIds))
+                }
+            }
         }
     })
     layui.use(['form'], function () {
@@ -72,7 +102,13 @@
 
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-            $.operate.submit("/admin/dict/save", app.$data.dict);
+            var dict = {
+                delIds: app.$data.delIds,
+                dictList: app.$data.dictList,
+                type: app.$data.type,
+                description: app.$data.description
+            }
+            $.operate.submit("/admin/dict/save", dict);
             return false;
         });
 

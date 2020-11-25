@@ -407,7 +407,7 @@
                                 window.parent.location.href = "/admin/sys/login"
                             })
                         }else if (result.code != 200){
-                            $.modal.msgError(result.msg)
+                            $.modal.msgError(result.msg+","+result.data);
                             return;
                         }else {
                             if (typeof callback == "function") {

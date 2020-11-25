@@ -2,12 +2,14 @@ package com.democxy.modules.sys.controller;
 
 import com.democxy.common.annotation.LoginRequired;
 import com.democxy.common.annotation.Permission;
+import com.democxy.common.enums.ResultEnum;
 import com.democxy.common.global.BaseController;
 import com.democxy.common.global.BasePageQuery;
 import com.democxy.common.global.ResponeData;
 import com.democxy.modules.sys.entity.Dict;
 import com.democxy.modules.sys.entity.field.DictField;
 import com.democxy.modules.sys.service.DictService;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
@@ -73,7 +75,11 @@ public class DictController extends BaseController<DictService, Dict, DictField>
     @RequestMapping(value = "page",method = RequestMethod.POST)
     @LoginRequired
     public ResponeData<PageInfo> findPage(@RequestBody BasePageQuery<DictField> basePageQuery){
-        return super.findPage(basePageQuery);
+        //调用业务逻辑，处理业务
+        PageHelper.startPage(basePageQuery.getPageNum(), basePageQuery.getPageSize());
+        List<Dict> list = service.findDistinct(basePageQuery.getEntity());
+        PageInfo<Dict> pageInfo = new PageInfo<Dict>(list,5);
+        return new ResponeData<>(ResultEnum.SUCCESS, pageInfo);
     }
 
     @ResponseBody

@@ -21,6 +21,18 @@
 		WHERE a.id = #{id}
 	</select>
 	
+	<select id="findDistinct" resultType="com.democxy.modules.sys.entity.Dict">
+		select DISTINCT description,type from sys_dict a
+		<where>
+			<if test="type != null and type != ''">
+				AND a.type = #{type}
+			</if>
+			<if test="description != null and description != ''">
+				AND a.description LIKE concat('%', #{description}, '%')
+			</if>
+		</where>
+	</select>
+
 	<select id="findList" resultType="com.democxy.modules.sys.entity.Dict">
 		SELECT
 		<include refid="dictColumns"/>

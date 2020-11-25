@@ -37,21 +37,19 @@
                 <thead>
                 <tr>
                     <th>序号</th>
+                    <th>字典名称</th>
                     <th>字典类型</th>
-                    <th>字典值</th>
-                    <th>字典标签</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="(item,index) in page.list">
                     <td>{{(index+1)+(pageNum-1)*pageSize}}</td>
+                    <td>{{item.description}}</td>
                     <td>{{item.type}}</td>
-                    <td>{{item.value}}</td>
-                    <td>{{item.label}}</td>
                     <td style="word-break: keep-all;white-space:nowrap;">
-                        <a href="javascript:void(0)" th:if="${@permission.check('sys:dict:edit')}" @click="edit(item.id);" class="layui-btn layui-btn-sm">编辑</a>
-                        <a href="javascript:void(0)" th:if="${@permission.check('sys:dict:del')}" @click="del(item.id)" class="layui-btn layui-btn-sm layui-btn-danger">删除</a>
+                        <a href="javascript:void(0)" th:if="${@permission.check('sys:dict:edit')}" @click="edit(item.type);" class="layui-btn layui-btn-sm">编辑</a>
+<!--                        <a href="javascript:void(0)" th:if="${@permission.check('sys:dict:del')}" @click="del(item.type)" class="layui-btn layui-btn-sm layui-btn-danger">删除</a>-->
                     </td>
                 </tr>
                 </tbody>
@@ -95,8 +93,8 @@
                 add: function () {
                     $.modal.open("新增字典",'/admin/sys/dictForm')
                 },
-                edit: function (id) {
-                    $.modal.open("编辑字典",'/admin/sys/dictForm?id='+id)
+                edit: function (type) {
+                    $.modal.open("编辑字典",'/admin/sys/dictForm?type='+type)
                 },
                 del:function (id) {
                     $.operate.del('/admin/dict/del/'+id,laypage,layer,app);

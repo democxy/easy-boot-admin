@@ -7,6 +7,7 @@ import com.democxy.modules.sys.entity.Account;
 import com.democxy.modules.sys.entity.Dict;
 import com.democxy.modules.sys.entity.Menu;
 import com.democxy.modules.sys.entity.Role;
+import com.democxy.modules.sys.entity.field.DictField;
 import com.democxy.modules.sys.entity.field.MenuField;
 import com.democxy.modules.sys.service.AccountService;
 import com.democxy.modules.sys.service.DictService;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,12 +72,17 @@ public class SysRoute {
     }
 
     @RequestMapping("dictForm")
-    public String dictForm(String id, Model model){
-        if (StringUtils.isEmpty(id)){
-            model.addAttribute("dict",new Dict());
+    public String dictForm( DictField dictField, Model model){
+        if (StringUtils.isEmpty(dictField.getType())){
+            model.addAttribute("dictList",new ArrayList<Dict>());
+            model.addAttribute("type","");
+            model.addAttribute("description","");
         }else {
-            Dict byId = dictService.getById(id);
-            model.addAttribute("dict", byId);
+            List<Dict> dictList = dictService.findList(dictField);
+            model.addAttribute("dictList", dictList);
+            Dict dict = dictList.get(0);
+            model.addAttribute("type",dict.getType());
+            model.addAttribute("description",dict.getDescription());
         }
         return PREFIX+"dictForm";
     }
