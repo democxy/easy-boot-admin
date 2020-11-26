@@ -3,16 +3,10 @@ package com.democxy.modules.route;
 import com.democxy.common.global.TreeEntity;
 import com.democxy.common.utils.StringUtils;
 import com.democxy.common.utils.TreeUtils;
-import com.democxy.modules.sys.entity.Account;
-import com.democxy.modules.sys.entity.Dict;
-import com.democxy.modules.sys.entity.Menu;
-import com.democxy.modules.sys.entity.Role;
+import com.democxy.modules.sys.entity.*;
 import com.democxy.modules.sys.entity.field.DictField;
 import com.democxy.modules.sys.entity.field.MenuField;
-import com.democxy.modules.sys.service.AccountService;
-import com.democxy.modules.sys.service.DictService;
-import com.democxy.modules.sys.service.MenuService;
-import com.democxy.modules.sys.service.RoleService;
+import com.democxy.modules.sys.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +34,8 @@ public class SysRoute {
     MenuService menuService;
     @Autowired
     DictService dictService;
+    @Autowired
+    TaskJobService taskJobService;
 
     @RequestMapping("login")
     public String login(){
@@ -85,6 +81,21 @@ public class SysRoute {
             model.addAttribute("description",dict.getDescription());
         }
         return PREFIX+"dictForm";
+    }
+
+    @RequestMapping("taskJob")
+    public String taskJob(){
+        return PREFIX+"taskJob";
+    }
+
+    @RequestMapping("taskJobForm")
+    public String taskJobForm( String id, Model model){
+        if (StringUtils.isEmpty(id)){
+            model.addAttribute("taskJob",new TaskJob());
+        }else {
+            model.addAttribute("taskJob",taskJobService.getById(id));
+        }
+        return PREFIX+"taskJobForm";
     }
 
     /**
