@@ -48,8 +48,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 if (Objects.isNull(perms)){
                     String subject = JwtUtil.parseToken(token).getSubject();
                     Account account = JSON.parseObject(subject, Account.class);
-                    Set<String> permsForRole = menuService.getPermsForRole(Integer.parseInt(account.getRole()));
-                    ServletUtils.getSession().setAttribute("perms",permsForRole);
                     // 重新设置login session
                     ServletUtils.getSession().setAttribute("login",account);
                 }

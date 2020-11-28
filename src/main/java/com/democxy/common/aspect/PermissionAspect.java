@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.democxy.common.annotation.Permission;
 import com.democxy.common.exception.CustomException;
+import com.democxy.common.global.SystemCache;
 import com.democxy.common.utils.ServletUtils;
+import com.democxy.modules.sys.entity.Account;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -46,9 +48,10 @@ public class PermissionAspect {
         // 将注解中测参数值保存到数据库，实现记录接口调用日志的功能(以下内容省略...)
         String permission = resourceId+annotationValue;
         System.out.println("permission:" + permission);
-        Object perms = ServletUtils.getSession().getAttribute("perms");
-        if (perms!=null && perms instanceof Set){
-            Set<String> permsSet = (Set<String>) perms;
+        Object perms = ServletUtils.getSession().getAttribute("login");
+        if (perms!=null && perms instanceof Account){
+            Account account = (Account)perms;
+            Set<String> permsSet = SystemCache.ROLE_MENU_CACHE.get(account.getRole());
             if (!permsSet.contains(permission)){
                 logger.info("无权限操作！");
                 throw new CustomException(4041, "您无操作权限！");

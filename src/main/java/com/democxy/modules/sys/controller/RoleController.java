@@ -26,7 +26,7 @@ public class RoleController extends BaseController<RoleService, Role, RoleField>
     @ResponseBody
     @RequestMapping(value = "save",method = RequestMethod.POST)
     @LoginRequired
-    @Permission(value = "sys:dict:add")
+    @Permission(value = "sys:role:add")
     public ResponeData<String> save(@Valid @RequestBody RoleField f ){
         //调用业务逻辑，处理业务
         return super.save(f);
@@ -40,7 +40,7 @@ public class RoleController extends BaseController<RoleService, Role, RoleField>
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
     @LoginRequired
-    @Permission(value = "sys:dict:add")
+    @Permission(value = "sys:role:add")
     public ResponeData<String> addUser(@Valid @RequestBody RoleField f ){
         return super.addUser(f);
     }
@@ -48,7 +48,7 @@ public class RoleController extends BaseController<RoleService, Role, RoleField>
     @ResponseBody
     @RequestMapping(value = "del/{id}",method = RequestMethod.GET)
     @LoginRequired
-    @Permission(value = "sys:dict:del")
+    @Permission(value = "sys:role:del")
     public ResponeData<String> delById(@PathVariable("id") String id){
         return super.delById(id);
     }
@@ -56,7 +56,7 @@ public class RoleController extends BaseController<RoleService, Role, RoleField>
     @ResponseBody
     @RequestMapping(value = "update",method = RequestMethod.POST)
     @LoginRequired
-    @Permission(value = "sys:dict:edit")
+    @Permission(value = "sys:role:edit")
     public ResponeData<String> update(@Valid @RequestBody RoleField f){
         return super.update(f);
     }
@@ -79,7 +79,7 @@ public class RoleController extends BaseController<RoleService, Role, RoleField>
     @ResponseBody
     @RequestMapping(value = "get/{id}",method = RequestMethod.GET)
     @LoginRequired
-    @Permission(value = "sys:dict:view")
+    @Permission(value = "sys:role:view")
     public ResponeData<Role> getById(@PathVariable("id") String id){
         return super.getById(id);
     }
