@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <th:block th:include="include :: public_css" />
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main" id="app">
+
+        <fieldset class="table-search-fieldset">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">角色名</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="roleName" v-model="entity.roleName" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="button" class="layui-btn layui-btn-primary" v-on:click="getData(1,pageSize)"><i class="layui-icon"></i> 搜 索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <div style="overflow-x: auto">
+            <table class="layui-table">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>模块名</th>
+                   <!-- <th>请求方法</th>-->
+                    <th>操作人员</th>
+                    <th>请求方式</th>
+                    <th>请求地址</th>
+                    <th>请求IP</th>
+                    <th>请求地点</th>
+                    <!--<th>请求参数</th>-->
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(item,index) in page.list">
+                    <td>{{(index+1)+(pageNum-1)*pageSize}}</td>
+                    <td>{{item.title}}</td>
+                    <!--<td>{{item.method}}</td>-->
+                    <td>{{item.operName}}</td>
+                    <td>{{item.requestMethod}}</td>
+                    <td>{{item.operUrl}}</td>
+                    <td>{{item.operIp}}</td>
+                    <td>{{item.operLocation}}</td>
+                   <!-- <td>{{item.operParam}}</td>-->
+                    <td style="word-break: keep-all;white-space:nowrap;">
+                        <a href="javascript:void(0)" @click="edit(item.id);" class="layui-btn layui-btn-sm">查看</a>
+                        <a href="javascript:void(0)" @click="del(item.id)" class="layui-btn layui-btn-sm layui-btn-danger">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <span id="page"></span>
+    </div>
+</div>
+
+<th:block th:include="include :: public_js" />
+
+<script>
+    var app;
+    function flashData(){
+        app.getData()
+    };
+    layui.use(['laypage','layer'], function(){
+        var $ = layui.jquery;
+        var laypage = layui.laypage;
+        var layer = layui.layer;
+        app = new Vue({
+            el: '#app',
+            data: {
+                pageUrl: "/admin/sysLog/page",
+                page:{},
+                pageNum:1,
+                pageSize:5,
+                entity:{
+                    "title":"",
+                    "operName":""
+                }
+            },
+            methods: {
+                getData: function () {
+                    $.operate.getPageData(laypage,app);
+                },
+                edit: function (id) {
+                    $.modal.open("查看详情",'/admin/sys/sysLogForm?id='+id)
+                },
+                del:function (id) {
+                    $.operate.del('/admin/sysLog/del/'+id,laypage,layer,app);
+                }
+            }
+        });
+
+        layer.ready(function(){
+            app.getData()
+        });
+    });
+</script>
+
+</body>
+
+</html>

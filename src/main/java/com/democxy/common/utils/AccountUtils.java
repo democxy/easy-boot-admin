@@ -20,4 +20,18 @@ public class AccountUtils {
         }
         return new Account();
     }
+
+    public static Account getAccount(){
+        try {
+            Object login = ServletUtils.getSession().getAttribute("login");
+            Account account = null;
+            if (login!=null){
+                account = (Account) login;
+            }
+            return account;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new Account();
+    }
 }

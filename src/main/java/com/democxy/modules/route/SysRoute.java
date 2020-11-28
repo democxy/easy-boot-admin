@@ -36,6 +36,8 @@ public class SysRoute {
     DictService dictService;
     @Autowired
     TaskJobService taskJobService;
+    @Autowired
+    SysLogService sysLogService;
 
     @RequestMapping("login")
     public String login(){
@@ -157,4 +159,18 @@ public class SysRoute {
         model.addAttribute("treeDatas",treeDatas);
         return PREFIX+"menuForm";
     }
+
+
+    @RequestMapping("sysLog")
+    public String sysLogList(){
+        return PREFIX+"sysLog";
+    }
+
+    @RequestMapping("sysLogForm")
+    public String sysLogForm(String id,Model model){
+        SysLog sysLog = sysLogService.getById(id);
+        model.addAttribute("sysLog",sysLog);
+        return PREFIX+"sysLogForm";
+    }
+
 }

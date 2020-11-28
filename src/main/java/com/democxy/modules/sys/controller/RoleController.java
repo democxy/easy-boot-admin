@@ -1,5 +1,6 @@
 package com.democxy.modules.sys.controller;
 
+import com.democxy.common.annotation.Log;
 import com.democxy.common.annotation.LoginRequired;
 import com.democxy.common.annotation.Permission;
 import com.democxy.common.global.BaseController;
@@ -27,6 +28,7 @@ public class RoleController extends BaseController<RoleService, Role, RoleField>
     @RequestMapping(value = "save",method = RequestMethod.POST)
     @LoginRequired
     @Permission(value = "sys:role:add")
+    @Log(title = "添加/修改角色")
     public ResponeData<String> save(@Valid @RequestBody RoleField f ){
         //调用业务逻辑，处理业务
         return super.save(f);

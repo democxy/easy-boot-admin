@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <th:block th:include="include :: public_css" />
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+        pre {
+            outline: 1px solid #ccc; padding: 5px; margin: 5px;
+            text-align: left;
+        }
+        .string { color: green; }
+        .number { color: darkorange; }
+        .boolean { color: blue; }
+        .null { color: magenta; }
+        .key { color: red; }
+    </style>
+</head>
+<body>
+<div class="layui-row" id="app">
+    <form class="layui-form" id="form-member-add">
+        <div class="layui-form-item">
+            <label class="layui-form-label required">模块名</label>
+            <div class="layui-input-block">
+                <input type="text" name="roleName" v-model="sysLog.title" readonly class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label required">请求方法</label>
+            <div class="layui-input-block">
+                <input type="text" name="roleName" v-model="sysLog.method" readonly class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label required">请求方式</label>
+            <div class="layui-input-block">
+                <input type="text" name="roleName" v-model="sysLog.requestMethod" readonly class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label required">请求人</label>
+            <div class="layui-input-block">
+                <input type="text" name="roleName" v-model="sysLog.operName" readonly class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label required">请求地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="roleName" v-model="sysLog.operUrl" readonly class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label required">请求IP</label>
+            <div class="layui-input-block">
+                <input type="text" name="roleName" v-model="sysLog.operIp" readonly class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label required">请求地点</label>
+            <div class="layui-input-block">
+                <input type="text" name="roleName" v-model="sysLog.operLocation" readonly class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label required">请求参数</label>
+            <div class="layui-input-block">
+                <pre id="operParam"></pre>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label required">返回参数</label>
+            <div class="layui-input-block">
+                <pre id="jsonResult"></pre>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<th:block th:include="include :: public_js" />
+<script th:inline="javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            sysLog: [[${sysLog}]]
+        }
+    })
+
+
+
+    layui.use(['form','tree'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            tree = layui.tree,
+            $ = layui.jquery;
+
+        function syntaxHighlight(json) {
+            if (typeof json != 'string') {
+                json = JSON.stringify(json, undefined, 2);
+            }
+            json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
+                var cls = 'number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'key';
+                    } else {
+                        cls = 'string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
+
+        layer.ready(function () {
+            $('#operParam').html(syntaxHighlight(app.$data.sysLog.operParam));
+            $('#jsonResult').html(syntaxHighlight(app.$data.sysLog.jsonResult));
+
+        })
+    });
+</script>
+</body>
+</html>
