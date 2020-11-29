@@ -337,9 +337,14 @@
                     },
                     success: function(result) {
                         if (result.code == 4040){
-                            $.modal.confirm(result.msg,function () {
-                                window.parent.location.href = "/admin/sys/login"
-                            })
+                            if ("auto" == result.data){
+                                $.operate.reflashToken();
+                                $.operate.get(url,callback);
+                            }else {
+                                $.modal.confirm(result.msg,function () {
+                                    window.parent.location.href = "/admin/sys/login"
+                                })
+                            }
                         }else if (result.code != 200){
                             $.modal.msgError(result.msg)
                             return;
@@ -370,9 +375,14 @@
                     // },
                     success: function(result) {
                         if (result.code == 4040){
-                            $.modal.confirm(result.msg,function () {
-                                window.parent.location.href = "/admin/sys/login"
-                            })
+                            if ("auto" == result.data){
+                                $.operate.reflashToken();
+                                $.operate.post(url,data,callback);
+                            }else {
+                                $.modal.confirm(result.msg,function () {
+                                    window.parent.location.href = "/admin/sys/login"
+                                })
+                            }
                         }else if (result.code != 200){
                             $.modal.msgError(result.msg)
                             return;
@@ -403,9 +413,14 @@
                     // },
                     success: function(result) {
                         if (result.code == 4040){
-                            $.modal.confirm(result.msg,function () {
-                                window.parent.location.href = "/admin/sys/login"
-                            })
+                            if ("auto" == result.data){
+                                $.operate.reflashToken();
+                                $.operate.submit(url,data,callback);
+                            }else {
+                                $.modal.confirm(result.msg,function () {
+                                    window.parent.location.href = "/admin/sys/login"
+                                })
+                            }
                         }else if (result.code != 200){
                             $.modal.msgError(result.msg+","+result.data);
                             return;
@@ -431,8 +446,25 @@
                     $.modal.msgError(result.msg+","+result.data);
                     return;
                 }
-
-
+            },
+            reflashToken: function(){
+                $.ajax({
+                    url: "/admin/account/autoLogin",
+                    type: "post",
+                    async: false,
+                    dataType: "json",
+                    data: {
+                        "token":sessionStorage.getItem("token")
+                    },
+                    success :function (result) {
+                        if (result.code == 200){
+                            sessionStorage.setItem("token",result.data);
+                            return;
+                        }else {
+                            $.modal.msgError(result.msg+","+result.data);
+                        }
+                    }
+                })
             },
             // 共用分页事件
             setPage:function (laypage,app) {

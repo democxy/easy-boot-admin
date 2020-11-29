@@ -1,5 +1,7 @@
 package com.democxy.common.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.democxy.modules.sys.entity.Account;
 import io.jsonwebtoken.*;
 import java.util.Date;
 
@@ -12,8 +14,10 @@ public class JwtUtil {
 
 
     //设置过期时间为15分钟
-    public static final long EXPIRE_TIME = 15*60*1000;
+    public static final long EXPIRE_TIME = 15*60;
 
+
+    public static final String REDIS_KEY_PREFIX = "JWT:";
     /**
      * token私钥
      */
@@ -36,11 +40,15 @@ public class JwtUtil {
                 .setIssuedAt(now)      // 签发时间
                 .signWith(SignatureAlgorithm.HS256, TOKEN_SECRET); // 签名算法以及密匙
         if (ttlMillis >= 0) {
-            long expMillis = nowMillis + ttlMillis;
+            long expMillis = nowMillis + ttlMillis*1000;
             Date expDate = new Date(expMillis);
             builder.setExpiration(expDate); // 过期时间
         }
         return builder.compact();
+    }
+
+    public static String reflashToken(Account account, long ttlMillis){
+        return signToken(account.getAccountId(), JSON.toJSONString(account),ttlMillis);
     }
 
     /**

@@ -11,11 +11,13 @@ import com.democxy.common.utils.IdGenUtil;
 import com.democxy.common.utils.JwtUtil;
 import com.democxy.common.utils.ServletUtils;
 import com.democxy.common.utils.StringUtils;
+import com.democxy.common.utils.redis.RedisUtil;
 import com.democxy.modules.sys.entity.Account;
 import com.democxy.modules.sys.entity.field.AccountField;
 import com.democxy.modules.sys.service.AccountService;
 import com.github.pagehelper.PageInfo;
 import io.jsonwebtoken.Claims;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +31,9 @@ import java.util.Map;
 @Controller
 @RequestMapping("/admin/account")
 public class AccountController extends BaseController<AccountService, Account,AccountField > {
+
+    @Autowired
+    RedisUtil redisUtil;
 
     @Override
     @ResponseBody
@@ -56,14 +61,34 @@ public class AccountController extends BaseController<AccountService, Account,Ac
         Map<String,Object> map = new HashMap<>();
         if (login!=null){
             //计算token
+            login.setPassword(""); //清空密码
             String token = JwtUtil.signToken(login.getAccountId(), JSON.toJSONString(login), JwtUtil.EXPIRE_TIME);
             map.put("token",token);
             map.put("login",login);
+            // 缓存token到redis
+            redisUtil.set(JwtUtil.REDIS_KEY_PREFIX+token,JSON.toJSONString(login),JwtUtil.EXPIRE_TIME*2); // 缓存时间为jwt有效期的2倍
             ServletUtils.getSession().setAttribute("login",login);
             return new ResponeData<>(ResultEnum.SUCCESS,map);
         }else{
             return new ResponeData<>(ResultEnum.LOGIN_FAILED,null);
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "autoLogin",method = RequestMethod.POST)
+    public ResponeData<String> autoLogin(String token){
+        if (StringUtils.isNotEmpty(token)){
+            Object o = redisUtil.get(JwtUtil.REDIS_KEY_PREFIX + token);
+            if (o!=null){
+                Account account = JSON.parseObject(o.toString(), Account.class);
+                String newToken = JwtUtil.reflashToken(account, JwtUtil.EXPIRE_TIME);
+                redisUtil.del(JwtUtil.REDIS_KEY_PREFIX+token);
+                redisUtil.set(JwtUtil.REDIS_KEY_PREFIX+newToken,o.toString(),JwtUtil.EXPIRE_TIME*2);
+                return new ResponeData<>(newToken);
+            }
+
+        }
+        return new ResponeData<>(ResultEnum.LOGIN_FAILED,null);
     }
 
     @ResponseBody
