@@ -25,7 +25,7 @@
     </style>
 </head>
 <body class="layui-layout-body layuimini-all">
-<div class="layui-layout layui-layout-admin">
+<div class="layui-layout layui-layout-admin" id="app">
 
     <div class="layui-header header">
         <div class="layui-logo layuimini-logo"></div>
@@ -153,23 +153,26 @@
             miniAdmin.render(options);
         })
 
+        layer.ready(function () {
+            var item = sessionStorage.getItem("login");
 
+        })
 
         // 百度统计代码，只统计指定域名
-        miniTongji.render({
-            specific: true,
-            domains: [
-                '99php.cn',
-                'layuimini.99php.cn',
-                'layuimini-onepage.99php.cn',
-            ],
-        });
+        // miniTongji.render({
+        //     specific: true,
+        //     domains: [
+        //         '99php.cn',
+        //         'layuimini.99php.cn',
+        //         'layuimini-onepage.99php.cn',
+        //     ],
+        // });
 
         $('.login-out').on("click", function () {
-            sessionStorage.removeItem("token");
-            layer.msg('退出登录成功', function () {
+            $.modal.confirm("确认要退出登录吗？",function () {
+                sessionStorage.removeItem("token");
                 window.location = '/admin/sys/login';
-            });
+            })
         });
     });
 </script>
