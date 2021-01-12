@@ -47,7 +47,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                     // 从redis中获取过期token 刷新token
                     Object o = redisUtil.get(JwtUtil.REDIS_KEY_PREFIX + token);
                     if (o != null){
-                        throw new CustomException(4040, "auto"); // 返回auto代表可以自动刷新
+                        // 返回auto代表可以自动刷新
+                        throw new CustomException(4040, "auto");
                     }
                     throw new CustomException(4040, "token过期，请重新登录");
                 }

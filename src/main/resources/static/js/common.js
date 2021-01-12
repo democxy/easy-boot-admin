@@ -333,7 +333,7 @@
                     type: "get",
                     dataType: "json",
                     headers: {
-                        'token': sessionStorage.getItem("token")
+                        'token': $.cookie("token")
                     },
                     success: function(result) {
                         if (result.code == 4040){
@@ -367,7 +367,7 @@
                     contentType: "application/json",
                     data: JSON.stringify(data),
                     headers: {
-                        'token': sessionStorage.getItem("token")
+                        'token': $.cookie("token")
                     },
                     // beforeSend: function () {
                     //     $.modal.loading("正在处理中，请稍后...");
@@ -405,7 +405,7 @@
                     contentType: "application/json",
                     data: JSON.stringify(data),
                     headers: {
-                        'token': sessionStorage.getItem("token")
+                        'token': $.cookie("token")
                     },
                     // beforeSend: function () {
                     //     $.modal.loading("正在处理中，请稍后...");
@@ -454,7 +454,7 @@
                     async: false,
                     dataType: "json",
                     data: {
-                        "token":sessionStorage.getItem("token")
+                        "token":$.cookie("token")
                     },
                     success :function (result) {
                         if (result.code == 200){

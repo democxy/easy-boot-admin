@@ -68,6 +68,7 @@
 
 <script th:src="@{/lib/jquery-3.4.1/jquery-3.4.1.min.js}"></script>
 <script th:src="@{/lib/layui-v2.5.5/layui.js}" charset="utf-8"></script>
+<script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script th:src="@{/js/vue.js}"></script>
 <script th:src="@{/js/common.js}"></script>
 <script>
@@ -104,8 +105,8 @@
             }
 
             $.operate.post("/admin/account/login", data,function (res) {
-                sessionStorage.setItem("token",res.data.token);
-                sessionStorage.setItem("login",res.data.login);
+                $.cookie('token', res.data.token, { expires: 7, path: '/' });
+                $.cookie('login', JSON.stringify(res.data.login), { expires: 7, path: '/' });
                 window.location = '/';
             });
 

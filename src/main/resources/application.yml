@@ -66,4 +66,4 @@ spring:
     poolMaxWait: 3
     timeout: 1000  #链接超时时间
 server:
-  port: 80
+  port: 8080

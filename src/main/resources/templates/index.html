@@ -60,7 +60,7 @@
                     <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
                 </li>
                 <li class="layui-nav-item layuimini-setting">
-                    <a href="javascript:;">admin</a>
+                    <a href="javascript:;" id="username">admin</a>
                     <dl class="layui-nav-child">
                         <dd>
                             <a href="javascript:;" layuimini-content-href="page/user-setting.html" data-title="基本资料" data-icon="fa fa-gears">基本资料<span class="layui-badge-dot"></span></a>
@@ -130,6 +130,7 @@
 <script th:src="@{/lib/jquery-3.4.1/jquery-3.4.1.min.js}"></script>
 <script th:src="@{/lib/layui-v2.5.5/layui.js}" charset="utf-8"></script>
 <script th:src="@{/js/lay-config.js?v=1.0.4}" charset="utf-8"></script>
+<script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script th:src="@{/js/common.js}"></script>
 <script>
     layui.use(['jquery', 'layer', 'miniAdmin','miniTongji'], function () {
@@ -138,7 +139,7 @@
             miniAdmin = layui.miniAdmin,
             miniTongji = layui.miniTongji;
 
-        $.operate.get("/admin/menu/initUserMenu?token="+sessionStorage.getItem("token"),function (res) {
+        $.operate.get("/admin/menu/initUserMenu?token="+$.cookie("token"),function (res) {
             var options = {
                 initData: res.data,    // 初始化接口
                 clearUrl: "/api/clear.json", // 缓存清理接口
@@ -154,23 +155,14 @@
         })
 
         layer.ready(function () {
-            var item = sessionStorage.getItem("login");
-
+            var item = $.cookie("login");
+            $("#username").text(JSON.parse(item).accountNo)
         })
-
-        // 百度统计代码，只统计指定域名
-        // miniTongji.render({
-        //     specific: true,
-        //     domains: [
-        //         '99php.cn',
-        //         'layuimini.99php.cn',
-        //         'layuimini-onepage.99php.cn',
-        //     ],
-        // });
 
         $('.login-out').on("click", function () {
             $.modal.confirm("确认要退出登录吗？",function () {
-                sessionStorage.removeItem("token");
+                $.removeCookie('token', { path: '/' });
+                $.removeCookie('login', { path: '/' });
                 window.location = '/admin/sys/login';
             })
         });
