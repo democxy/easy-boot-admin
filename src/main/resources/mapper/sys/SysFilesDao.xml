@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.democxy.modules.sys.dao.SysFilesDao">
+
+	<sql id="sysFilesColumns">
+		a.id AS "id",
+		a.file_path AS "filePath",
+		a.file_newname AS "fileNewname",
+		a.file_old_name AS "fileOldName",
+		a.file_size AS "fileSize",
+		a.file_suffix AS "fileSuffix",
+		a.file_type AS "fileType",
+		a.remark AS "remark",
+		a.use_id AS "useId",
+		a.upload_time AS "uploadTime"
+    </sql>
+    
+    <sql id="sysFilesJoins">
+    
+    </sql>
+
+	<select id="getById" resultType="com.democxy.modules.sys.entity.SysFiles">
+		SELECT
+		<include refid="sysFilesColumns"/>
+		FROM sys_files a
+		<include refid="sysFilesJoins"/>
+		WHERE a.id = #{id}
+	</select>
+
+	<select id="findList" resultType="com.democxy.modules.sys.entity.SysFiles">
+		SELECT
+		<include refid="sysFilesColumns"/>
+		FROM sys_files a
+		<include refid="sysFilesJoins"/>
+		<where>
+			
+			<if test="fileNewname != null and fileNewname != ''">
+				AND a.file_newname = #{fileNewname}
+			</if>
+			<if test="fileOldName != null and fileOldName != ''">
+				AND a.file_old_name LIKE  concat('%',#{fileOldName},'%')
+			</if>
+			<if test="fileType != null and fileType != ''">
+				AND a.file_type = #{fileType}
+			</if>
+		</where>
+	</select>
+
+	<insert id="insert">
+		INSERT INTO sys_files(
+			id,
+			file_path,
+			file_newname,
+			file_old_name,
+			file_size,
+			file_suffix,
+			file_type,
+			remark,
+			use_id,
+			upload_time
+		) VALUES (
+			#{id},
+			#{filePath},
+			#{fileNewname},
+			#{fileOldName},
+			#{fileSize},
+			#{fileSuffix},
+			#{fileType},
+			#{remark},
+			#{useId},
+			#{uploadTime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE sys_files SET 	
+			file_path = #{filePath},
+			file_newname = #{fileNewname},
+			file_old_name = #{fileOldName},
+			file_size = #{fileSize},
+			file_suffix = #{fileSuffix},
+			file_type = #{fileType},
+			remark = #{remark},
+			use_id = #{useId},
+			upload_time = #{uploadTime}
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from sys_files WHERE id = #{id}
+	</delete>
+	
+</mapper>

@@ -27,6 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author democxy
+ */
 @CrossOrigin
 @Controller
 @RequestMapping("/admin/account")
@@ -61,12 +64,14 @@ public class AccountController extends BaseController<AccountService, Account,Ac
         Map<String,Object> map = new HashMap<>();
         if (login!=null){
             //计算token
-            login.setPassword(""); //清空密码
+            //清空密码
+            login.setPassword("");
             String token = JwtUtil.signToken(login.getAccountId(), JSON.toJSONString(login), JwtUtil.EXPIRE_TIME);
             map.put("token",token);
             map.put("login",login);
             // 缓存token到redis
-            redisUtil.set(JwtUtil.REDIS_KEY_PREFIX+token,JSON.toJSONString(login),JwtUtil.EXPIRE_TIME*2); // 缓存时间为jwt有效期的2倍
+            // 缓存时间为jwt有效期的2倍
+            redisUtil.set(JwtUtil.REDIS_KEY_PREFIX+token,JSON.toJSONString(login),JwtUtil.EXPIRE_TIME*2);
             ServletUtils.getSession().setAttribute("login",login);
             return new ResponeData<>(ResultEnum.SUCCESS,map);
         }else{
@@ -106,6 +111,7 @@ public class AccountController extends BaseController<AccountService, Account,Ac
      * @param f
      * @return
      */
+    @Override
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
     @LoginRequired
@@ -114,6 +120,7 @@ public class AccountController extends BaseController<AccountService, Account,Ac
         return super.addUser(f);
     }
 
+    @Override
     @ResponseBody
     @RequestMapping(value = "del/{id}",method = RequestMethod.GET)
     @LoginRequired
@@ -122,6 +129,7 @@ public class AccountController extends BaseController<AccountService, Account,Ac
         return super.delById(id);
     }
 
+    @Override
     @ResponseBody
     @RequestMapping(value = "update",method = RequestMethod.POST)
     @LoginRequired
@@ -131,6 +139,7 @@ public class AccountController extends BaseController<AccountService, Account,Ac
     }
 
 
+    @Override
     @ResponseBody
     @RequestMapping(value = "list",method = RequestMethod.POST)
     @LoginRequired
@@ -138,6 +147,7 @@ public class AccountController extends BaseController<AccountService, Account,Ac
         return super.findList(f);
     }
 
+    @Override
     @ResponseBody
     @RequestMapping(value = "page",method = RequestMethod.POST)
     @LoginRequired
@@ -145,6 +155,7 @@ public class AccountController extends BaseController<AccountService, Account,Ac
         return super.findPage(basePageQuery);
     }
 
+    @Override
     @ResponseBody
     @RequestMapping(value = "get/{id}",method = RequestMethod.GET)
     @LoginRequired

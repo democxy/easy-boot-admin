@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>文件管理列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <th:block th:include="include :: public_css" />
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main" id="app">
+
+        <fieldset class="table-search-fieldset">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <!--<div class="layui-inline">
+                            <label class="layui-form-label">文件名称</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="fileNewname" v-model="entity.fileNewname" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>-->
+                        <div class="layui-inline">
+                            <label class="layui-form-label">文件名称</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="fileOldName" v-model="entity.fileOldName" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">文件类型</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="fileType" v-model="entity.fileType" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="button" class="layui-btn layui-btn-primary" v-on:click="getData(1)"><i class="layui-icon"></i> 搜 索</button>
+                            <button type="button"  th:if="${@permission.check('sys:sysFiles:add')}" class="layui-btn" v-on:click="add()"><i class="layui-icon"></i> 添 加</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <div style="overflow-x: auto">
+            <table class="layui-table" >
+                <thead>
+                <tr>
+                    <th>序号</th>
+					<th>文件路径</th>
+					<!--<th>文件名称</th>-->
+					<th>文件名称</th>
+					<th>文件大小</th>
+					<th>文件后缀名</th>
+					<th>文件类型</th>
+					<!--<th>备注</th>-->
+					<th>上传用户</th>
+					<th>上传时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(sysFiles,index) in page.list">
+                    <td>{{(index+1)+(pageNum-1)*pageSize}}</td>
+                    <td>
+						{{sysFiles.filePath}}
+                    </td>
+                    <!--<td>
+						{{sysFiles.fileNewname}}
+                    </td>-->
+                    <td>
+						{{sysFiles.fileOldName}}
+                    </td>
+                    <td>
+						{{sysFiles.fileSize}}
+                    </td>
+                    <td>
+						{{sysFiles.fileSuffix}}
+                    </td>
+                    <td>
+						{{sysFiles.fileType}}
+                    </td>
+                    <!--<td>
+						{{sysFiles.remark}}
+                    </td>-->
+                    <td>
+						{{sysFiles.useId}}
+                    </td>
+                    <td>
+                    
+                    </td>
+                    <td style="word-break: keep-all;white-space:nowrap;">
+                        <a href="javascript:void(0)" th:if="${@permission.check('sys:sysFiles:edit')}" @click="edit(sysFiles.id);" class="layui-btn layui-btn-sm">查看</a>
+                        <a href="javascript:void(0)" th:if="${@permission.check('sys:sysFiles:del')}" @click="del(sysFiles.id)" class="layui-btn layui-btn-sm layui-btn-danger">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <span id="page"></span>
+    </div>
+</div>
+
+<th:block th:include="include :: public_js" />
+
+<script>
+    var app;
+    function flashData(){
+        app.getData(0)
+    };
+    layui.use(['laypage','layer'], function(){
+        var $ = layui.jquery;
+        var laypage = layui.laypage;
+        var layer = layui.layer;
+        app = new Vue({
+            el: '#app',
+            data: {
+                pageUrl: "/sys/sysFiles/page",
+                page:{},
+                pageNum:1,
+                pageSize:5,
+                entity:{
+                    "fileNewname":"",
+                    "fileOldName":"",
+                    "fileType":"",
+                }
+            },
+            methods: {
+               	getData: function (pageNum) {
+                    if (1 == pageNum) app.$data.pageNum = 1;
+                    $.operate.getPageData(laypage,app);
+                },
+                add: function () {
+                    $.modal.open("新增文件管理",'/sys/sysFiles/form')
+                },
+                edit: function (id) {
+                    $.modal.open("编辑文件管理",'/sys/sysFiles/form?id='+id)
+                },
+                del:function (id) {
+                    $.operate.del('/sys/sysFiles/del/'+id,laypage,layer,app);
+                }
+            }
+        });
+
+        layer.ready(function(){
+            app.getData(0)
+        });
+    });
+</script>
+
+</body>
+
+</html>
