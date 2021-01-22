@@ -1,21 +1,21 @@
 package com.democxy.modules.sys.controller;
 
+import com.democxy.common.annotation.Log;
+import com.democxy.common.annotation.LoginRequired;
 import com.democxy.common.annotation.Permission;
 import com.democxy.common.config.ProjectConfig;
 import com.democxy.common.enums.ResultEnum;
 import com.democxy.common.global.BaseController;
 import com.democxy.common.global.ResponeData;
 import com.democxy.common.utils.DateUtils;
+import com.democxy.common.utils.FileUtils;
 import com.democxy.common.utils.IdGenUtil;
 import com.democxy.common.utils.StringUtils;
 import com.democxy.modules.sys.entity.SysFiles;
 import com.democxy.modules.sys.entity.field.SysFilesField;
 import com.democxy.modules.sys.service.SysFilesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -53,6 +53,19 @@ public class SysFilesController extends BaseController<SysFilesService, SysFiles
         return modelAndView;
     }
 
+    @Override
+    @ResponseBody
+    @RequestMapping(value = "del/{id}",method = RequestMethod.GET)
+    @LoginRequired
+    @Log(title = "删除文件")
+    public ResponeData<String> delById(@PathVariable("id") String id){
+        SysFiles byId = service.getById(id);
+        // 删除磁盘文件
+        FileUtils.deleteFile(projectConfig.getBasepath()+byId.getFilePath());
+        // 删除数据库记录
+        return super.delById(id);
+    }
+
     @RequestMapping("upload")
     public ResponeData<SysFilesField> upload(@RequestParam("file") MultipartFile file) {
         try {
@@ -88,7 +101,7 @@ public class SysFilesController extends BaseController<SysFilesService, SysFiles
             userFiles.setFilePath(saveUrl);
             userFiles.setFileSize(size);
             userFiles.setFileSuffix(suffixName);
-            userFiles.setFileType("");
+            userFiles.setFileType(FileUtils.getFileType(suffixName));
             userFiles.setRemark("");
             userFiles.setId(fileId);
             userFiles.setUseId("");

@@ -47,7 +47,6 @@ public class PermissionAspect {
         String annotationValue = getAnnotationValue(joinPoint, annotation.func());
         // 将注解中测参数值保存到数据库，实现记录接口调用日志的功能(以下内容省略...)
         String permission = resourceId+annotationValue;
-        System.out.println("permission:" + permission);
         Object perms = ServletUtils.getSession().getAttribute("login");
         if (perms!=null && perms instanceof Account){
             Account account = (Account)perms;
