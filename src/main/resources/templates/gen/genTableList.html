@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>代码生成列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <th:block th:include="include :: public_css" />
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main" id="app">
+
+        <fieldset class="table-search-fieldset">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">名称</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="name" v-model="entity.name" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">实体类名称</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="className" v-model="entity.className" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="button" class="layui-btn layui-btn-primary" v-on:click="getData(1)"><i class="layui-icon"></i> 搜 索</button>
+                            <button type="button"  th:if="${@permission.check('gen:genTable:add')}" class="layui-btn" v-on:click="add()"><i class="layui-icon"></i> 添 加</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <div style="overflow-x: auto">
+            <table class="layui-table" >
+                <thead>
+                <tr>
+                    <th>序号</th>
+					<th>名称</th>
+					<th>描述</th>
+					<th>实体类名称</th>
+					<th>更新时间</th>
+					<th>备注信息</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(genTable,index) in page.list">
+                    <td>{{(index+1)+(pageNum-1)*pageSize}}</td>
+                    <td>
+						{{genTable.name}}
+                    </td>
+                    <td>
+						{{genTable.comments}}
+                    </td>
+                    <td>
+						{{genTable.className}}
+                    </td>
+                    <td>
+                    
+                    </td>
+                    <td>
+						{{genTable.remarks}}
+                    </td>
+                    <td style="word-break: keep-all;white-space:nowrap;">
+                        <a href="javascript:void(0)" th:if="${@permission.check('gen:genTable:edit')}" @click="edit(genTable.id);" class="layui-btn layui-btn-sm">编辑</a>
+                        <a href="javascript:void(0)" th:if="${@permission.check('gen:genTable:del')}" @click="del(genTable.id)" class="layui-btn layui-btn-sm layui-btn-danger">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <span id="page"></span>
+    </div>
+</div>
+
+<th:block th:include="include :: public_js" />
+
+<script>
+    var app;
+    function flashData(){
+        app.getData(0)
+    };
+    layui.use(['laypage','layer'], function(){
+        var $ = layui.jquery;
+        var laypage = layui.laypage;
+        var layer = layui.layer;
+        app = new Vue({
+            el: '#app',
+            data: {
+                pageUrl: "/gen/genTable/page",
+                page:{},
+                pageNum:1,
+                pageSize:5,
+                entity:{
+                    "name":"",
+                    "className":"",
+                }
+            },
+            methods: {
+               	getData: function (pageNum) {
+                    if (1 == pageNum) app.$data.pageNum = 1;
+                    $.operate.getPageData(laypage,app);
+                },
+                add: function () {
+                    $.modal.open("新增代码生成",'/gen/genTable/form')
+                },
+                edit: function (id) {
+                    $.modal.open("编辑代码生成",'/gen/genTable/form?id='+id)
+                },
+                del:function (id) {
+                    $.operate.del('/gen/genTable/del/'+id,laypage,layer,app);
+                }
+            }
+        });
+
+        layer.ready(function(){
+            app.getData(0)
+        });
+    });
+</script>
+
+</body>
+
+</html>

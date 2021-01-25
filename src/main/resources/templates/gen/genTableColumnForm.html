@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>代码生成管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <th:block th:include="include :: public_css" />
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-row" id="app">
+    <form class="layui-form" id="form-member-add">
+        <input type="hidden" name="id" v-model="genTableColumn.id">
+        <div class="layui-form-item">
+            <label class="layui-form-label required">归属表编号</label>
+            <div class="layui-input-block">
+                <input type="text" name="genTableId" v-model="genTableColumn.genTableId"   placeholder="请输入归属表编号" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" v-model="genTableColumn.name"   placeholder="请输入名称" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">描述</label>
+            <div class="layui-input-block">
+                <input type="text" name="comments" v-model="genTableColumn.comments"   placeholder="请输入描述" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">列的数据类型的字节长度</label>
+            <div class="layui-input-block">
+                <input type="text" name="jdbcType" v-model="genTableColumn.jdbcType"   placeholder="请输入列的数据类型的字节长度" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">JAVA类型</label>
+            <div class="layui-input-block">
+                <input type="text" name="javaType" v-model="genTableColumn.javaType"   placeholder="请输入JAVA类型" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">JAVA字段名</label>
+            <div class="layui-input-block">
+                <input type="text" name="javaField" v-model="genTableColumn.javaField"   placeholder="请输入JAVA字段名" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">是否主键</label>
+            <div class="layui-input-block">
+                <input type="text" name="isPk" v-model="genTableColumn.isPk"   placeholder="请输入是否主键" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">是否可为空</label>
+            <div class="layui-input-block">
+                <input type="text" name="isNull" v-model="genTableColumn.isNull"   placeholder="请输入是否可为空" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">是否为插入字段</label>
+            <div class="layui-input-block">
+                <input type="text" name="isInsert" v-model="genTableColumn.isInsert"   placeholder="请输入是否为插入字段" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">是否编辑字段</label>
+            <div class="layui-input-block">
+                <input type="text" name="isEdit" v-model="genTableColumn.isEdit"   placeholder="请输入是否编辑字段" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">是否列表字段</label>
+            <div class="layui-input-block">
+                <input type="text" name="isList" v-model="genTableColumn.isList"   placeholder="请输入是否列表字段" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">是否查询字段</label>
+            <div class="layui-input-block">
+                <input type="text" name="isQuery" v-model="genTableColumn.isQuery"   placeholder="请输入是否查询字段" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">查询方式（等于、不等于、大于、小于、范围、左LIKE、右LIKE、左右LIKE）</label>
+            <div class="layui-input-block">
+                <input type="text" name="queryType" v-model="genTableColumn.queryType"   placeholder="请输入查询方式（等于、不等于、大于、小于、范围、左LIKE、右LIKE、左右LIKE）" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">字段生成方案（文本框、文本域、下拉框、复选框、单选框、字典选择、人员选择、部门选择、区域选择）</label>
+            <div class="layui-input-block">
+                <input type="text" name="showType" v-model="genTableColumn.showType"   placeholder="请输入字段生成方案（文本框、文本域、下拉框、复选框、单选框、字典选择、人员选择、部门选择、区域选择）" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">字典类型</label>
+            <div class="layui-input-block">
+                <input type="text" name="dictType" v-model="genTableColumn.dictType"   placeholder="请输入字典类型" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">其它设置（扩展字段JSON）</label>
+            <div class="layui-input-block">
+                <input type="text" name="settings" v-model="genTableColumn.settings"   placeholder="请输入其它设置（扩展字段JSON）" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">排序（升序）</label>
+            <div class="layui-input-block">
+                <input type="text" name="sort" v-model="genTableColumn.sort"   placeholder="请输入排序（升序）" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">备注信息</label>
+            <div class="layui-input-block">
+            
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal"  th:if="${@permission.check('gen:genTableColumn:save')}" lay-submit lay-filter="saveBtn">确认保存</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<th:block th:include="include :: public_js" />
+<script th:inline="javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            genTableColumn: [[${genTableColumn}]],
+        }
+    })
+
+
+
+    layui.use(['form','tree'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            tree = layui.tree,
+            $ = layui.jquery;
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            $.operate.submit("/gen/genTableColumn/save", app.$data.genTableColumn);
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>

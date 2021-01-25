@@ -20,4 +20,6 @@ public abstract class BaseFiled<T> implements Serializable {
 
     protected String remark;
 
+    protected String delFlag;
+
 }
