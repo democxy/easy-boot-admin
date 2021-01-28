@@ -81,7 +81,7 @@ public class AccountController extends BaseController<AccountService, Account,Ac
 
     @ResponseBody
     @RequestMapping(value = "autoLogin",method = RequestMethod.POST)
-    public ResponeData<String> autoLogin(String token){
+    public ResponeData<Map> autoLogin(String token){
         if (StringUtils.isNotEmpty(token)){
             Object o = redisUtil.get(JwtUtil.REDIS_KEY_PREFIX + token);
             if (o!=null){
@@ -89,7 +89,10 @@ public class AccountController extends BaseController<AccountService, Account,Ac
                 String newToken = JwtUtil.reflashToken(account, JwtUtil.EXPIRE_TIME);
                 redisUtil.del(JwtUtil.REDIS_KEY_PREFIX+token);
                 redisUtil.set(JwtUtil.REDIS_KEY_PREFIX+newToken,o.toString(),JwtUtil.EXPIRE_TIME*2);
-                return new ResponeData<>(newToken);
+                Map<String,Object> map = new HashMap<>();
+                map.put("token",newToken);
+                map.put("login",account);
+                return new ResponeData<>(map);
             }
 
         }

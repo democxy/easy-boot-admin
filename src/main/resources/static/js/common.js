@@ -458,7 +458,8 @@
                     },
                     success :function (result) {
                         if (result.code == 200){
-                            sessionStorage.setItem("token",result.data);
+                            $.cookie('token', result.data.token, { expires: 7, path: '/' });
+                            $.cookie('login', JSON.stringify(result.data.login), { expires: 7, path: '/' });
                             return;
                         }else {
                             $.modal.msgError(result.msg+","+result.data);
