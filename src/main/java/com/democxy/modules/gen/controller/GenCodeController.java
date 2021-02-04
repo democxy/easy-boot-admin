@@ -1,5 +1,6 @@
 package com.democxy.modules.gen.controller;
 
+import com.democxy.common.config.ProjectConfig;
 import com.democxy.modules.gen.service.TemplateInfoService;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -31,6 +32,8 @@ public class GenCodeController {
     FreeMarkerConfig freeMarkerConfig;
     @Autowired
     TemplateInfoService templateInfoService;
+    @Autowired
+    ProjectConfig projectConfig;
 
     @GetMapping("test")
     public String gen(){
@@ -41,16 +44,20 @@ public class GenCodeController {
             Template template = new Template("template", new StringReader(temStr),
                     new Configuration(Configuration.VERSION_2_3_23));
             Map<String,Object> map = new HashMap<>();
-            map.put("packageName","com.democxy");
+            map.put("packageName","com.democxy.test");
             map.put("moduleName","gen");
             map.put("ClassName","TemplateInfo");
             String string = FreeMarkerTemplateUtils.processTemplateIntoString(template, map);
 //            FileUtils.writeStringToFile(new File("F://gencode/test.java"),string,"UTF-8");
             System.out.println("st0:   " + string);
-            Template template1 = freeMarkerConfig.getConfiguration().getTemplate("test.ftl", "utf-8");
+            Configuration configuration = freeMarkerConfig.getConfiguration();
+            configuration.setDirectoryForTemplateLoading(new File(projectConfig.getBasepath()));
+            Template template1 = configuration.getTemplate("test.ftl", "utf-8");
             String string1 = FreeMarkerTemplateUtils.processTemplateIntoString(template1, map);
             System.out.println("st1:  " + string1);
-//            FileUtils.writeStringToFile(new File("F://gencode/test1.java"),string1,"UTF-8");
+            FileUtils.writeStringToFile(new File("F://gencode/test2.java"),string1,"UTF-8");
+
+
 
             return string;
         } catch (IOException | TemplateException e) {
