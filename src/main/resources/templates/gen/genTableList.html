@@ -70,6 +70,7 @@
 						{{genTable.remarks}}
                     </td>
                     <td style="word-break: keep-all;white-space:nowrap;">
+                        <a href="javascript:void(0)" th:if="${@permission.check('gen:genTable:edit')}" @click="gen(genTable.id);" class="layui-btn layui-btn-sm">生成</a>
                         <a href="javascript:void(0)" th:if="${@permission.check('gen:genTable:edit')}" @click="edit(genTable.id);" class="layui-btn layui-btn-sm">编辑</a>
                         <a href="javascript:void(0)" th:if="${@permission.check('gen:genTable:del')}" @click="del(genTable.id)" class="layui-btn layui-btn-sm layui-btn-danger">删除</a>
                     </td>
@@ -118,7 +119,12 @@
                 },
                 del:function (id) {
                     $.operate.del('/gen/genTable/del/'+id,laypage,layer,app);
-                }
+                },
+                gen: function (id) {
+                    $.operate.get('/gen/genTable/gen/'+id, function (data) {
+                        $.modal.msgSuccess(data.msg)
+                    });
+                },
             }
         });
 

@@ -2,6 +2,7 @@ package com.democxy.modules.gen.controller;
 
 import com.democxy.common.config.ProjectConfig;
 import com.democxy.modules.gen.service.TemplateInfoService;
+import com.democxy.modules.gen.utils.GenCodeUtil;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -34,6 +35,8 @@ public class GenCodeController {
     TemplateInfoService templateInfoService;
     @Autowired
     ProjectConfig projectConfig;
+    @Autowired
+    GenCodeUtil genCodeUtil;
 
     @GetMapping("test")
     public String gen(){
@@ -64,5 +67,16 @@ public class GenCodeController {
             e.printStackTrace();
         }
         return "error";
+    }
+
+    @GetMapping("test2")
+    public String gen2(){
+        /**/
+            Map<String,Object> map = new HashMap<>();
+            map.put("packageName","com.democxy.test");
+            map.put("moduleName","gen");
+            map.put("ClassName","TemplateInfo");
+
+            return genCodeUtil.genCode("codetemp/entity.ftl",map,"F://gencode/entity.java");
     }
 }

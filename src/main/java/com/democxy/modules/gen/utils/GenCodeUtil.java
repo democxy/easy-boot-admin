@@ -36,7 +36,7 @@ public class GenCodeUtil {
         try {
             Configuration configuration = freeMarkerConfig.getConfiguration();
             // 设置freemarker 模板的加载路径
-            configuration.setDirectoryForTemplateLoading(new File(projectConfig.getBasepath()));
+//            configuration.setDirectoryForTemplateLoading(new File(projectConfig.getBasepath()));
             // 加载模板文件
             Template template1 = configuration.getTemplate(tempPath, "utf-8");
             // 填充数据

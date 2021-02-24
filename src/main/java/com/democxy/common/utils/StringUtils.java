@@ -261,6 +261,30 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
         return sb.toString();
     }
+
+	/**
+	 * 将字符串首字母转大写
+	 * @param str
+	 * @return
+	 */
+    public static String toUpForFistChar(String str) {
+    	if (isEmpty(str)) {
+    		return str;
+		}
+    	return str.substring(0,1).toUpperCase() + str.substring(1);
+	}
+
+	/**
+	 * 将字符串首字母转小写
+	 * @param str
+	 * @return
+	 */
+	public static String toLowerForFistChar(String str) {
+		if (isEmpty(str)) {
+			return str;
+		}
+		return str.substring(0,1).toLowerCase() + str.substring(1);
+	}
  
     /**
      * 转换为JS获取对象值，生成三目运算返回结果

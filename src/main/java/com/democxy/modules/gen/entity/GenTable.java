@@ -22,6 +22,10 @@ public class GenTable {
 	private String comments;
 	// 实体类名称
 	private String className;
+    // 包路径
+	private String packageName;
+	// 模块名称
+	private String modelName;
 	// 关联父表
 	private String parentTable;
 	// 关联父表外键

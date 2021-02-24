@@ -44,6 +44,18 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
+                        <label class="layui-form-label required">包路径</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="className" v-model="genTable.packageName"   placeholder="请输入包路径" value="" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">模块名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="className" v-model="genTable.modelName"   placeholder="请输入模块名称" value="" class="layui-input">
+                        </div>
+                    </div>
+                    <!--<div class="layui-form-item">
                         <label class="layui-form-label required">关联父表</label>
                         <div class="layui-input-block">
                             <input type="text" name="parentTable" v-model="genTable.parentTable"   placeholder="请输入关联父表" value="" class="layui-input">
@@ -54,7 +66,7 @@
                         <div class="layui-input-block">
                             <input type="text" name="parentTableFk" v-model="genTable.parentTableFk"   placeholder="请输入关联父表外键" value="" class="layui-input">
                         </div>
-                    </div>
+                    </div>-->
                     <div class="layui-form-item">
                         <label class="layui-form-label required">备注信息</label>
                         <div class="layui-input-block">
