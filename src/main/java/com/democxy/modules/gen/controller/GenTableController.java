@@ -69,6 +69,7 @@ public class GenTableController extends BaseController<GenTableService, GenTable
         GenTableColumnField query = new GenTableColumnField();
         query.setGenTableId(id);
         List<GenTableColumn> list = genTableColumnService.findList(query);
+        genTable.setColumnList(list);
         // 引用列表
         List<String> importList = Lists.newArrayList();
         for (GenTableColumn genTableColumn : list) {
@@ -84,6 +85,7 @@ public class GenTableController extends BaseController<GenTableService, GenTable
         map.put("ClassName", genTable.getClassName());
         map.put("className", StringUtils.toLowerForFistChar(genTable.getClassName()));
         map.put("columnList", list);
+        map.put("table", genTable);
         map.put("importList", importList);
         String filePath = "F://gencode/" + genTable.getPackageName() + "/" + genTable.getModelName() ;
         genCodeUtil.genCode("codetemp/entity.ftl",map,filePath+ "/entity/" +genTable.getClassName()+ ".java");
@@ -92,6 +94,8 @@ public class GenTableController extends BaseController<GenTableService, GenTable
         genCodeUtil.genCode("codetemp/serviceImp.ftl",map,filePath+ "/service/impl/" +genTable.getClassName()+ "ServiceImp.java");
         genCodeUtil.genCode("codetemp/dao.ftl",map,filePath+ "/dao/" +genTable.getClassName()+ "Dao.java");
         genCodeUtil.genCode("codetemp/controller.ftl",map,filePath+ "/controller/" +genTable.getClassName()+ "Controller.java");
+        genCodeUtil.genCode("codetemp/mapper.ftl",map,filePath+ "/mapper/" +genTable.getClassName()+ "Dao.xml");
+
         return new ResponeData<>(ResultEnum.SUCCESS,"代码生成成功");
     }
 }
