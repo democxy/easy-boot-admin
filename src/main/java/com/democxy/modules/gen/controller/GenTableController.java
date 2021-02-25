@@ -97,6 +97,7 @@ public class GenTableController extends BaseController<GenTableService, GenTable
         genCodeUtil.genCode("codetemp/mapper.ftl",map,filePath+ "/mapper/" +genTable.getClassName()+ "Dao.xml");
         genCodeUtil.genCode("codetemp/viewList.ftl",map,filePath+ "/view/" +genTable.getClassName()+ "List.html");
         genCodeUtil.genCode("codetemp/viewForm.ftl",map,filePath+ "/view/" +genTable.getClassName()+ "Form.html");
+        genCodeUtil.genCode("codetemp/menuSql.ftl",map,filePath+ "/" +genTable.getClassName()+ "MenuSql.sql");
 
         return new ResponeData<>(ResultEnum.SUCCESS,"代码生成成功");
     }
