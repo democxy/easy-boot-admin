@@ -107,7 +107,7 @@
                             {{genTableColumn.name}}
                         </td>
                         <td>
-                            {{genTableColumn.comments}}
+                            <input v-model="genTableColumn.comments" class="layui-input">
                         </td>
                         <td>
                             {{genTableColumn.jdbcType}}
@@ -116,6 +116,12 @@
                             <select v-model="genTableColumn.javaType" class="layui-input" style="width: 100px;">
                                 <option value=""></option>
                                 <option value="String">String</option>
+                                <option value="Integer">Integer</option>
+                                <option value="Long">Long</option>
+                                <option value="Float">Float</option>
+                                <option value="Double">Double</option>
+                                <option value="BigDecimal">BigDecimal</option>
+                                <option value="Boolean">Boolean</option>
                                 <option value="java.util.Date">java.util.Date</option>
                             </select>
                         </td>

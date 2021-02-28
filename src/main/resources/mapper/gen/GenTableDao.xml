@@ -23,6 +23,29 @@
     
     </sql>
 
+	<select id="selectAllTableForDatabase" resultType="com.democxy.modules.gen.entity.GenTable">
+		SELECT
+        TABLE_NAME AS name,
+        TABLE_COMMENT AS comments
+        FROM
+        information_schema.TABLES
+        WHERE
+        TABLE_SCHEMA = ( SELECT DATABASE ( ) )
+        AND TABLE_NAME not in (select name from gen_table)
+        ORDER BY
+        CREATE_TIME DESC
+	</select>
+
+	<select id="selectCommentsForTableName" resultType="java.lang.String">
+		SELECT TABLE_COMMENT AS comments
+        FROM
+        information_schema.TABLES
+        WHERE
+        TABLE_SCHEMA = ( SELECT DATABASE ( ) )
+				and table_name = #{tableName}
+	</select>
+
+
 	<select id="getById" resultType="com.democxy.modules.gen.entity.GenTable">
 		SELECT
 		<include refid="genTableColumns"/>

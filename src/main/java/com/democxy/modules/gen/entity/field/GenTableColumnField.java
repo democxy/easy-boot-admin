@@ -29,7 +29,7 @@ public class GenTableColumnField extends BaseFiled<GenTableColumnField> {
 	private String showType;		// 字段生成方案（文本框、文本域、下拉框、复选框、单选框、字典选择、人员选择、部门选择、区域选择）
 	private String dictType;		// 字典类型
 	private String settings;		// 其它设置（扩展字段JSON）
-	private Double sort;		// 排序（升序）
+	private Integer sort;		// 排序（升序）
 	
 	
 }

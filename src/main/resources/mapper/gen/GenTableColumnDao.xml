@@ -58,6 +58,17 @@
 		order by a.sort
 	</select>
 
+	<select id="selectColumnsForTableName" resultType="com.democxy.modules.gen.entity.field.GenTableColumnField">
+		select
+			column_name name,
+			data_type jdbcType,
+			column_comment comments,
+			if(column_key = 'PRI', '1', '0') isPk,
+			if(is_nullable = 'No','0','1') isNull
+		from information_schema.columns
+ 		where table_name = #{tableName} and table_schema = (select database()) order by ordinal_position
+	</select>
+
 	<insert id="insert">
 		INSERT INTO gen_table_column(
 			id,

@@ -26,14 +26,11 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">实体类名称</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="className" v-model="entity.className" autocomplete="off" class="layui-input">
+                                <input type="text" name="comments" v-model="entity.comments" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <button type="button" class="layui-btn layui-btn-primary" v-on:click="getData(1)"><i class="layui-icon"></i> 搜 索</button>
-                            <button type="button"  th:if="${@permission.check('gen:genTable:add')}" class="layui-btn" v-on:click="add()"><i class="layui-icon"></i> 添 加</button>
-                            <button type="button"  th:if="${@permission.check('gen:genTable:add')}" class="layui-btn" v-on:click="importTable()"><i class="layui-icon"></i> 导 入</button>
-
+                            <button type="button"  th:if="${@permission.check('gen:genTable:add')}" class="layui-btn" v-on:click="importSelect()"><i class="layui-icon"></i> 添 加</button>
                         </div>
                     </div>
                 </form>
@@ -47,34 +44,23 @@
                     <th>序号</th>
 					<th>名称</th>
 					<th>描述</th>
-					<th>实体类名称</th>
-					<th>更新时间</th>
-					<th>备注信息</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="(genTable,index) in page.list">
-                    <td>{{(index+1)+(pageNum-1)*pageSize}}</td>
+                    <td>
+                        <input type="checkbox" name="selectId" v-model="selectIds" :value="genTable.name">
+                        {{(index+1)+(pageNum-1)*pageSize}}
+                    </td>
                     <td>
 						{{genTable.name}}
                     </td>
                     <td>
 						{{genTable.comments}}
                     </td>
-                    <td>
-						{{genTable.className}}
-                    </td>
-                    <td>
-                    
-                    </td>
-                    <td>
-						{{genTable.remarks}}
-                    </td>
                     <td style="word-break: keep-all;white-space:nowrap;">
                         <a href="javascript:void(0)" th:if="${@permission.check('gen:genTable:edit')}" @click="gen(genTable.id);" class="layui-btn layui-btn-sm">生成</a>
-                        <a href="javascript:void(0)" th:if="${@permission.check('gen:genTable:edit')}" @click="edit(genTable.id);" class="layui-btn layui-btn-sm">编辑</a>
-                        <a href="javascript:void(0)" th:if="${@permission.check('gen:genTable:del')}" @click="del(genTable.id)" class="layui-btn layui-btn-sm layui-btn-danger">删除</a>
                     </td>
                 </tr>
                 </tbody>
@@ -99,31 +85,25 @@
         app = new Vue({
             el: '#app',
             data: {
-                pageUrl: "/gen/genTable/page",
+                pageUrl: "/gen/genTable/findAllTableForDatabase",
                 page:{},
                 pageNum:1,
                 pageSize:5,
                 entity:{
                     "name":"",
-                    "className":"",
-                }
+                },
+                selectIds: []
+
             },
             methods: {
                	getData: function (pageNum) {
                     if (1 == pageNum) app.$data.pageNum = 1;
                     $.operate.getPageData(laypage,app);
                 },
-                add: function () {
-                    $.modal.open("新增代码生成",'/gen/genTable/form')
-                },
-                importTable: function () {
-                    $.modal.open("导入表",'/gen/genTable/importTable')
-                },
-                edit: function (id) {
-                    $.modal.open("编辑代码生成",'/gen/genTable/form?id='+id)
-                },
-                del:function (id) {
-                    $.operate.del('/gen/genTable/del/'+id,laypage,layer,app);
+                importSelect: function() {
+               	    console.info(app.$data.selectIds)
+                    $.operate.submit("/gen/genTable/importTable", app.$data.selectIds);
+                    return false;
                 },
                 gen: function (id) {
                     $.operate.get('/gen/genTable/gen/'+id, function (data) {
