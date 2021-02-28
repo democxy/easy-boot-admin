@@ -16,7 +16,7 @@ public abstract class BaseFiled<T> implements Serializable {
 
     protected String updateBy;
 
-    protected String updateTime;
+    protected Date updateTime;
 
     protected String remark;
 

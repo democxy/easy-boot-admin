@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.apache.commons.configuration.Configuration;
+
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -29,8 +31,11 @@ public class GenTableServiceImp extends BaseServiceImp<GenTableDao, GenTable, Ge
     public int save(GenTableField entity) {
         if (StringUtils.isEmpty(entity.getId())){
             entity.setId(IdGenUtil.getUUID());
+            entity.setCreateTime(new Date());
+            entity.setUpdateTime(new Date());
             dao.insert(entity);
         }else {
+            entity.setUpdateTime(new Date());
             dao.update(entity);
         }
         List<GenTableColumnField> columnList = entity.getColumnList();

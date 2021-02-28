@@ -31,8 +31,8 @@
                         </div>
                         <div class="layui-inline">
                             <button type="button" class="layui-btn layui-btn-primary" v-on:click="getData(1)"><i class="layui-icon"></i> 搜 索</button>
-                            <button type="button"  th:if="${@permission.check('gen:genTable:add')}" class="layui-btn" v-on:click="add()"><i class="layui-icon"></i> 添 加</button>
-                            <button type="button"  th:if="${@permission.check('gen:genTable:add')}" class="layui-btn" v-on:click="importTable()"><i class="layui-icon"></i> 导 入</button>
+                            <button type="button"  th:if="${@permission.check('gen:genTable:add')}" class="layui-btn" v-on:click="add()"><i class="layui-icon">&#xe654;</i> 添 加</button>
+                            <button type="button"  th:if="${@permission.check('gen:genTable:add')}" class="layui-btn" v-on:click="importTable()"><i class="layui-icon">&#xe67c;</i> 导 入</button>
 
                         </div>
                     </div>
@@ -66,10 +66,10 @@
 						{{genTable.className}}
                     </td>
                     <td>
-                    
+                        {{genTable.updateTime | formatDate("yyyy-MM-dd HH:mm:ss")}}
                     </td>
                     <td>
-						{{genTable.remarks}}
+						{{genTable.remark}}
                     </td>
                     <td style="word-break: keep-all;white-space:nowrap;">
                         <a href="javascript:void(0)" th:if="${@permission.check('gen:genTable:edit')}" @click="gen(genTable.id);" class="layui-btn layui-btn-sm">生成</a>
@@ -130,8 +130,30 @@
                         $.modal.msgSuccess(data.data)
                     });
                 },
+            },
+            filters: {
+                formatDate: function (value) {
+                    if (value) {
+                        var date = new Date(value)
+                        var year = date.getFullYear()
+                        var month = padDate(date.getMonth() + 1)
+                        var day = padDate(date.getDate())
+                        var hours = padDate(date.getHours())
+                        var minutes = padDate(date.getMinutes())
+                        var seconds = padDate(date.getSeconds())
+                        return year + '-' + month + '-' + day + '-' + ' ' + hours + ':' + minutes + ':' + seconds
+                    } else {
+                        return ""
+                    }
+
+                }
             }
         });
+
+
+        var padDate = function (value) {
+            return value < 10 ? '0' + value : value
+        }
 
         layer.ready(function(){
             app.getData(0)

@@ -1,5 +1,6 @@
 package com.democxy.modules.gen.entity;
 
+import com.democxy.common.global.BaseFiled;
 import org.hibernate.validator.constraints.Length;
 
 import lombok.Data;
@@ -12,10 +13,9 @@ import java.util.List;
  * @version 2021-01-25
  */
  @Data
-public class GenTable {
+public class GenTable extends BaseFiled<GenTable> {
 	
 	private static final long serialVersionUID = 1L;
-	private String id;
 	// 名称
 	private String name;
 	// 描述
