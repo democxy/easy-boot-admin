@@ -72,6 +72,7 @@
 						{{genTable.remark}}
                     </td>
                     <td style="word-break: keep-all;white-space:nowrap;">
+                        <a href="javascript:void(0)" th:if="${@permission.check('gen:genTable:edit')}" @click="preview(genTable.id);" class="layui-btn layui-btn-sm">预览</a>
                         <a href="javascript:void(0)" th:if="${@permission.check('gen:genTable:edit')}" @click="gen(genTable.id);" class="layui-btn layui-btn-sm">生成</a>
                         <a href="javascript:void(0)" th:if="${@permission.check('gen:genTable:edit')}" @click="edit(genTable.id);" class="layui-btn layui-btn-sm">编辑</a>
                         <a href="javascript:void(0)" th:if="${@permission.check('gen:genTable:del')}" @click="del(genTable.id)" class="layui-btn layui-btn-sm layui-btn-danger">删除</a>
@@ -118,6 +119,9 @@
                 },
                 importTable: function () {
                     $.modal.open("导入表",'/gen/genTable/importTable')
+                },
+                preview: function (id) {
+                    $.modal.open("预览代码",'/gen/code/previewCode?id='+id)
                 },
                 edit: function (id) {
                     $.modal.open("编辑代码生成",'/gen/genTable/form?id='+id)

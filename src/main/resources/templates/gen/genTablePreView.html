@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>代码生成管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <th:block th:include="include :: public_css" />
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-row" id="app">
+
+    <div class="layui-tab">
+        <ul class="layui-tab-title">
+
+            <li v-bind:class="{ 'layui-this': index == 0 }" v-for = "(code,index) in preViewCodes">{{code.fileName}}</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div  v-bind:class="['layui-tab-item' ,index == 0 ? 'layui-show' : '']" v-for = "(code,index) in preViewCodes">
+                <pre class="layui-code">{{code.code}}</pre>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<th:block th:include="include :: public_js" />
+<script th:inline="javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            preViewCodes: [[${preViewCodes}]]
+        }
+    })
+
+
+
+    layui.use(['form','tree','element'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            tree = layui.tree,
+            $ = layui.jquery;
+
+
+    });
+</script>
+</body>
+</html>

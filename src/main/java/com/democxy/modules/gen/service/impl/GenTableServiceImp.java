@@ -57,7 +57,7 @@ public class GenTableServiceImp extends BaseServiceImp<GenTableDao, GenTable, Ge
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void addGenTableForTableName(List<String> tableNames) {
         //配置信息
         Configuration config = getConfig();
@@ -79,6 +79,12 @@ public class GenTableServiceImp extends BaseServiceImp<GenTableDao, GenTable, Ge
                 genTableColumn.setGenTableId(genTable.getId());
                 genTableColumn.setJavaField(StringUtils.toCamelCase(genTableColumn.getName()));
                 genTableColumn.setDelFlag("0");
+                genTableColumn.setIsEdit(true);
+                genTableColumn.setIsInsert(true);
+                genTableColumn.setIsList(true);
+                genTableColumn.setIsQuery(false);
+                genTableColumn.setShowType("input");
+
                 //列的数据类型，转换成Java类型
                 String javaType = config.getString(genTableColumn.getJdbcType(), "unknowType");
                 genTableColumn.setJavaType(javaType);

@@ -66,7 +66,7 @@ public class GenTableController extends BaseController<GenTableService, GenTable
     @ResponseBody
     @PostMapping(value = "importTable")
     @LoginRequired
-    public ResponeData<String> save(@RequestBody List<String> tableNames ){
+    public ResponeData<String> addGenTableForTableName(@RequestBody List<String> tableNames ){
         //调用业务逻辑，处理业务
         service.addGenTableForTableName(tableNames);
         return new ResponeData<>("导入表成功");

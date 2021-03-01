@@ -50,4 +50,27 @@ public class GenCodeUtil {
         return null;
     }
 
+    /**
+     * 预览代码
+     * @param tempPath
+     * @param data
+     * @return
+     */
+    public String preViewCode(String tempPath, Map<String,Object> data){
+        try {
+            Configuration configuration = freeMarkerConfig.getConfiguration();
+            // 设置freemarker 模板的加载路径
+//            configuration.setDirectoryForTemplateLoading(new File(projectConfig.getBasepath()));
+            // 加载模板文件
+            Template template1 = configuration.getTemplate(tempPath, "utf-8");
+            // 填充数据
+            String string1 = FreeMarkerTemplateUtils.processTemplateIntoString(template1, data);
+            // 写入文件
+            return string1;
+        } catch (IOException | TemplateException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
