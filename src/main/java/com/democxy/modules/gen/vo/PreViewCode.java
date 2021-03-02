@@ -9,11 +9,14 @@ import lombok.Data;
 @Data
 public class PreViewCode {
 
+    private String filePath;
+
     private String fileName;
 
     private String code;
 
-    public PreViewCode(String fileName, String code) {
+    public PreViewCode(String filePath, String fileName, String code) {
+        this.filePath = filePath;
         this.fileName = fileName;
         this.code = code;
     }

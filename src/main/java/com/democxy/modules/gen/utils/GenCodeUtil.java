@@ -12,6 +12,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfig;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,6 +26,7 @@ public class GenCodeUtil {
     @Autowired
     ProjectConfig projectConfig;
 
+
     /**
      * 向本地磁盘输出文件
      * @param tempPath 模板文件相对路径
@@ -34,9 +36,7 @@ public class GenCodeUtil {
      */
     public String genCode(String tempPath, Map<String,Object> data, String outPath){
         try {
-            Configuration configuration = freeMarkerConfig.getConfiguration();
-            // 设置freemarker 模板的加载路径
-//            configuration.setDirectoryForTemplateLoading(new File(projectConfig.getBasepath()));
+            Configuration configuration = getConfiguration();
             // 加载模板文件
             Template template1 = configuration.getTemplate(tempPath, "utf-8");
             // 填充数据
@@ -58,9 +58,7 @@ public class GenCodeUtil {
      */
     public String preViewCode(String tempPath, Map<String,Object> data){
         try {
-            Configuration configuration = freeMarkerConfig.getConfiguration();
-            // 设置freemarker 模板的加载路径
-//            configuration.setDirectoryForTemplateLoading(new File(projectConfig.getBasepath()));
+            Configuration configuration = getConfiguration();
             // 加载模板文件
             Template template1 = configuration.getTemplate(tempPath, "utf-8");
             // 填充数据
@@ -71,6 +69,13 @@ public class GenCodeUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private Configuration getConfiguration(){
+        Configuration configuration = freeMarkerConfig.getConfiguration();
+        // 设置freemarker 模板的加载路径
+//        configuration.setDirectoryForTemplateLoading(new File(projectConfig.getBasepath()));
+        return configuration;
     }
 
 }

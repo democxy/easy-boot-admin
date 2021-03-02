@@ -30,6 +30,11 @@ public class GenTableColumnField extends BaseFiled<GenTableColumnField> {
 	private String dictType;		// 字典类型
 	private String settings;		// 其它设置（扩展字段JSON）
 	private Integer sort;		// 排序（升序）
-	
-	
+
+	public GenTableColumnField(String genTableId) {
+		this.genTableId = genTableId;
+	}
+
+	public GenTableColumnField() {
+	}
 }

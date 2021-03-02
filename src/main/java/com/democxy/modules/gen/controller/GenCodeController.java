@@ -99,41 +99,8 @@ public class GenCodeController {
 
     @GetMapping(value = "previewCode")
     private ModelAndView preCode(String id) {
-        GenTable genTable = genTableService.getById(id);
         ModelAndView modelAndView = new ModelAndView("gen/" + "genTablePreview");
-        GenTableColumnField genTableColumnField = new GenTableColumnField();
-        genTableColumnField.setGenTableId(id);
-        List<GenTableColumn> list = genTableColumnService.findList(genTableColumnField);
-        genTable.setColumnList(list);
-        // 引用列表
-        List<String> importList = Lists.newArrayList();
-        for (GenTableColumn genTableColumn : list) {
-            // 导入类型依赖包， 如果类型中包含“.”，则需要导入引用。
-            if (StringUtils.indexOf(genTableColumn.getJavaType(), ".") != -1 && !importList.contains(genTableColumn.getJavaType())){
-                importList.add(genTableColumn.getJavaType());
-                genTableColumn.setJavaType(genTableColumn.getJavaType().substring(genTableColumn.getJavaType().lastIndexOf(".") + 1));
-            }
-        }
-        Map<String,Object> map = new HashMap<>();
-        map.put("packageName", genTable.getPackageName());
-        map.put("moduleName", genTable.getModelName());
-        map.put("ClassName", genTable.getClassName());
-        map.put("className", StringUtils.toLowerForFistChar(genTable.getClassName()));
-        map.put("columnList", list);
-        map.put("table", genTable);
-        map.put("importList", importList);
-        List<PreViewCode> preViewCodes = new ArrayList<>();
-        preViewCodes.add(new PreViewCode(genTable.getClassName()+".java",genCodeUtil.preViewCode("codetemp/entity.ftl", map)));
-        preViewCodes.add(new PreViewCode(genTable.getClassName()+"Filed.java",genCodeUtil.preViewCode("codetemp/filed.ftl", map)));
-        preViewCodes.add(new PreViewCode(genTable.getClassName()+"Service.java",genCodeUtil.preViewCode("codetemp/service.ftl", map)));
-        preViewCodes.add(new PreViewCode(genTable.getClassName()+"ServiceImp.java",genCodeUtil.preViewCode("codetemp/serviceImp.ftl", map)));
-        preViewCodes.add(new PreViewCode(genTable.getClassName()+"Dao.java",genCodeUtil.preViewCode("codetemp/dao.ftl", map)));
-        preViewCodes.add(new PreViewCode(genTable.getClassName()+"Controller.java",genCodeUtil.preViewCode("codetemp/controller.ftl", map)));
-        preViewCodes.add(new PreViewCode(genTable.getClassName()+"Mapper.xml",genCodeUtil.preViewCode("codetemp/mapper.ftl", map)));
-        preViewCodes.add(new PreViewCode(genTable.getClassName()+"ViewList.html",genCodeUtil.preViewCode("codetemp/viewList.ftl", map)));
-        preViewCodes.add(new PreViewCode(genTable.getClassName()+"ViewForm.html",genCodeUtil.preViewCode("codetemp/viewForm.ftl", map)));
-        preViewCodes.add(new PreViewCode(genTable.getClassName()+"MenuSql.sql",genCodeUtil.preViewCode("codetemp/menuSql.ftl", map)));
-        modelAndView.addObject("preViewCodes",preViewCodes);
+        modelAndView.addObject("preViewCodes",genTableService.preViewCode(id));
         return modelAndView;
     }
 }
