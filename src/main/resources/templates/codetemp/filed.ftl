@@ -9,7 +9,7 @@ import lombok.Data;
 import ${packageName}.common.global.BaseFiled;
 
 @Data
-public class ${ClassName}Filed extends BaseFiled<${ClassName}Field> {
+public class ${ClassName}Field extends BaseFiled<${ClassName}Field> {
 
 <#list columnList as c>
     // ${c.comments}

@@ -134,18 +134,19 @@ public class GenTableServiceImp extends BaseServiceImp<GenTableDao, GenTable, Ge
         String mapperPath = filePath + "/resources/mapper/" + map.get("moduleName").toString();
         String sqlPath = filePath + "/resources/sql/" + map.get("moduleName").toString();;
         String htmlPath = filePath + "/resources/templates/" + map.get("moduleName").toString();
-        String className = map.get("ClassName").toString();
+        String ClassName = map.get("ClassName").toString();
+        String className = map.get("className").toString();
         List<PreViewCode> preViewCodes = new ArrayList<>();
-        preViewCodes.add(new PreViewCode(javaPath + "/entity", className+".java",genCodeUtil.preViewCode("codetemp/entity.ftl", map)));
-        preViewCodes.add(new PreViewCode(javaPath + "/entity/filed",className+"Filed.java",genCodeUtil.preViewCode("codetemp/filed.ftl", map)));
-        preViewCodes.add(new PreViewCode(javaPath + "/service",className+"Service.java",genCodeUtil.preViewCode("codetemp/service.ftl", map)));
-        preViewCodes.add(new PreViewCode(javaPath + "/service/impl",className+"ServiceImp.java",genCodeUtil.preViewCode("codetemp/serviceImp.ftl", map)));
-        preViewCodes.add(new PreViewCode(javaPath + "/dao",className+"Dao.java",genCodeUtil.preViewCode("codetemp/dao.ftl", map)));
-        preViewCodes.add(new PreViewCode(javaPath + "/controller",className+"Controller.java",genCodeUtil.preViewCode("codetemp/controller.ftl", map)));
-        preViewCodes.add(new PreViewCode(mapperPath,className+"Mapper.xml",genCodeUtil.preViewCode("codetemp/mapper.ftl", map)));
-        preViewCodes.add(new PreViewCode(htmlPath,className+"ViewList.html",genCodeUtil.preViewCode("codetemp/viewList.ftl", map)));
-        preViewCodes.add(new PreViewCode(htmlPath,className+"ViewForm.html",genCodeUtil.preViewCode("codetemp/viewForm.ftl", map)));
-        preViewCodes.add(new PreViewCode(sqlPath,className+"MenuSql.sql",genCodeUtil.preViewCode("codetemp/menuSql.ftl", map)));
+        preViewCodes.add(new PreViewCode(javaPath + "/entity", ClassName+".java",genCodeUtil.preViewCode("codetemp/entity.ftl", map)));
+        preViewCodes.add(new PreViewCode(javaPath + "/entity/field",ClassName+"Field.java",genCodeUtil.preViewCode("codetemp/filed.ftl", map)));
+        preViewCodes.add(new PreViewCode(javaPath + "/service",ClassName+"Service.java",genCodeUtil.preViewCode("codetemp/service.ftl", map)));
+        preViewCodes.add(new PreViewCode(javaPath + "/service/impl",ClassName+"ServiceImp.java",genCodeUtil.preViewCode("codetemp/serviceImp.ftl", map)));
+        preViewCodes.add(new PreViewCode(javaPath + "/dao",ClassName+"Dao.java",genCodeUtil.preViewCode("codetemp/dao.ftl", map)));
+        preViewCodes.add(new PreViewCode(javaPath + "/controller",ClassName+"Controller.java",genCodeUtil.preViewCode("codetemp/controller.ftl", map)));
+        preViewCodes.add(new PreViewCode(mapperPath,ClassName+"Mapper.xml",genCodeUtil.preViewCode("codetemp/mapper.ftl", map)));
+        preViewCodes.add(new PreViewCode(htmlPath,className+"List.html",genCodeUtil.preViewCode("codetemp/viewList.ftl", map)));
+        preViewCodes.add(new PreViewCode(htmlPath,className+"Form.html",genCodeUtil.preViewCode("codetemp/viewForm.ftl", map)));
+        preViewCodes.add(new PreViewCode(sqlPath,ClassName+"MenuSql.sql",genCodeUtil.preViewCode("codetemp/menuSql.ftl", map)));
         return preViewCodes;
     }
 
