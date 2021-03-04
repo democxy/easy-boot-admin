@@ -137,7 +137,7 @@ public class GenTableServiceImp extends BaseServiceImp<GenTableDao, GenTable, Ge
         String className = map.get("ClassName").toString();
         List<PreViewCode> preViewCodes = new ArrayList<>();
         preViewCodes.add(new PreViewCode(javaPath + "/entity", className+".java",genCodeUtil.preViewCode("codetemp/entity.ftl", map)));
-        preViewCodes.add(new PreViewCode(javaPath + "/filed",className+"Filed.java",genCodeUtil.preViewCode("codetemp/filed.ftl", map)));
+        preViewCodes.add(new PreViewCode(javaPath + "/entity/filed",className+"Filed.java",genCodeUtil.preViewCode("codetemp/filed.ftl", map)));
         preViewCodes.add(new PreViewCode(javaPath + "/service",className+"Service.java",genCodeUtil.preViewCode("codetemp/service.ftl", map)));
         preViewCodes.add(new PreViewCode(javaPath + "/service/impl",className+"ServiceImp.java",genCodeUtil.preViewCode("codetemp/serviceImp.ftl", map)));
         preViewCodes.add(new PreViewCode(javaPath + "/dao",className+"Dao.java",genCodeUtil.preViewCode("codetemp/dao.ftl", map)));
