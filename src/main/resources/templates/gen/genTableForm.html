@@ -147,7 +147,11 @@
                             <input type="checkbox" v-model="genTableColumn.isQuery">
                         </td>
                         <td>
-                            {{genTableColumn.queryType}}
+                            <select v-model="genTableColumn.queryType" class="layui-input" style="width: 100px;">
+                                <option value=""></option>
+                                <option value="=">=</option>
+                                <option value="like">like</option>
+                            </select>
                         </td>
                        <!-- <td>
                             {{genTableColumn.showType}}
@@ -156,7 +160,7 @@
                             {{genTableColumn.dictType}}
                         </td>-->
                         <td>
-                            {{genTableColumn.sort}}
+                            <input v-model="genTableColumn.sort" class="layui-input">
                         </td>
                        <!-- <td>
 
