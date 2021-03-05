@@ -17,7 +17,11 @@ public enum ResultEnum {
 
     LOGIN_FAILED(4040, "用户验证失败或长时间未操作身份已过期，请重新登录！"),
 
-    NO_PERMISSION(4041, "对不起！您无操作权限！");
+    NO_PERMISSION(4041, "对不起！您无操作权限！"),
+
+    CODE_CHECK_ERROR(4042, "验证码错误！"),
+
+    ACCOUNT_ERROR(4043, "账号密码错误");
 
     private int code;
     private String msg;

@@ -1,5 +1,9 @@
 package com.democxy.modules.sys.controller;
 
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.LineCaptcha;
+import cn.hutool.captcha.generator.RandomGenerator;
+import cn.hutool.crypto.digest.DigestUtil;
 import com.alibaba.fastjson.JSON;
 import com.democxy.common.annotation.LoginRequired;
 import com.democxy.common.annotation.Permission;
@@ -22,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +51,8 @@ public class AccountController extends BaseController<AccountService, Account,Ac
         //调用业务逻辑，处理业务
         if (StringUtils.isEmpty(accountField.getAccountId())){
             accountField.setAccountId(IdGenUtil.getUUID());
+            String md5Hex = DigestUtil.md5Hex(accountField.getAccountNo() + accountField.getPassword());
+            accountField.setPassword(md5Hex);
             service.insert(accountField);
             return new ResponeData<>("添加成功");
         }else {
@@ -58,25 +65,36 @@ public class AccountController extends BaseController<AccountService, Account,Ac
 
     @ResponseBody
     @RequestMapping(value = "login",method = RequestMethod.POST)
-    public ResponeData<Map<String,Object>> login(@Valid @RequestBody AccountField accountField){
-        //调用业务逻辑，处理业务
-        Account login= service.login(accountField);
-        Map<String,Object> map = new HashMap<>();
-        if (login!=null){
-            //计算token
-            //清空密码
-            login.setPassword("");
-            String token = JwtUtil.signToken(login.getAccountId(), JSON.toJSONString(login), JwtUtil.EXPIRE_TIME);
-            map.put("token",token);
-            map.put("login",login);
-            // 缓存token到redis
-            // 缓存时间为jwt有效期的2倍
-            redisUtil.set(JwtUtil.REDIS_KEY_PREFIX+token,JSON.toJSONString(login),JwtUtil.EXPIRE_TIME*2);
-            ServletUtils.getSession().setAttribute("login",login);
-            return new ResponeData<>(ResultEnum.SUCCESS,map);
-        }else{
-            return new ResponeData<>(ResultEnum.LOGIN_FAILED,null);
+    public ResponeData<Map<String,Object>> login(@Valid @RequestBody AccountField accountField, HttpServletRequest request){
+        Object loginCode = request.getSession().getAttribute("loginCode");
+        if (loginCode != null) {
+            if (loginCode.toString().equals(accountField.getCode())) {
+                //调用业务逻辑，处理业务
+                String md5Hex = DigestUtil.md5Hex(accountField.getAccountNo() + accountField.getPassword());
+                accountField.setPassword(md5Hex);
+                Account login= service.login(accountField);
+                Map<String,Object> map = new HashMap<>();
+                if (login!=null){
+                    //计算token
+                    //清空密码
+                    login.setPassword("");
+                    String token = JwtUtil.signToken(login.getAccountId(), JSON.toJSONString(login), JwtUtil.EXPIRE_TIME);
+                    map.put("token",token);
+                    map.put("login",login);
+                    // 缓存token到redis
+                    // 缓存时间为jwt有效期的2倍
+                    redisUtil.set(JwtUtil.REDIS_KEY_PREFIX+token,JSON.toJSONString(login),JwtUtil.EXPIRE_TIME*2);
+                    ServletUtils.getSession().setAttribute("login",login);
+                    return new ResponeData<>(ResultEnum.SUCCESS,map);
+                }else{
+                    return new ResponeData(ResultEnum.ACCOUNT_ERROR,"");
+                }
+            }
+            return new ResponeData(ResultEnum.CODE_CHECK_ERROR,"");
         }
+        return new ResponeData(ResultEnum.CODE_CHECK_ERROR,"");
+
+
     }
 
     @ResponseBody
@@ -167,4 +185,22 @@ public class AccountController extends BaseController<AccountService, Account,Ac
         return super.getById(id);
     }
 
+
+    @GetMapping(value = "reCode")
+    public void reCode(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        //刷新验证码
+//		LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(100, 30);
+        //输出到浏览器
+        // 自定义纯数字的验证码（随机4位数字，可重复）
+        RandomGenerator randomGenerator = new RandomGenerator("0123456789", 4);
+        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(100, 30);
+        lineCaptcha.setGenerator(randomGenerator);
+        // 重新生成code
+        lineCaptcha.createCode();
+        String code = lineCaptcha.getCode();
+        System.out.println(code);
+        request.getSession().setAttribute("loginCode",code);//缓存验证码
+        lineCaptcha.write(response.getOutputStream());
+        System.out.println(lineCaptcha.verify(code));
+    }
 }

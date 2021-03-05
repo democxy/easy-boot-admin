@@ -385,6 +385,10 @@
                             }
                         }else if (result.code != 200){
                             $.modal.msgError(result.msg)
+                            if (result.code == 4042) {
+                                // 验证码错误 刷新验证码
+                                $("#captchaPic").attr("src", "/admin/account/reCode?" + Math.random());
+                            }
                             return;
                         }else {
                             if (typeof callback == "function") {

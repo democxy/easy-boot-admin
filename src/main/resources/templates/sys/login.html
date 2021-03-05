@@ -49,9 +49,9 @@
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-vercode" for="captcha"></label>
-                    <input type="text" name="captcha" lay-verify="required|captcha" placeholder="图形验证码" autocomplete="off" class="layui-input verification captcha" value="xszg">
+                    <input type="text" name="code" lay-verify="required|captcha" placeholder="图形验证码" autocomplete="off" class="layui-input verification captcha" value="">
                     <div class="captcha-img">
-                        <img id="captchaPic" th:src="@{/images/captcha.jpg}">
+                        <img id="captchaPic" th:src="@{/admin/account/reCode}">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -71,7 +71,15 @@
 <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script th:src="@{/js/vue.js}"></script>
 <script th:src="@{/js/common.js}"></script>
+<script th:src="@{/lib/jq-module/jquery.particleground.min.js}" charset="utf-8"></script>
 <script>
+
+    $(function () {
+        $('#captchaPic').click(function () {
+            var url = "/admin/account/reCode?" + Math.random();
+            $("#captchaPic").attr("src", url);
+        });
+    });
 
     layui.use(['form'], function () {
         var form = layui.form,

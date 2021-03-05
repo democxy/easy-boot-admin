@@ -21,10 +21,12 @@ public class AccountField extends BaseFiled<AccountField> {
     @NotNull(message = "登录账号不能为空")
     private String accountNo;
     //登录密码
-    @Size(min = 5, max = 11, message = "密码长度必须介于5-11之间")
+    @Size(min = 1, max = 50, message = "密码长度必须介于5-11之间")
     private String password;
     //用户身份
     private String role;
+
+    private String code;
 
 
 }
