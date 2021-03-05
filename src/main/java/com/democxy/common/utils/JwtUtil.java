@@ -13,8 +13,10 @@ import java.util.Date;
 public class JwtUtil {
 
 
-    //设置过期时间为15分钟
-    public static final long EXPIRE_TIME = 15*60;
+    /**
+     * 设置过期时间为60分钟
+     */
+    public static final long EXPIRE_TIME = 60*60;
 
 
     public static final String REDIS_KEY_PREFIX = "JWT:";
