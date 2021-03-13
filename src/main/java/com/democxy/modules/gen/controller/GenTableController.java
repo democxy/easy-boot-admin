@@ -1,6 +1,6 @@
 package com.democxy.modules.gen.controller;
 
-import com.democxy.common.annotation.LoginRequired;
+import com.democxy.common.annotation.PassLogin;
 import com.democxy.common.annotation.Permission;
 import com.democxy.common.enums.ResultEnum;
 import com.democxy.common.global.BaseController;
@@ -18,7 +18,6 @@ import com.democxy.modules.gen.utils.GenCodeUtil;
 import com.democxy.modules.gen.vo.PreViewCode;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,9 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -44,6 +41,7 @@ public class GenTableController extends BaseController<GenTableService, GenTable
 
     @RequestMapping("")
     @Permission(value = "gen:genTable:view")
+    @PassLogin
     private ModelAndView genTable() {
         ModelAndView modelAndView = new ModelAndView(PREFIX + "genTableList");
         return modelAndView;
@@ -51,7 +49,6 @@ public class GenTableController extends BaseController<GenTableService, GenTable
 
     @ResponseBody
     @RequestMapping(value = "findAllTableForDatabase",method = RequestMethod.POST)
-    @LoginRequired
     public ResponeData<PageInfo> findAllTableForDatabase(@RequestBody BasePageQuery<GenTableField> basePageQuery){
         //调用业务逻辑，处理业务
         PageHelper.startPage(basePageQuery.getPageNum(), basePageQuery.getPageSize());
@@ -62,6 +59,7 @@ public class GenTableController extends BaseController<GenTableService, GenTable
 
     @GetMapping("importTable")
     @Permission(value = "gen:genTable:view")
+    @PassLogin
     private ModelAndView importTable() {
         ModelAndView modelAndView = new ModelAndView(PREFIX + "genTableImport");
         return modelAndView;
@@ -69,7 +67,6 @@ public class GenTableController extends BaseController<GenTableService, GenTable
 
     @ResponseBody
     @PostMapping(value = "importTable")
-    @LoginRequired
     public ResponeData<String> addGenTableForTableName(@RequestBody List<String> tableNames ){
         //调用业务逻辑，处理业务
         service.addGenTableForTableName(tableNames);
@@ -78,6 +75,7 @@ public class GenTableController extends BaseController<GenTableService, GenTable
 
     @RequestMapping("form")
     @Permission(value = "gen:genTable:add")
+    @PassLogin
     public ModelAndView courseTypeForm(String id) {
         ModelAndView modelAndView = new ModelAndView(PREFIX + "genTableForm");
         if (StringUtils.isEmpty(id)) {
@@ -99,7 +97,6 @@ public class GenTableController extends BaseController<GenTableService, GenTable
 
     @ResponseBody
     @RequestMapping(value = "gen/{id}",method = RequestMethod.GET)
-    @LoginRequired
     public ResponeData<String> gen(@PathVariable("id") String id){
         List<PreViewCode> preViewCodes = service.preViewCode(id);
         try {

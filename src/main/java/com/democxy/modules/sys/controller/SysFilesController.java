@@ -1,7 +1,7 @@
 package com.democxy.modules.sys.controller;
 
 import com.democxy.common.annotation.Log;
-import com.democxy.common.annotation.LoginRequired;
+import com.democxy.common.annotation.PassLogin;
 import com.democxy.common.annotation.Permission;
 import com.democxy.common.config.ProjectConfig;
 import com.democxy.common.enums.ResultEnum;
@@ -36,6 +36,7 @@ public class SysFilesController extends BaseController<SysFilesService, SysFiles
 
     @RequestMapping("")
     @Permission(value = "sys:sysFiles:view")
+    @PassLogin
     private ModelAndView sysFiles() {
         ModelAndView modelAndView = new ModelAndView(PREFIX + "sysFilesList");
         return modelAndView;
@@ -43,6 +44,7 @@ public class SysFilesController extends BaseController<SysFilesService, SysFiles
 
     @RequestMapping("form")
     @Permission(value = "sys:sysFiles:add")
+    @PassLogin
     public ModelAndView courseTypeForm(String id) {
         ModelAndView modelAndView = new ModelAndView(PREFIX + "sysFilesForm");
         if (StringUtils.isEmpty(id)) {
@@ -56,7 +58,6 @@ public class SysFilesController extends BaseController<SysFilesService, SysFiles
     @Override
     @ResponseBody
     @RequestMapping(value = "del/{id}",method = RequestMethod.GET)
-    @LoginRequired
     @Log(title = "删除文件")
     public ResponeData<String> delById(@PathVariable("id") String id){
         SysFiles byId = service.getById(id);

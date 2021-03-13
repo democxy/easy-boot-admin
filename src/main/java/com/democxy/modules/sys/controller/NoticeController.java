@@ -1,5 +1,6 @@
 package com.democxy.modules.sys.controller;
 
+import com.democxy.common.annotation.PassLogin;
 import com.democxy.common.annotation.Permission;
 import com.democxy.common.global.BaseController;
 import com.democxy.common.utils.StringUtils;
@@ -20,6 +21,7 @@ public class NoticeController extends BaseController<NoticeService, Notice, Noti
 
     @RequestMapping("")
     @Permission(value = "sys:notice:view")
+    @PassLogin
     private ModelAndView notice(){
         ModelAndView modelAndView = new ModelAndView(PREFIX+"noticeList");
         return modelAndView;
@@ -27,6 +29,7 @@ public class NoticeController extends BaseController<NoticeService, Notice, Noti
 
     @RequestMapping("form")
     @Permission(value = "sys:notice:add")
+    @PassLogin
     public ModelAndView courseTypeForm(String id){
         ModelAndView modelAndView = new ModelAndView(PREFIX+"noticeForm");
         if (StringUtils.isEmpty(id)){

@@ -1,5 +1,6 @@
 package com.democxy.modules.gen.controller;
 
+import com.democxy.common.annotation.PassLogin;
 import com.democxy.common.annotation.Permission;
 import com.democxy.common.global.BaseController;
 import com.democxy.common.utils.StringUtils;
@@ -20,6 +21,7 @@ public class TemplateInfoController extends BaseController<TemplateInfoService, 
 
     @RequestMapping("")
     @Permission(value = "gen:templateInfo:view")
+    @PassLogin
     private ModelAndView templateInfo(){
         ModelAndView modelAndView = new ModelAndView(PREFIX+"templateInfoList");
         return modelAndView;
@@ -27,6 +29,7 @@ public class TemplateInfoController extends BaseController<TemplateInfoService, 
 
     @RequestMapping("form")
     @Permission(value = "gen:templateInfo:add")
+    @PassLogin
     public ModelAndView courseTypeForm(String id){
         ModelAndView modelAndView = new ModelAndView(PREFIX+"templateInfoForm");
         if (StringUtils.isEmpty(id)){

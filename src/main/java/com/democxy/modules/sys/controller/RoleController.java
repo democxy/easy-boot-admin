@@ -1,7 +1,7 @@
 package com.democxy.modules.sys.controller;
 
 import com.democxy.common.annotation.Log;
-import com.democxy.common.annotation.LoginRequired;
+import com.democxy.common.annotation.PassLogin;
 import com.democxy.common.annotation.Permission;
 import com.democxy.common.global.BaseController;
 import com.democxy.common.global.BasePageQuery;
@@ -26,7 +26,6 @@ public class RoleController extends BaseController<RoleService, Role, RoleField>
      */
     @ResponseBody
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    @LoginRequired
     @Permission(value = "sys:role:add")
     @Log(title = "添加/修改角色")
     public ResponeData<String> save(@Valid @RequestBody RoleField f ){
@@ -41,7 +40,6 @@ public class RoleController extends BaseController<RoleService, Role, RoleField>
      */
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
-    @LoginRequired
     @Permission(value = "sys:role:add")
     public ResponeData<String> addUser(@Valid @RequestBody RoleField f ){
         return super.addUser(f);
@@ -49,7 +47,6 @@ public class RoleController extends BaseController<RoleService, Role, RoleField>
 
     @ResponseBody
     @RequestMapping(value = "del/{id}",method = RequestMethod.GET)
-    @LoginRequired
     @Permission(value = "sys:role:del")
     public ResponeData<String> delById(@PathVariable("id") String id){
         return super.delById(id);
@@ -57,7 +54,6 @@ public class RoleController extends BaseController<RoleService, Role, RoleField>
 
     @ResponseBody
     @RequestMapping(value = "update",method = RequestMethod.POST)
-    @LoginRequired
     @Permission(value = "sys:role:edit")
     public ResponeData<String> update(@Valid @RequestBody RoleField f){
         return super.update(f);
@@ -66,21 +62,18 @@ public class RoleController extends BaseController<RoleService, Role, RoleField>
 
     @ResponseBody
     @RequestMapping(value = "list",method = RequestMethod.POST)
-    @LoginRequired
     public ResponeData<List> findList(RoleField f){
         return super.findList(f);
     }
 
     @ResponseBody
     @RequestMapping(value = "page",method = RequestMethod.POST)
-    @LoginRequired
     public ResponeData<PageInfo> findPage(@RequestBody BasePageQuery<RoleField> basePageQuery){
         return super.findPage(basePageQuery);
     }
 
     @ResponseBody
     @RequestMapping(value = "get/{id}",method = RequestMethod.GET)
-    @LoginRequired
     @Permission(value = "sys:role:view")
     public ResponeData<Role> getById(@PathVariable("id") String id){
         return super.getById(id);

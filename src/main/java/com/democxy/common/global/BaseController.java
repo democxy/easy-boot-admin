@@ -1,6 +1,6 @@
 package com.democxy.common.global;
 
-import com.democxy.common.annotation.LoginRequired;
+import com.democxy.common.annotation.PassLogin;
 import com.democxy.common.annotation.Permission;
 import com.democxy.common.enums.ResultEnum;
 import com.github.pagehelper.PageHelper;
@@ -23,7 +23,6 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
      */
     @ResponseBody
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    @LoginRequired
     public ResponeData<String> save(@Valid @RequestBody F f ){
         //调用业务逻辑，处理业务
         service.save(f);
@@ -37,7 +36,6 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
      */
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
-    @LoginRequired
     public ResponeData<String> addUser(@Valid @RequestBody F f ){
         //调用业务逻辑，处理业务
         service.insert(f);
@@ -46,7 +44,6 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
 
     @ResponseBody
     @RequestMapping(value = "del/{id}",method = RequestMethod.GET)
-    @LoginRequired
     public ResponeData<String> delById(@PathVariable("id") String id){
         service.delete(id);
         return new ResponeData<>(ResultEnum.SUCCESS,"删除成功");
@@ -54,7 +51,6 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
 
     @ResponseBody
     @RequestMapping(value = "update",method = RequestMethod.POST)
-    @LoginRequired
     public ResponeData<String> update(@Valid @RequestBody F f){
         //调用业务逻辑，处理业务
         service.update(f);
@@ -64,7 +60,6 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
 
     @ResponseBody
     @RequestMapping(value = "list",method = RequestMethod.POST)
-    @LoginRequired
     public ResponeData<List> findList(F f){
         //调用业务逻辑，处理业务
         List<T> list = service.findList(f);
@@ -73,7 +68,6 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
 
     @ResponseBody
     @RequestMapping(value = "page",method = RequestMethod.POST)
-    @LoginRequired
     public ResponeData<PageInfo> findPage( @RequestBody BasePageQuery<F> basePageQuery){
         //调用业务逻辑，处理业务
         PageHelper.startPage(basePageQuery.getPageNum(), basePageQuery.getPageSize());
@@ -84,7 +78,6 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
 
     @ResponseBody
     @RequestMapping(value = "get/{id}",method = RequestMethod.GET)
-    @LoginRequired
     @Permission(value = "permission")
     public ResponeData<T> getById(@PathVariable("id") String id){
         T account = service.getById(id);

@@ -1,5 +1,6 @@
 package com.democxy.modules.route;
 
+import com.democxy.common.annotation.PassLogin;
 import com.democxy.common.utils.ServletUtils;
 import com.democxy.modules.sys.entity.Account;
 import com.democxy.modules.sys.service.MenuService;
@@ -18,17 +19,20 @@ public class PublicController {
     MenuService menuService;
 
     @RequestMapping("")
+    @PassLogin
     public String index(){
         return "index";
     }
 
     @RequestMapping("/login")
+    @PassLogin
     public String login(){
         return "page/login-1";
     }
 
 
     @RequestMapping("/main")
+    @PassLogin
     public String main(){
         Object login = ServletUtils.getSession().getAttribute("login");
         if (login!=null && login instanceof Account){
@@ -41,6 +45,7 @@ public class PublicController {
     }
 
     @RequestMapping("/page/{name}.html")
+    @PassLogin
     public String toPage(@PathVariable("name") String name){
         return "page/"+name;
     }

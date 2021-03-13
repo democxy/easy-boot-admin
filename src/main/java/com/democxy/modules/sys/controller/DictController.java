@@ -1,6 +1,6 @@
 package com.democxy.modules.sys.controller;
 
-import com.democxy.common.annotation.LoginRequired;
+import com.democxy.common.annotation.PassLogin;
 import com.democxy.common.annotation.Permission;
 import com.democxy.common.enums.ResultEnum;
 import com.democxy.common.global.BaseController;
@@ -27,7 +27,6 @@ public class DictController extends BaseController<DictService, Dict, DictField>
      */
     @ResponseBody
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    @LoginRequired
     @Permission(value = "sys:dict:add")
     public ResponeData<String> save(@Valid @RequestBody DictField f ){
         //调用业务逻辑，处理业务
@@ -41,7 +40,6 @@ public class DictController extends BaseController<DictService, Dict, DictField>
      */
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
-    @LoginRequired
     @Permission(value = "sys:dict:add")
     public ResponeData<String> addUser(@Valid @RequestBody DictField f ){
         return super.addUser(f);
@@ -49,7 +47,6 @@ public class DictController extends BaseController<DictService, Dict, DictField>
 
     @ResponseBody
     @RequestMapping(value = "del/{id}",method = RequestMethod.GET)
-    @LoginRequired
     @Permission(value = "sys:dict:del")
     public ResponeData<String> delById(@PathVariable("id") String id){
         return super.delById(id);
@@ -57,7 +54,6 @@ public class DictController extends BaseController<DictService, Dict, DictField>
 
     @ResponseBody
     @RequestMapping(value = "update",method = RequestMethod.POST)
-    @LoginRequired
     @Permission(value = "sys:dict:edit")
     public ResponeData<String> update(@Valid @RequestBody DictField f){
         return super.update(f);
@@ -66,14 +62,12 @@ public class DictController extends BaseController<DictService, Dict, DictField>
 
     @ResponseBody
     @RequestMapping(value = "list",method = RequestMethod.POST)
-    @LoginRequired
     public ResponeData<List> findList(DictField f){
         return super.findList(f);
     }
 
     @ResponseBody
     @RequestMapping(value = "page",method = RequestMethod.POST)
-    @LoginRequired
     public ResponeData<PageInfo> findPage(@RequestBody BasePageQuery<DictField> basePageQuery){
         //调用业务逻辑，处理业务
         PageHelper.startPage(basePageQuery.getPageNum(), basePageQuery.getPageSize());
@@ -84,7 +78,6 @@ public class DictController extends BaseController<DictService, Dict, DictField>
 
     @ResponseBody
     @RequestMapping(value = "get/{id}",method = RequestMethod.GET)
-    @LoginRequired
     @Permission(value = "sys:dict:view")
     public ResponeData<Dict> getById(@PathVariable("id") String id){
         return super.getById(id);

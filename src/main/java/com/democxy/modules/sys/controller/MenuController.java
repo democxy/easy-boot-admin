@@ -1,6 +1,6 @@
 package com.democxy.modules.sys.controller;
 
-import com.democxy.common.annotation.LoginRequired;
+import com.democxy.common.annotation.PassLogin;
 import com.democxy.common.annotation.Permission;
 import com.democxy.common.enums.ResultEnum;
 import com.democxy.common.global.BaseController;
@@ -28,7 +28,6 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
 
     @ResponseBody
     @RequestMapping(value = "list",method = RequestMethod.POST)
-    @LoginRequired
     public ResponeData<List> findList(MenuField menuField){
         //调用业务逻辑，处理业务
         List<Menu> list = service.findList(menuField);
@@ -37,7 +36,6 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
 
     @ResponseBody
     @RequestMapping(value = "tree",method = RequestMethod.GET)
-    @LoginRequired
     public List<Menu> treeMenu(){
         List<Menu> list = service.findList(new MenuField());
         return TreeUtils.getChildPerms(list,"0");
@@ -45,7 +43,6 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
 
     @ResponseBody
     @RequestMapping(value = "treeSelect",method = RequestMethod.GET)
-    @LoginRequired
     public List<TreeEntity> treeLayUi(){
         List<Menu> list = service.findList(new MenuField());
         return new TreeEntity().sortMenuList(TreeUtils.getChildPerms(list,"0"));
@@ -53,7 +50,6 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
 
     @ResponseBody
     @RequestMapping(value = "delByPid/{id}",method = RequestMethod.GET)
-    @LoginRequired
     public ResponeData<String> delById(@PathVariable("id") String id){
         service.delMore(id);
         return new ResponeData<>(ResultEnum.SUCCESS,"删除成功");
@@ -65,7 +61,6 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
      */
     @ResponseBody
     @RequestMapping(value = "initUserMenu",method = RequestMethod.GET)
-    @LoginRequired
     public ResponeData<Map<String,Object>> initUserMenu(String token){
         Account accountByToken = AccountUtils.getAccountByToken(token);
         Map<String,Object> userMenu = new HashMap<>();
@@ -91,7 +86,6 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
      */
     @ResponseBody
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    @LoginRequired
     @Permission(value = "sys:dict:add")
     public ResponeData<String> save(@Valid @RequestBody MenuField f ){
         //调用业务逻辑，处理业务
@@ -105,7 +99,6 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
      */
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
-    @LoginRequired
     @Permission(value = "sys:dict:add")
     public ResponeData<String> addUser(@Valid @RequestBody MenuField f ){
         return super.addUser(f);
@@ -113,7 +106,6 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
 
     @ResponseBody
     @RequestMapping(value = "update",method = RequestMethod.POST)
-    @LoginRequired
     @Permission(value = "sys:dict:edit")
     public ResponeData<String> update(@Valid @RequestBody MenuField f){
         return super.update(f);
@@ -121,14 +113,12 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
 
     @ResponseBody
     @RequestMapping(value = "page",method = RequestMethod.POST)
-    @LoginRequired
     public ResponeData<PageInfo> findPage(@RequestBody BasePageQuery<MenuField> basePageQuery){
         return super.findPage(basePageQuery);
     }
 
     @ResponseBody
     @RequestMapping(value = "get/{id}",method = RequestMethod.GET)
-    @LoginRequired
     @Permission(value = "sys:dict:view")
     public ResponeData<Menu> getById(@PathVariable("id") String id){
         return super.getById(id);

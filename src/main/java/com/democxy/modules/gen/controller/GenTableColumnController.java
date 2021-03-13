@@ -1,5 +1,6 @@
 package com.democxy.modules.gen.controller;
 
+import com.democxy.common.annotation.PassLogin;
 import com.democxy.common.annotation.Permission;
 import com.democxy.common.global.BaseController;
 import com.democxy.common.utils.StringUtils;
@@ -20,6 +21,7 @@ public class GenTableColumnController extends BaseController<GenTableColumnServi
 
     @RequestMapping("")
     @Permission(value = "gen:genTableColumn:view")
+    @PassLogin
     private ModelAndView genTableColumn(){
         ModelAndView modelAndView = new ModelAndView(PREFIX+"genTableColumnList");
         return modelAndView;
@@ -27,6 +29,7 @@ public class GenTableColumnController extends BaseController<GenTableColumnServi
 
     @RequestMapping("form")
     @Permission(value = "gen:genTableColumn:add")
+    @PassLogin
     public ModelAndView courseTypeForm(String id){
         ModelAndView modelAndView = new ModelAndView(PREFIX+"genTableColumnForm");
         if (StringUtils.isEmpty(id)){

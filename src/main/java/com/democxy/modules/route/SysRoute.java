@@ -1,5 +1,6 @@
 package com.democxy.modules.route;
 
+import com.democxy.common.annotation.PassLogin;
 import com.democxy.common.global.TreeEntity;
 import com.democxy.common.utils.StringUtils;
 import com.democxy.common.utils.TreeUtils;
@@ -40,6 +41,7 @@ public class SysRoute {
     SysLogService sysLogService;
 
     @RequestMapping("login")
+    @PassLogin
     public String login(){
         System.out.println("login");
         return PREFIX+"login";
@@ -50,11 +52,13 @@ public class SysRoute {
      * @return
      */
     @RequestMapping("account")
+    @PassLogin
     public String account(){
         return PREFIX+"account";
     }
 
     @RequestMapping("accountForm")
+    @PassLogin
     public String accountForm(String id, Model model){
         if (StringUtils.isEmpty(id)){
             model.addAttribute("account",new Account());
@@ -65,11 +69,13 @@ public class SysRoute {
     }
 
     @RequestMapping("dict")
+    @PassLogin
     public String dict(){
         return PREFIX+"dict";
     }
 
     @RequestMapping("dictForm")
+    @PassLogin
     public String dictForm( DictField dictField, Model model){
         if (StringUtils.isEmpty(dictField.getType())){
             model.addAttribute("dictList",new ArrayList<Dict>());
@@ -86,11 +92,13 @@ public class SysRoute {
     }
 
     @RequestMapping("taskJob")
+    @PassLogin
     public String taskJob(){
         return PREFIX+"taskJob";
     }
 
     @RequestMapping("taskJobForm")
+    @PassLogin
     public String taskJobForm( String id, Model model){
         if (StringUtils.isEmpty(id)){
             model.addAttribute("taskJob",new TaskJob());
@@ -105,11 +113,13 @@ public class SysRoute {
      * @return
      */
     @RequestMapping("role")
+    @PassLogin
     public String roleList(){
         return PREFIX+"role";
     }
 
     @RequestMapping("roleForm")
+    @PassLogin
     public String roleForm(String id, Model model){
         if (StringUtils.isEmpty(id)){
             model.addAttribute("role",new Role());
@@ -128,11 +138,13 @@ public class SysRoute {
     }
 
     @RequestMapping("menu")
+    @PassLogin
     public String menuList(){
         return PREFIX+"menu";
     }
 
     @RequestMapping("menuForm")
+    @PassLogin
     public String menuForm(String id, Model model){
         if (StringUtils.isEmpty(id)){
             Menu menu = new Menu();
@@ -148,6 +160,7 @@ public class SysRoute {
     }
 
     @RequestMapping("addChildren")
+    @PassLogin
     public String addChildren(String id, Model model){
         Menu byId = menuService.getById(id);
         Menu menu = new Menu();
@@ -162,11 +175,13 @@ public class SysRoute {
 
 
     @RequestMapping("sysLog")
+    @PassLogin
     public String sysLogList(){
         return PREFIX+"sysLog";
     }
 
     @RequestMapping("sysLogForm")
+    @PassLogin
     public String sysLogForm(String id,Model model){
         SysLog sysLog = sysLogService.getById(id);
         model.addAttribute("sysLog",sysLog);

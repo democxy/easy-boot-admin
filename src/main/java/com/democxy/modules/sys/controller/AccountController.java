@@ -5,7 +5,7 @@ import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.captcha.generator.RandomGenerator;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.alibaba.fastjson.JSON;
-import com.democxy.common.annotation.LoginRequired;
+import com.democxy.common.annotation.PassLogin;
 import com.democxy.common.annotation.Permission;
 import com.democxy.common.global.BaseController;
 import com.democxy.common.global.BasePageQuery;
@@ -65,6 +65,7 @@ public class AccountController extends BaseController<AccountService, Account,Ac
 
     @ResponseBody
     @RequestMapping(value = "login",method = RequestMethod.POST)
+    @PassLogin
     public ResponeData<Map<String,Object>> login(@Valid @RequestBody AccountField accountField, HttpServletRequest request){
         Object loginCode = request.getSession().getAttribute("loginCode");
         if (loginCode != null) {
@@ -99,6 +100,7 @@ public class AccountController extends BaseController<AccountService, Account,Ac
 
     @ResponseBody
     @RequestMapping(value = "autoLogin",method = RequestMethod.POST)
+    @PassLogin
     public ResponeData<Map> autoLogin(String token){
         if (StringUtils.isNotEmpty(token)){
             Object o = redisUtil.get(JwtUtil.REDIS_KEY_PREFIX + token);
@@ -119,7 +121,6 @@ public class AccountController extends BaseController<AccountService, Account,Ac
 
     @ResponseBody
     @RequestMapping(value = "getAccount",method = RequestMethod.POST)
-    @LoginRequired
     public ResponeData<String> getAccountByToken(HttpServletRequest request) {
         Claims claims = JwtUtil.parseToken(request.getHeader("token"));
         String subject = claims.getSubject();
@@ -135,7 +136,6 @@ public class AccountController extends BaseController<AccountService, Account,Ac
     @Override
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
-    @LoginRequired
     @Permission(value = "sys:dict:add")
     public ResponeData<String> addUser(@Valid @RequestBody AccountField f ){
         return super.addUser(f);
@@ -144,7 +144,6 @@ public class AccountController extends BaseController<AccountService, Account,Ac
     @Override
     @ResponseBody
     @RequestMapping(value = "del/{id}",method = RequestMethod.GET)
-    @LoginRequired
     @Permission(value = "sys:dict:del")
     public ResponeData<String> delById(@PathVariable("id") String id){
         return super.delById(id);
@@ -153,7 +152,6 @@ public class AccountController extends BaseController<AccountService, Account,Ac
     @Override
     @ResponseBody
     @RequestMapping(value = "update",method = RequestMethod.POST)
-    @LoginRequired
     @Permission(value = "sys:dict:edit")
     public ResponeData<String> update(@Valid @RequestBody AccountField f){
         return super.update(f);
@@ -163,7 +161,6 @@ public class AccountController extends BaseController<AccountService, Account,Ac
     @Override
     @ResponseBody
     @RequestMapping(value = "list",method = RequestMethod.POST)
-    @LoginRequired
     public ResponeData<List> findList(AccountField f){
         return super.findList(f);
     }
@@ -171,7 +168,6 @@ public class AccountController extends BaseController<AccountService, Account,Ac
     @Override
     @ResponseBody
     @RequestMapping(value = "page",method = RequestMethod.POST)
-    @LoginRequired
     public ResponeData<PageInfo> findPage(@RequestBody BasePageQuery<AccountField> basePageQuery){
         return super.findPage(basePageQuery);
     }
@@ -179,7 +175,6 @@ public class AccountController extends BaseController<AccountService, Account,Ac
     @Override
     @ResponseBody
     @RequestMapping(value = "get/{id}",method = RequestMethod.GET)
-    @LoginRequired
     @Permission(value = "sys:dict:view")
     public ResponeData<Account> getById(@PathVariable("id") String id){
         return super.getById(id);
@@ -187,6 +182,7 @@ public class AccountController extends BaseController<AccountService, Account,Ac
 
 
     @GetMapping(value = "reCode")
+    @PassLogin
     public void reCode(HttpServletRequest request, HttpServletResponse response) throws Exception{
         //刷新验证码
 //		LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(100, 30);
