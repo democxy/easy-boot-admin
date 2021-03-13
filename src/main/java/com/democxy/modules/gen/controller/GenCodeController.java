@@ -1,5 +1,6 @@
 package com.democxy.modules.gen.controller;
 
+import com.democxy.common.annotation.PassLogin;
 import com.democxy.common.annotation.Permission;
 import com.democxy.common.config.ProjectConfig;
 import com.democxy.common.utils.StringUtils;
@@ -98,6 +99,7 @@ public class GenCodeController {
     }
 
     @GetMapping(value = "previewCode")
+    @PassLogin
     private ModelAndView preCode(String id) {
         ModelAndView modelAndView = new ModelAndView("gen/" + "genTablePreview");
         modelAndView.addObject("preViewCodes",genTableService.preViewCode(id));

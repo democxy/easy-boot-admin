@@ -124,7 +124,7 @@
                     $.modal.open("预览代码",'/gen/code/previewCode?id='+id)
                 },
                 edit: function (id) {
-                    $.modal.open("编辑代码生成",'/gen/genTable/form?id='+id)
+                    $.modal.open("编辑代码生成",'/gen/genTable/form?id='+id, '90%')
                 },
                 del:function (id) {
                     $.operate.del('/gen/genTable/del/'+id,laypage,layer,app);
