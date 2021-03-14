@@ -11,10 +11,7 @@ import com.democxy.common.global.BaseController;
 import com.democxy.common.global.BasePageQuery;
 import com.democxy.common.global.ResponeData;
 import com.democxy.common.enums.ResultEnum;
-import com.democxy.common.utils.IdGenUtil;
-import com.democxy.common.utils.JwtUtil;
-import com.democxy.common.utils.ServletUtils;
-import com.democxy.common.utils.StringUtils;
+import com.democxy.common.utils.*;
 import com.democxy.common.utils.redis.RedisUtil;
 import com.democxy.modules.sys.entity.Account;
 import com.democxy.modules.sys.entity.field.AccountField;
@@ -194,17 +191,35 @@ public class AccountController extends BaseController<AccountService, Account,Ac
     @PassLogin
     public void reCode(HttpServletRequest request, HttpServletResponse response) throws Exception{
         //刷新验证码
-//		LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(100, 30);
-        //输出到浏览器
-        // 自定义纯数字的验证码（随机4位数字，可重复）
         RandomGenerator randomGenerator = new RandomGenerator("0123456789", 4);
         LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(100, 30);
         lineCaptcha.setGenerator(randomGenerator);
         // 重新生成code
         lineCaptcha.createCode();
         String code = lineCaptcha.getCode();
-        request.getSession().setAttribute("loginCode",code);//缓存验证码
+        //缓存验证码
+        request.getSession().setAttribute("loginCode",code);
         lineCaptcha.write(response.getOutputStream());
         System.out.println(lineCaptcha.verify(code));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "fixPass",method = RequestMethod.POST)
+    public ResponeData<String> checkPassword(@RequestBody AccountField accountField){
+        Account account = AccountUtils.getAccount();
+        accountField.setAccountId(account.getAccountId());
+        accountField.setAccountNo(account.getAccountNo());
+        accountField.setRole(account.getRole());
+        String md5Hex = DigestUtil.md5Hex(account.getAccountNo() + accountField.getOldPassword());
+        if (!md5Hex.equals(account.getPassword())) {
+            return new ResponeData<>(ResultEnum.FIX_PASS_CHECK_PASS_FAILED,"");
+        }
+        if (!accountField.getPassword().equals(accountField.getRePassword())) {
+            return new ResponeData<>(ResultEnum.PASSWORD_NO_EQU,"");
+        }
+        String newWord = DigestUtil.md5Hex(account.getAccountNo() + accountField.getPassword());
+        accountField.setPassword(newWord);
+        service.update(accountField);
+        return new ResponeData<>("修改成功！");
     }
 }

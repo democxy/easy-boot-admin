@@ -188,7 +188,7 @@ public class SysRoute {
         return PREFIX+"sysLogForm";
     }
 
-    @RequestMapping("fixPass")
+    @GetMapping("fixPass")
     public String fixPass(){
         return PREFIX+"fixPass";
     }

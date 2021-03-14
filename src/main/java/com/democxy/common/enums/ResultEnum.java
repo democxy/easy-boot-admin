@@ -21,7 +21,11 @@ public enum ResultEnum {
 
     CODE_CHECK_ERROR(4042, "验证码错误！"),
 
-    ACCOUNT_ERROR(4043, "账号密码错误");
+    ACCOUNT_ERROR(4043, "账号密码错误"),
+
+    FIX_PASS_CHECK_PASS_FAILED(4044, "旧密码验证不通过"),
+
+    PASSWORD_NO_EQU(4045, "确认密码不一致");
 
     private int code;
     private String msg;

@@ -37,5 +37,8 @@ public class AccountField extends BaseFiled<AccountField> {
     /** 登录类型 */
     private String loginType;
 
+    private String oldPassword;
+    private String rePassword;
+
 
 }
