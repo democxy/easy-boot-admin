@@ -36,7 +36,6 @@ public class SysFilesController extends BaseController<SysFilesService, SysFiles
 
     @RequestMapping("")
     @Permission(value = "sys:sysFiles:view")
-    @PassLogin
     private ModelAndView sysFiles() {
         ModelAndView modelAndView = new ModelAndView(PREFIX + "sysFilesList");
         return modelAndView;
@@ -44,7 +43,6 @@ public class SysFilesController extends BaseController<SysFilesService, SysFiles
 
     @RequestMapping("form")
     @Permission(value = "sys:sysFiles:add")
-    @PassLogin
     public ModelAndView courseTypeForm(String id) {
         ModelAndView modelAndView = new ModelAndView(PREFIX + "sysFilesForm");
         if (StringUtils.isEmpty(id)) {

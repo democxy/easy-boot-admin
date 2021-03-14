@@ -63,6 +63,12 @@ public class AccountController extends BaseController<AccountService, Account,Ac
 
     }
 
+    /**
+     * 后台管理登录端-使用session
+     * @param accountField
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "login",method = RequestMethod.POST)
     @PassLogin
@@ -76,16 +82,19 @@ public class AccountController extends BaseController<AccountService, Account,Ac
                 Account login= service.login(accountField);
                 Map<String,Object> map = new HashMap<>();
                 if (login!=null){
-                    //计算token
-                    //清空密码
-                    login.setPassword("");
-                    String token = JwtUtil.signToken(login.getAccountId(), JSON.toJSONString(login), JwtUtil.EXPIRE_TIME);
-                    map.put("token",token);
-                    map.put("login",login);
-                    // 缓存token到redis
-                    // 缓存时间为jwt有效期的2倍
-                    redisUtil.set(JwtUtil.REDIS_KEY_PREFIX+token,JSON.toJSONString(login),JwtUtil.EXPIRE_TIME*2);
-                    ServletUtils.getSession().setAttribute("login",login);
+                    // 手机登录 返回token信息
+                    String loginType = accountField.getLoginType();
+                    if (StringUtils.isNotEmpty(loginType) && loginType.equals("mobile")) {
+                        login.setPassword("");
+                        String token = JwtUtil.signToken(login.getAccountId(), JSON.toJSONString(login), JwtUtil.EXPIRE_TIME);
+                        map.put("token",token);
+                        map.put("login",login);
+                        redisUtil.set(JwtUtil.REDIS_KEY_PREFIX+token,JSON.toJSONString(login),JwtUtil.EXPIRE_TIME*2);
+                    } else {
+                        loginType = "admin";
+                        ServletUtils.getSession().setAttribute("login",login);
+                    }
+                    map.put("loginType", loginType);
                     return new ResponeData<>(ResultEnum.SUCCESS,map);
                 }else{
                     return new ResponeData(ResultEnum.ACCOUNT_ERROR,"");
@@ -194,7 +203,6 @@ public class AccountController extends BaseController<AccountService, Account,Ac
         // 重新生成code
         lineCaptcha.createCode();
         String code = lineCaptcha.getCode();
-        System.out.println(code);
         request.getSession().setAttribute("loginCode",code);//缓存验证码
         lineCaptcha.write(response.getOutputStream());
         System.out.println(lineCaptcha.verify(code));

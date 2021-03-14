@@ -5,6 +5,7 @@ import com.democxy.common.annotation.PassLogin;
 import com.democxy.common.exception.CustomException;
 import com.democxy.common.utils.JwtUtil;
 import com.democxy.common.utils.ServletUtils;
+import com.democxy.common.utils.StringUtils;
 import com.democxy.common.utils.redis.RedisUtil;
 import com.democxy.modules.sys.entity.Account;
 import com.democxy.modules.sys.service.MenuService;
@@ -37,27 +38,27 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             // 接口是否有@PassLogin注解, 没有则需要判断是否登录
             boolean annotationPresent = method.isAnnotationPresent(PassLogin.class);
             if (!annotationPresent) {
-                // 验证token
+                // 验证是否登录
                 String token = request.getHeader("token");
-                boolean verity = JwtUtil.validateToken(token);
-                if (!verity) {
-                    // 从redis中获取过期token 刷新token
-                    Object o = redisUtil.get(JwtUtil.REDIS_KEY_PREFIX + token);
-                    if (o != null){
-                        // 返回auto代表可以自动刷新
-                        throw new CustomException(4040, "auto");
+                if (StringUtils.isNotEmpty(token)) {
+                    // 手机登录
+                    boolean verity = JwtUtil.validateToken(token);
+                    if (!verity) {
+                        // 从redis中获取过期token 刷新token
+                        Object o = redisUtil.get(JwtUtil.REDIS_KEY_PREFIX + token);
+                        if (o != null){
+                            // 返回auto代表可以自动刷新
+                            throw new CustomException(4040, "auto");
+                        }
+                        throw new CustomException(4040, "token过期，请重新登录");
                     }
-                    throw new CustomException(4040, "token过期，请重新登录");
+                }else {
+                    // 后台管理端登录，判断session是否过期，session过期重新设置
+                    Object perms = ServletUtils.getSession().getAttribute("login");
+                    if (Objects.isNull(perms)){
+                        response.sendRedirect("/admin/sys/login");
+                    }
                 }
-                // token不过期的情况下，判断session是否过期，session过期重新设置
-                Object perms = ServletUtils.getSession().getAttribute("login");
-                if (Objects.isNull(perms)){
-                    String subject = JwtUtil.parseToken(token).getSubject();
-                    Account account = JSON.parseObject(subject, Account.class);
-                    // 重新设置login session
-                    ServletUtils.getSession().setAttribute("login",account);
-                }
-//                return true;
             }
         }
         return true;

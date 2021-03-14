@@ -332,9 +332,6 @@
                     url: url,
                     type: "get",
                     dataType: "json",
-                    headers: {
-                        'token': $.cookie("token")
-                    },
                     success: function(result) {
                         if (result.code == 4040){
                             if ("auto" == result.data){
@@ -366,9 +363,6 @@
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(data),
-                    headers: {
-                        'token': $.cookie("token")
-                    },
                     // beforeSend: function () {
                     //     $.modal.loading("正在处理中，请稍后...");
                     //     $.modal.disable();
@@ -408,9 +402,6 @@
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(data),
-                    headers: {
-                        'token': $.cookie("token")
-                    },
                     // beforeSend: function () {
                     //     $.modal.loading("正在处理中，请稍后...");
                     //     $.modal.disable();
@@ -457,9 +448,6 @@
                     type: "post",
                     async: false,
                     dataType: "json",
-                    data: {
-                        "token":$.cookie("token")
-                    },
                     success :function (result) {
                         if (result.code == 200){
                             $.cookie('token', result.data.token, { expires: 7, path: '/' });

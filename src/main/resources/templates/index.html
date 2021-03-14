@@ -60,13 +60,13 @@
                     <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
                 </li>
                 <li class="layui-nav-item layuimini-setting">
-                    <a href="javascript:;" id="username">admin</a>
+                    <a href="javascript:;" id="username" th:text="${session.login.accountNo}"></a>
                     <dl class="layui-nav-child">
                         <dd>
                             <a href="javascript:;" layuimini-content-href="page/user-setting.html" data-title="基本资料" data-icon="fa fa-gears">基本资料<span class="layui-badge-dot"></span></a>
                         </dd>
                         <dd>
-                            <a href="javascript:;" layuimini-content-href="page/user-password.html" data-title="修改密码" data-icon="fa fa-gears">修改密码</a>
+                            <a href="javascript:;" id="fixPass" data-title="修改密码" data-icon="fa fa-gears">修改密码</a>
                         </dd>
                         <dd>
                             <hr>
@@ -139,7 +139,7 @@
             miniAdmin = layui.miniAdmin,
             miniTongji = layui.miniTongji;
 
-        $.operate.get("/admin/menu/initUserMenu?token="+$.cookie("token"),function (res) {
+        $.operate.get("/admin/menu/initUserMenu",function (res) {
             var options = {
                 initData: res.data,    // 初始化接口
                 clearUrl: "/api/clear.json", // 缓存清理接口
@@ -155,17 +155,24 @@
         })
 
         layer.ready(function () {
-            var item = $.cookie("login");
-            $("#username").text(JSON.parse(item).accountNo)
+            // var item = $.cookie("login");
+            // $("#username").text(JSON.parse(item).accountNo)
         })
 
         $('.login-out').on("click", function () {
             $.modal.confirm("确认要退出登录吗？",function () {
-                $.removeCookie('token', { path: '/' });
-                $.removeCookie('login', { path: '/' });
-                window.location = '/admin/sys/login';
+                /*$.removeCookie('token', { path: '/' });
+                $.removeCookie('login', { path: '/' });*/
+                window.location = '/admin/sys/logout';
             })
         });
+
+        /**
+         * 修改密码
+         */
+        $("#fixPass").on("click", function () {
+            $.modal.open("修改密码",'/admin/sys/fixPass','400px','300px')
+        })
     });
 </script>
 </body>

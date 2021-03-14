@@ -17,7 +17,6 @@ public class DruidController {
     private String prefix = "/druid";
 
     @GetMapping()
-    @PassLogin
     public String index()
     {
         return"redirect:"+prefix + "/index";

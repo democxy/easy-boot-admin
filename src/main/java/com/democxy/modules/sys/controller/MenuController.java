@@ -28,6 +28,7 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
 
     @ResponseBody
     @RequestMapping(value = "list",method = RequestMethod.POST)
+    @Override
     public ResponeData<List> findList(MenuField menuField){
         //调用业务逻辑，处理业务
         List<Menu> list = service.findList(menuField);
@@ -50,6 +51,7 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
 
     @ResponseBody
     @RequestMapping(value = "delByPid/{id}",method = RequestMethod.GET)
+    @Override
     public ResponeData<String> delById(@PathVariable("id") String id){
         service.delMore(id);
         return new ResponeData<>(ResultEnum.SUCCESS,"删除成功");
@@ -61,8 +63,8 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
      */
     @ResponseBody
     @RequestMapping(value = "initUserMenu",method = RequestMethod.GET)
-    public ResponeData<Map<String,Object>> initUserMenu(String token){
-        Account accountByToken = AccountUtils.getAccountByToken(token);
+    public ResponeData<Map<String,Object>> initUserMenu(){
+        Account accountByToken = AccountUtils.getAccount();
         Map<String,Object> userMenu = new HashMap<>();
         Map<String,String> homeInfo = new HashMap<>();
         homeInfo.put("title","首页");
@@ -87,6 +89,7 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
     @ResponseBody
     @RequestMapping(value = "save",method = RequestMethod.POST)
     @Permission(value = "sys:dict:add")
+    @Override
     public ResponeData<String> save(@Valid @RequestBody MenuField f ){
         //调用业务逻辑，处理业务
         return super.save(f);
@@ -100,6 +103,7 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
     @Permission(value = "sys:dict:add")
+    @Override
     public ResponeData<String> addUser(@Valid @RequestBody MenuField f ){
         return super.addUser(f);
     }
@@ -107,12 +111,14 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
     @ResponseBody
     @RequestMapping(value = "update",method = RequestMethod.POST)
     @Permission(value = "sys:dict:edit")
+    @Override
     public ResponeData<String> update(@Valid @RequestBody MenuField f){
         return super.update(f);
     }
 
     @ResponseBody
     @RequestMapping(value = "page",method = RequestMethod.POST)
+    @Override
     public ResponeData<PageInfo> findPage(@RequestBody BasePageQuery<MenuField> basePageQuery){
         return super.findPage(basePageQuery);
     }
@@ -120,6 +126,7 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
     @ResponseBody
     @RequestMapping(value = "get/{id}",method = RequestMethod.GET)
     @Permission(value = "sys:dict:view")
+    @Override
     public ResponeData<Menu> getById(@PathVariable("id") String id){
         return super.getById(id);
     }

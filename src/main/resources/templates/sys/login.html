@@ -113,8 +113,8 @@
             }
 
             $.operate.post("/admin/account/login", data,function (res) {
-                $.cookie('token', res.data.token, { expires: 7, path: '/' });
-                $.cookie('login', JSON.stringify(res.data.login), { expires: 7, path: '/' });
+                // $.cookie('token', res.data.token, { expires: 7, path: '/' });
+                // $.cookie('login', JSON.stringify(res.data.login), { expires: 7, path: '/' });
                 window.location = '/';
             });
 
