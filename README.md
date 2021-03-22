@@ -8,6 +8,9 @@ easy-boot-admin是一个基于springboot快速构建轻量级后台管理平台�
 #### 技术栈
 springboot+mybatis+Thymeleaf +vue.js + Layui
 
+#### 运行环境
+idea(eclipse)/jdk1.8/maven/redis/mysql5.5+
+
 #### 内置功能
 1.账号管理： 账号管理主要记录系统的登录账号信息，无用户信息
 
