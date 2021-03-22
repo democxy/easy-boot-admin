@@ -360,6 +360,7 @@
                 var config = {
                     url: url,
                     type: "post",
+                    async: false,
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(data),

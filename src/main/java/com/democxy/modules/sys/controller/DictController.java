@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * @author shiling_deng
+ */
 @RestController
 @RequestMapping("/admin/dict")
 public class DictController extends BaseController<DictService, Dict, DictField> {
@@ -25,6 +28,7 @@ public class DictController extends BaseController<DictService, Dict, DictField>
      * @param f
      * @return
      */
+    @Override
     @ResponseBody
     @RequestMapping(value = "save",method = RequestMethod.POST)
     @Permission(value = "sys:dict:add")
@@ -38,6 +42,7 @@ public class DictController extends BaseController<DictService, Dict, DictField>
      * @param f
      * @return
      */
+    @Override
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
     @Permission(value = "sys:dict:add")
@@ -45,6 +50,7 @@ public class DictController extends BaseController<DictService, Dict, DictField>
         return super.addUser(f);
     }
 
+    @Override
     @ResponseBody
     @RequestMapping(value = "del/{id}",method = RequestMethod.GET)
     @Permission(value = "sys:dict:del")
@@ -52,6 +58,7 @@ public class DictController extends BaseController<DictService, Dict, DictField>
         return super.delById(id);
     }
 
+    @Override
     @ResponseBody
     @RequestMapping(value = "update",method = RequestMethod.POST)
     @Permission(value = "sys:dict:edit")
@@ -60,12 +67,14 @@ public class DictController extends BaseController<DictService, Dict, DictField>
     }
 
 
+    @Override
     @ResponseBody
     @RequestMapping(value = "list",method = RequestMethod.POST)
-    public ResponeData<List> findList(DictField f){
+    public ResponeData<List> findList(@RequestBody DictField f){
         return super.findList(f);
     }
 
+    @Override
     @ResponseBody
     @RequestMapping(value = "page",method = RequestMethod.POST)
     public ResponeData<PageInfo> findPage(@RequestBody BasePageQuery<DictField> basePageQuery){
@@ -76,10 +85,13 @@ public class DictController extends BaseController<DictService, Dict, DictField>
         return new ResponeData<>(ResultEnum.SUCCESS, pageInfo);
     }
 
+    @Override
     @ResponseBody
     @RequestMapping(value = "get/{id}",method = RequestMethod.GET)
     @Permission(value = "sys:dict:view")
     public ResponeData<Dict> getById(@PathVariable("id") String id){
         return super.getById(id);
     }
+
+
 }

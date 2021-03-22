@@ -26,7 +26,9 @@
         <div class="layui-form-item">
             <label class="layui-form-label required">类型</label>
             <div class="layui-input-block">
-                    <input type="text" name="type" v-model="notice.type"   placeholder="请输入类型" value="" class="layui-input">
+                <select id="type" name="type" v-model="notice.type">
+                    <option th:each="data:${@dict.getDictsByType('sys_notice_type')}" th:text="${data.label}" th:value="${data.value}"></option>
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
@@ -66,6 +68,7 @@
         form.on('submit(saveBtn)', function (data) {
             var content = layedit.getContent(index);
             app.$data.notice.content = content
+            app.$data.notice.type = $("#type").val()
             $.operate.submit("/sys/notice/save", app.$data.notice);
             return false;
         });

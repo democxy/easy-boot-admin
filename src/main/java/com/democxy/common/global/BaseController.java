@@ -60,7 +60,7 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
 
     @ResponseBody
     @RequestMapping(value = "list",method = RequestMethod.POST)
-    public ResponeData<List> findList(F f){
+    public ResponeData<List> findList(@RequestBody F f){
         //调用业务逻辑，处理业务
         List<T> list = service.findList(f);
         return new ResponeData<List>(ResultEnum.SUCCESS,list);

@@ -21,7 +21,7 @@ public class DictServiceImp extends BaseServiceImp<DictDao, Dict, DictField> imp
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int save(DictField f){
         List<DictField> dictList = f.getDictList();
         if (dictList!=null && dictList.size()>0){
@@ -46,5 +46,11 @@ public class DictServiceImp extends BaseServiceImp<DictDao, Dict, DictField> imp
             throw new CustomException(500,"至少包含一对键值！");
         }
         return 0;
+    }
+
+    public List<Dict> getDictsByType(String type){
+        DictField dictField = new DictField();
+        dictField.setType(type);
+        return dao.findList(dictField);
     }
 }
