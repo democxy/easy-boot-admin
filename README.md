@@ -51,3 +51,15 @@ springboot+mybatis+Thymeleaf +vue.js + Layui
 
 
 #### 运行截图
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0323/005452_5e26c1c6_1208466.png "登录界面.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0323/005558_45a41836_1208466.png "首页.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0323/005522_9691d408_1208466.png "菜单管理.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0323/005534_0723d095_1208466.png "操作日志详情.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0323/005620_029954f1_1208466.png "通知公告.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0323/005637_ff69558a_1208466.png "字典管理.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0323/005656_cb51ab76_1208466.png "文件管理.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0323/005730_28ada6ba_1208466.png "角色管理.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0323/005742_f2f1bda2_1208466.png "定时任务编辑.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0323/005751_c826047d_1208466.png "定时任务.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0323/005807_b4c8dd09_1208466.png "代码生成预览.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0323/005818_53e845fc_1208466.png "SQL监控.png")
