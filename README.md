@@ -1,7 +1,9 @@
 # easy-boot-admin
 
 #### 介绍
-easy-boot-admin是一个基于springboot快速构建轻量级后台管理平台，由来主要是想搭建一个属于自己的简易框架，寂寞消遣之作，仅供参考，同时欢迎指点错误与不足。
+easy-boot-admin是一个基于springboot快速构建轻量级后台管理平台，由来主要是想搭建一个属于自己的简易框架（尽可能不引入过多的maven依赖），寂寞消遣之作，仅供参考，同时欢迎指点错误与不足。
+- 感谢 [layuimi后台管理模板](https://gitee.com/zhongshaofa/layuimini/tree/v2).
+- 项目正在逐步优化完善，欢迎关注。
 
 #### 技术栈
 springboot+mybatis+Thymeleaf +vue.js + Layui
