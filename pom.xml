@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.democxy</groupId>
-    <artifactId>springboot-api-demo</artifactId>
+    <artifactId>easy-boot-admin</artifactId>
     <version>1.0</version>
-    <name>springboot-api-demo</name>
+    <name>easy-boot-admin</name>
     <description>一个基于springboot的api项目脚手架</description>
 
     <properties>
