@@ -1,7 +1,27 @@
-# springboot-api-demo
+# easy-boot-admin
 
 #### 介绍
-springboot-api-demo是一个基于springboot快速构建api的脚手架项目，由来主要是想搭建一个属于自己的简易框架，寂寞消遣之作，仅供参考，同时欢迎指点错误与不足。
+easy-boot-admin是一个基于springboot快速构建轻量级后台管理平台，由来主要是想搭建一个属于自己的简易框架，寂寞消遣之作，仅供参考，同时欢迎指点错误与不足。
+
+#### 技术栈
+springboot+mybatis+Thymeleaf +vue.js + Layui
+
+#### 内置功能
+1.账号管理： 账号管理主要记录系统的登录账号信息，无用户信息
+
+2.菜单管理： 菜单管理主要用于蒋系统的菜单 按钮 权限标识入口，方便动态设置用户角色权限
+
+3.角色管理： 角色管理，主要管理系统的角色，对角色进行权限授权，精确到按钮级别的控制
+
+4.字典管理：对系统中经常使用的一些较为固定的数据进行维护，如性别，通知类型等
+
+5.操作日志：基于自定义注解加AOP形式实现的操作日志记录功能；
+
+6.定时任务：基于springboot定时任务加反射机制实现的在线（添加、修改、删除)任务调度包含执行结果日志
+
+7.代码生成：基于free mark模板技术实现的代码生成功能，一键生成前后端代码；
+
+8.连接池监视：监视当前系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈
 
 
 #### 安装教程
@@ -14,18 +34,13 @@ springboot-api-demo是一个基于springboot快速构建api的脚手架项目，
 
 4.修改application.yml中数据库链接信息，初始化sql下的脚本到数据库
 
-5.运行SpringbootApiDemoApplication.java下的main方法启动程序
+5.运行EasyBootAdminApplication.java下的main方法启动程序
 
 
 #### 使用说明
+启动项目，浏览器输入 http://localhost:8080/admin/sys/login 进入登录界面；
+管理员用户名密码：admin/123456
 
-程序启动成功后可以直接浏览器输入：http://localhost:8080/admin/account/get/1 访问，正常响应结果如下：
-
-{"code":4040,"msg":"登录失败！","data":"token过期，请重新登录"}
-
-结果正常，说明系统正常运行起来了，可以使用接口测试工具（postman,restman,soapui等）开始测试接口；
-
- **请先通过登录接口获取请求token再进行其他接口的测试。** 
 
 #### 参与贡献
 
@@ -35,11 +50,4 @@ springboot-api-demo是一个基于springboot快速构建api的脚手架项目，
 4.  新建 Pull Request
 
 
-#### 码云特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5.  码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+#### 运行截图
