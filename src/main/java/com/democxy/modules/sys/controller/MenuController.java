@@ -71,7 +71,7 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
         homeInfo.put("href","/admin/main");
         userMenu.put("homeInfo",homeInfo);
         Map<String,String> logoInfo = new HashMap<>();
-        logoInfo.put("title","DEMOCXY");
+        logoInfo.put("title","EasyAdmin");
         logoInfo.put("image","/images/logo.png");
         logoInfo.put("href","");
         userMenu.put("logoInfo",logoInfo);
