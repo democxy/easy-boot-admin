@@ -19,6 +19,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author shiling_deng
+ */
 @Configuration
 public class DruidConfig {
 
@@ -28,8 +31,11 @@ public class DruidConfig {
         return  new DruidDataSource();
     }
 
-    //配置Druid的监控
-    //1、配置一个管理后台的Servlet
+    /**
+     * 配置Druid的监控
+     * 1、配置一个管理后台的Servlet
+     * @return
+     */
     @Bean
     public ServletRegistrationBean statViewServlet(){
         ServletRegistrationBean bean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
@@ -45,7 +51,10 @@ public class DruidConfig {
     }
 
 
-    //2、配置一个web监控的filter
+    /**
+     * 2、配置一个web监控的filter
+     * @return
+     */
     @Bean
     public FilterRegistrationBean webStatFilter(){
         FilterRegistrationBean bean = new FilterRegistrationBean();

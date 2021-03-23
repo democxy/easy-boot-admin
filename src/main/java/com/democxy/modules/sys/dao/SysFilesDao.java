@@ -6,6 +6,9 @@ import com.democxy.modules.sys.entity.SysFiles;
 import com.democxy.modules.sys.entity.field.SysFilesField;
 import org.apache.ibatis.annotations.Mapper;
 
+/**
+ * @author shiling_deng
+ */
 @Mapper
 public interface SysFilesDao extends BaseDao<SysFiles, SysFilesField> {
 

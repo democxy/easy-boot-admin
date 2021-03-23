@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * @author shiling_deng
+ */
 @Component
 public class CronTaskRegistrar implements DisposableBean {
 

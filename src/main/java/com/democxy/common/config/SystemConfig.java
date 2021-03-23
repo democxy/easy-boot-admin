@@ -21,6 +21,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author shiling_deng
+ */
 @Component
 public class SystemConfig implements CommandLineRunner {
 

@@ -1,13 +1,11 @@
 package com.democxy.common.interceptor;
 
-import com.alibaba.fastjson.JSON;
 import com.democxy.common.annotation.PassLogin;
 import com.democxy.common.exception.CustomException;
 import com.democxy.common.utils.JwtUtil;
 import com.democxy.common.utils.ServletUtils;
 import com.democxy.common.utils.StringUtils;
 import com.democxy.common.utils.redis.RedisUtil;
-import com.democxy.modules.sys.entity.Account;
 import com.democxy.modules.sys.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
@@ -21,6 +19,7 @@ import java.util.Objects;
 
 /**
  * 授权验证拦截器
+ * @author shiling_deng
  */
 public class AuthenticationInterceptor implements HandlerInterceptor {
 

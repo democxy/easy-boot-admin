@@ -21,6 +21,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * @author shiling_deng
+ */
 @Aspect
 @Component
 public class PermissionAspect {

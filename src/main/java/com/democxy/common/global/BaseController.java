@@ -1,6 +1,5 @@
 package com.democxy.common.global;
 
-import com.democxy.common.annotation.PassLogin;
 import com.democxy.common.annotation.Permission;
 import com.democxy.common.enums.ResultEnum;
 import com.github.pagehelper.PageHelper;
@@ -11,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * @author shiling_deng
+ */
 public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<F>> {
 
     @Autowired

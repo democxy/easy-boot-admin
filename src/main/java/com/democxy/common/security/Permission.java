@@ -7,6 +7,7 @@ import java.util.Set;
 
 /**
  * 安全认证许可类
+ * @author shiling_deng
  */
 @Service("permission")
 public class Permission {

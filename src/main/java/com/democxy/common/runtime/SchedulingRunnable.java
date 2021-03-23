@@ -9,6 +9,9 @@ import org.springframework.util.ReflectionUtils;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
+/**
+ * @author shiling_deng
+ */
 public class SchedulingRunnable implements Runnable {
 
     private static final Logger logger = LoggerFactory.getLogger(SchedulingRunnable.class);

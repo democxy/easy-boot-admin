@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class BaseServiceImp<D extends BaseDao<T,F>, T,F extends BaseFiled<F>> implements BaseService<T,F> {
+/**
+ * @author shiling_deng
+ */
+public class BaseServiceImpl<D extends BaseDao<T,F>, T,F extends BaseFiled<F>> implements BaseService<T,F> {
 
     @Autowired
     public D dao;

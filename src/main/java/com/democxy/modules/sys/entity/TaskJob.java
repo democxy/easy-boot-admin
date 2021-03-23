@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * @author shiling_deng
+ */
 @Data
 public class TaskJob {
 

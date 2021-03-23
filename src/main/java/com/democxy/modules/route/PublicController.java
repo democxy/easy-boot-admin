@@ -1,6 +1,5 @@
 package com.democxy.modules.route;
 
-import com.democxy.common.annotation.PassLogin;
 import com.democxy.common.utils.ServletUtils;
 import com.democxy.modules.sys.entity.Account;
 import com.democxy.modules.sys.service.MenuService;
@@ -11,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Set;
 
+/**
+ * @author shiling_deng
+ */
 @RequestMapping("/admin")
 @Controller
 public class PublicController {

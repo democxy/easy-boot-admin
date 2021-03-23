@@ -1,6 +1,6 @@
 package com.democxy.modules.sys.service.impl;
 
-import com.democxy.common.global.BaseServiceImp;
+import com.democxy.common.global.BaseServiceImpl;
 import com.democxy.common.utils.TreeUtils;
 import com.democxy.modules.sys.dao.MenuDao;
 import com.democxy.modules.sys.entity.Menu;
@@ -12,11 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author shiling_deng
+ */
 @Service
-public class MenuServiceImp extends BaseServiceImp<MenuDao, Menu, MenuField> implements MenuService {
+public class MenuServiceImpl extends BaseServiceImpl<MenuDao, Menu, MenuField> implements MenuService {
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int delMore(String id) {
         List<Menu> list = dao.findList(new MenuField());
         List<Menu> childPerms = TreeUtils.getChildPerms(list, id);

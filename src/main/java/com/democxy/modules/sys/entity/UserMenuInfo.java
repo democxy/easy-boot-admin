@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * 对应框架初始化菜单数据实体模型
+ * @author shiling_deng
  */
 @Data
 public class UserMenuInfo {

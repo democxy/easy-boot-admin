@@ -1,6 +1,5 @@
 package com.democxy.modules.sys.controller;
 
-import com.democxy.common.annotation.PassLogin;
 import com.democxy.common.annotation.Permission;
 import com.democxy.common.global.BaseController;
 import com.democxy.common.utils.StringUtils;
@@ -12,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * @author shiling_deng
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("sys/notice")

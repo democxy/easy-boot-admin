@@ -1,6 +1,5 @@
 package com.democxy.common.aspect;
 
-import cn.hutool.core.io.IoUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.democxy.common.annotation.Log;
@@ -8,10 +7,8 @@ import com.democxy.common.utils.AccountUtils;
 import com.democxy.common.utils.ServletUtils;
 import com.democxy.common.utils.StringUtils;
 import com.democxy.modules.sys.entity.Account;
-import com.democxy.modules.sys.entity.SysLog;
 import com.democxy.modules.sys.entity.field.SysLogField;
 import com.democxy.modules.sys.service.SysLogService;
-import org.apache.commons.io.IOUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
@@ -21,16 +18,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.Method;
-import java.util.List;
-import java.util.Map;
 
+/**
+ * @author shiling_deng
+ */
 @Aspect
 @Component
 public class SysLogAspect {

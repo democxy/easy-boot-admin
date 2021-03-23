@@ -5,6 +5,9 @@ import com.democxy.modules.sys.entity.TaskJob;
 import com.democxy.modules.sys.entity.field.TaskJobField;
 import org.apache.ibatis.annotations.Mapper;
 
+/**
+ * @author shiling_deng
+ */
 @Mapper
 public interface TaskJobDao extends BaseDao<TaskJob, TaskJobField> {
 }

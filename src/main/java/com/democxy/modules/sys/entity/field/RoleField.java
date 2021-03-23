@@ -10,26 +10,38 @@ import java.util.Set;
 
 /**
  * 系统角色实体类
+ *
  * @author shiling_deng
  * @version 2020-11-01
  */
 @Data
 public class RoleField extends BaseFiled<RoleField> {
 
-    private String permission = "sys:role"; // 权限字段标识
-    // 角色名称
+    /**
+     * 权限字段标识
+     */
+    private String permission = "sys:role";
+    /**
+     * 角色名称
+     */
     @NotNull(message = "角色名不能为空")
     private String roleName;
 
-    // 角色表示（及角色英文名称）
-    @NotNull( message = "角色标识不能为空")
+    /**
+     * 角色表示（及角色英文名称）
+     */
+    @NotNull(message = "角色标识不能为空")
     @Size(min = 4, max = 8, message = "角色标识必须介于4-8之间")
     private String roleFlag;
 
-    // 校色数据范围（备用字段，暂时无业务作用）
+    /**
+     * 校色数据范围（备用字段，暂时无业务作用）
+     */
     private String dataScope;
 
-    // 角色状态
+    /**
+     * 角色状态
+     */
     private String status;
 
     private Set<String> menuIds;

@@ -7,6 +7,9 @@ import com.democxy.modules.sys.service.SysLogService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author shiling_deng
+ */
 @RestController
 @RequestMapping("/admin/sysLog")
 public class SysLogController extends BaseController<SysLogService, SysLog, SysLogField> {

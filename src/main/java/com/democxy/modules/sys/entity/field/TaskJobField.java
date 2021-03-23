@@ -4,6 +4,9 @@ import com.democxy.common.global.BaseFiled;
 import com.democxy.modules.sys.entity.TaskJob;
 import lombok.Data;
 
+/**
+ * @author 86150
+ */
 @Data
 public class TaskJobField extends BaseFiled<TaskJobField> {
 

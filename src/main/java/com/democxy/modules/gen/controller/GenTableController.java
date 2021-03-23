@@ -27,6 +27,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author shiling_deng
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("gen/genTable")

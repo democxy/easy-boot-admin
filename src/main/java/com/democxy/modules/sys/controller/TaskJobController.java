@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author shiling_deng
+ */
 @RestController
 @RequestMapping("admin/taskJob")
 public class TaskJobController extends BaseController<TaskJobService, TaskJob, TaskJobField> {

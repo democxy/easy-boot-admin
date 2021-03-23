@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * @author shiling_deng
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("gen/genTableColumn")

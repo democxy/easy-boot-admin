@@ -5,6 +5,9 @@ import com.democxy.modules.sys.entity.Notice;
 import com.democxy.modules.sys.entity.field.NoticeField;
 import org.apache.ibatis.annotations.Mapper;
 
+/**
+ * @author shiling_deng
+ */
 @Mapper
 public interface NoticeDao extends BaseDao<Notice, NoticeField> {
 

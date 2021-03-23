@@ -1,8 +1,7 @@
 package com.democxy.modules.gen.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.democxy.common.config.ProjectConfig;
-import com.democxy.common.global.BaseServiceImp;
+import com.democxy.common.global.BaseServiceImpl;
 import com.democxy.common.utils.IdGenUtil;
 import com.democxy.common.utils.StringUtils;
 import com.democxy.modules.gen.dao.GenTableColumnDao;
@@ -24,8 +23,12 @@ import org.apache.commons.configuration.Configuration;
 
 import java.util.*;
 
+/**
+ * @author shiling_deng
+ * @version 2021/03/03
+ */
 @Service
-public class GenTableServiceImp extends BaseServiceImp<GenTableDao, GenTable, GenTableField> implements GenTableService {
+public class GenTableServiceImpl extends BaseServiceImpl<GenTableDao, GenTable, GenTableField> implements GenTableService {
 
     @Autowired
     GenTableColumnDao genTableColumnDao;

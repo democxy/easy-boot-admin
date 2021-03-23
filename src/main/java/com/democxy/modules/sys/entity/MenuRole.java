@@ -2,6 +2,9 @@ package com.democxy.modules.sys.entity;
 
 import lombok.Data;
 
+/**
+ * @author shiling_deng
+ */
 @Data
 public class MenuRole {
 

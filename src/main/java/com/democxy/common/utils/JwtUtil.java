@@ -37,14 +37,19 @@ public class JwtUtil {
         Date now = new Date(nowMillis);
         JwtBuilder builder = Jwts.builder()
                 .setId(id)
-                .setSubject(subject)   // 主题
-                .setIssuer("admin")     // 签发者
-                .setIssuedAt(now)      // 签发时间
-                .signWith(SignatureAlgorithm.HS256, TOKEN_SECRET); // 签名算法以及密匙
+                // 主题
+                .setSubject(subject)
+                // 签发者
+                .setIssuer("admin")
+                // 签发时间
+                .setIssuedAt(now)
+                // 签名算法以及密匙
+                .signWith(SignatureAlgorithm.HS256, TOKEN_SECRET);
         if (ttlMillis >= 0) {
             long expMillis = nowMillis + ttlMillis*1000;
             Date expDate = new Date(expMillis);
-            builder.setExpiration(expDate); // 过期时间
+            // 过期时间
+            builder.setExpiration(expDate);
         }
         return builder.compact();
     }

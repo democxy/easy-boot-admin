@@ -1,6 +1,5 @@
 package com.democxy.modules.sys.controller;
 
-import com.democxy.common.annotation.PassLogin;
 import com.democxy.common.annotation.Permission;
 import com.democxy.common.enums.ResultEnum;
 import com.democxy.common.global.BaseController;
@@ -22,6 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author shiling_deng
+ */
 @RestController
 @RequestMapping("admin/menu")
 public class MenuController extends BaseController<MenuService, Menu, MenuField> {

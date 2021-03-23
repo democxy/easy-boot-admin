@@ -63,13 +63,17 @@ public class TreeEntity {
 
             List<Menu> children = menu.getChildren();
             if (children!=null && children.size()>0){
-                treeEntity.setSpread(true); //默认展开
-                checks.remove(menu.getId()); //移除父节点的勾选
-                List<TreeEntity> list1 = sortMenuList(children,checks); //递归处理子集
+                //默认展开
+                treeEntity.setSpread(true);
+                //移除父节点的勾选
+                checks.remove(menu.getId());
+                //递归处理子集
+                List<TreeEntity> list1 = sortMenuList(children,checks);
                 treeEntity.setChildren(list1);
             }
             if (checks.contains(menu.getId())){
-                treeEntity.setChecked(true); //设置选中
+                //设置选中
+                treeEntity.setChecked(true);
             }
             list.add(treeEntity);
         }

@@ -5,6 +5,9 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author shiling_deng
+ */
 @Data
 public abstract class BaseFiled<T> implements Serializable {
 

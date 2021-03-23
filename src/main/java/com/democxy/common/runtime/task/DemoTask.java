@@ -2,6 +2,9 @@ package com.democxy.common.runtime.task;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * @author shiling_deng
+ */
 @Component("demoTask")
 public class DemoTask {
     public void taskWithParams(String params) {

@@ -2,6 +2,9 @@ package com.democxy.common.runtime;
 
 import java.util.concurrent.ScheduledFuture;
 
+/**
+ * @author shiling_deng
+ */
 public final class ScheduledTask {
 
     volatile ScheduledFuture<?> future;

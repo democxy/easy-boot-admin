@@ -3,6 +3,10 @@ package com.democxy.common.utils;
 import com.alibaba.fastjson.JSON;
 import com.democxy.modules.sys.entity.Account;
 
+/**
+ * 当前用户工具类
+ * @author shiling_deng
+ */
 public class AccountUtils {
 
     /**

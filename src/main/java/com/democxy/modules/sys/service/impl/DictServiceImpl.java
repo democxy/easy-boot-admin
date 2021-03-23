@@ -1,7 +1,7 @@
 package com.democxy.modules.sys.service.impl;
 
 import com.democxy.common.exception.CustomException;
-import com.democxy.common.global.BaseServiceImp;
+import com.democxy.common.global.BaseServiceImpl;
 import com.democxy.common.utils.IdGenUtil;
 import com.democxy.common.utils.StringUtils;
 import com.democxy.modules.sys.dao.DictDao;
@@ -13,8 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * @author shiling_deng
+ */
 @Service("dict")
-public class DictServiceImp extends BaseServiceImp<DictDao, Dict, DictField> implements DictService {
+public class DictServiceImpl extends BaseServiceImpl<DictDao, Dict, DictField> implements DictService {
     @Override
     public List<Dict> findDistinct(DictField dictField) {
         return dao.findDistinct(dictField);

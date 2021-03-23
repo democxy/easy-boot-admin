@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author democxy
+ * @author shiling_deng
  */
 @CrossOrigin
 @Controller
@@ -200,7 +200,6 @@ public class AccountController extends BaseController<AccountService, Account,Ac
         //缓存验证码
         request.getSession().setAttribute("loginCode",code);
         lineCaptcha.write(response.getOutputStream());
-        System.out.println(lineCaptcha.verify(code));
     }
 
     @ResponseBody

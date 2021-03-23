@@ -5,6 +5,7 @@ import lombok.Data;
 
 /**
  * 响应数据
+ * @author shiling_deng
  */
 @Data
 public class ResponeData<T> {
