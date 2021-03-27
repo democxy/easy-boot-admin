@@ -12,8 +12,12 @@ File Encoding         : 65001
 
 Date: 2021-03-24 22:52:40
 */
+CREATE DATABASE  `easy-boot-admin` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
-SET FOREIGN_KEY_CHECKS=0;
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+USE `easy-boot-admin`;
 
 -- ----------------------------
 -- Table structure for gen_table
