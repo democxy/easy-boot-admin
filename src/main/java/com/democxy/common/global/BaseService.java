@@ -49,4 +49,11 @@ public interface BaseService<T,F extends BaseFiled<F>> {
      */
     List<T> findList(F entity);
 
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    int deleteBatch(List<String> ids);
+
 }

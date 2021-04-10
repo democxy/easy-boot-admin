@@ -68,5 +68,12 @@
 	<delete id="delete">
 		delete from sys_task_job WHERE id = #{id}
 	</delete>
+
+	<delete id="deleteBatch" parameterType="String">
+		delete from sys_task_job where id in
+		<foreach item="id" collection="list" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
 	
 </mapper>

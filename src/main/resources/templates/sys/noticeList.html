@@ -30,8 +30,9 @@
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <button type="button" class="layui-btn layui-btn-primary" v-on:click="getData(1)"><i class="layui-icon"></i> 搜 索</button>
-                            <button type="button"  th:if="${@permission.check('sys:notice:add')}" class="layui-btn" v-on:click="add()"><i class="layui-icon"></i> 添 加</button>
+                            <button type="button" class="layui-btn layui-btn-primary" @click="getData(1)"><i class="layui-icon"></i> 搜 索</button>
+                            <button type="button"  th:if="${@permission.check('sys:notice:add')}" class="layui-btn" @click="add()"><i class="layui-icon"></i> 添 加</button>
+                            <button type="button" class="layui-btn layui-btn-danger" @click="delBatch()" >删 除</button>
                         </div>
                     </div>
                 </form>
@@ -42,7 +43,7 @@
             <table class="layui-table" >
                 <thead>
                 <tr>
-                    <th>序号</th>
+                    <th><input type="checkbox" name="checkAll" onclick="checkboxUtils.jsCheckAll('checkAll','checkName')">序号</th>
                     <th>标题</th>
                     <th>类型</th>
                    <!-- <th>内容</th>-->
@@ -53,7 +54,7 @@
                 </thead>
                 <tbody>
                 <tr v-for="(notice,index) in page.list">
-                    <td>{{(index+1)+(pageNum-1)*pageSize}}</td>
+                    <td><input type="checkbox" name="checkName" :value="notice.id" onclick="checkboxUtils.changeAllType('checkAll','checkName')" >{{(index+1)+(pageNum-1)*pageSize}}</td>
                     <td>
                         {{notice.title}}
                     </td>
@@ -118,6 +119,9 @@
                 },
                 del:function (id) {
                     $.operate.del('/sys/notice/del/'+id,laypage,layer,app);
+                },
+                delBatch: function () {
+                    $.operate.delBatch('/sys/notice/delBatch',laypage,layer,app);
                 }
             }
         });

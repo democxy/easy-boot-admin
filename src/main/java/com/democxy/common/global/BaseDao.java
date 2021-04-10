@@ -41,4 +41,11 @@ public interface BaseDao<T,F extends BaseFiled<F>> {
      * @return
      */
     List<T> findList(F entity);
+
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    int deleteBatch(List<String> ids);
 }

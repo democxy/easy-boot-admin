@@ -1,5 +1,6 @@
 package com.democxy.common.global;
 
+import com.alibaba.fastjson.JSON;
 import com.democxy.common.annotation.Permission;
 import com.democxy.common.enums.ResultEnum;
 import com.github.pagehelper.PageHelper;
@@ -48,6 +49,14 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
     @RequestMapping(value = "del/{id}",method = RequestMethod.GET)
     public ResponeData<String> delById(@PathVariable("id") String id){
         service.delete(id);
+        return new ResponeData<>(ResultEnum.SUCCESS,"删除成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "delBatch",method = RequestMethod.POST)
+    public ResponeData<String> delBatch(@RequestBody String request){
+        List list = JSON.parseObject(request, List.class);
+        service.deleteBatch(list);
         return new ResponeData<>(ResultEnum.SUCCESS,"删除成功");
     }
 

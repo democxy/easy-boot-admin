@@ -122,5 +122,12 @@
 	<delete id="delete">
 		delete from gen_table WHERE id = #{id}
 	</delete>
+
+	<delete id="deleteBatch" parameterType="String">
+		delete from gen_table where id in
+		<foreach item="id" collection="list" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
 	
 </mapper>

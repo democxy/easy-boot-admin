@@ -80,5 +80,12 @@
         WHERE account_id = #{accountId}
     </update>
 
+    <delete id="deleteBatch" parameterType="String">
+        delete from sys_account where account_id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
 
 </mapper>

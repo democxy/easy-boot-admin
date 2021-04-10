@@ -52,5 +52,12 @@
 	<delete id="delete">
 		delete from sys_log WHERE id = #{id}
 	</delete>
+
+	<delete id="deleteBatch" parameterType="String">
+		delete from sys_log where id in
+		<foreach item="id" collection="list" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
 	
 </mapper>

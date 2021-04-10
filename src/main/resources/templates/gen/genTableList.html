@@ -30,10 +30,10 @@
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <button type="button" class="layui-btn layui-btn-primary" v-on:click="getData(1)"><i class="layui-icon"></i> 搜 索</button>
-                            <button type="button"  th:if="${@permission.check('gen:genTable:add')}" class="layui-btn" v-on:click="add()"><i class="layui-icon">&#xe654;</i> 添 加</button>
-                            <button type="button"  th:if="${@permission.check('gen:genTable:add')}" class="layui-btn" v-on:click="importTable()"><i class="layui-icon">&#xe67c;</i> 导 入</button>
-
+                            <button type="button" class="layui-btn layui-btn-primary" @click="getData(1)"><i class="layui-icon"></i> 搜 索</button>
+                            <button type="button"  th:if="${@permission.check('gen:genTable:add')}" class="layui-btn" @click="add()"><i class="layui-icon">&#xe654;</i> 添 加</button>
+                            <button type="button"  th:if="${@permission.check('gen:genTable:add')}" class="layui-btn" @click="importTable()"><i class="layui-icon">&#xe67c;</i> 导 入</button>
+                            <button type="button" class="layui-btn layui-btn-danger" @click="delBatch()" >删 除</button>
                         </div>
                     </div>
                 </form>
@@ -44,7 +44,7 @@
             <table class="layui-table" >
                 <thead>
                 <tr>
-                    <th>序号</th>
+                    <th><input type="checkbox" name="checkAll" onclick="checkboxUtils.jsCheckAll('checkAll','checkName')">序号</th>
 					<th>名称</th>
 					<th>描述</th>
 					<th>实体类名称</th>
@@ -55,7 +55,7 @@
                 </thead>
                 <tbody>
                 <tr v-for="(genTable,index) in page.list">
-                    <td>{{(index+1)+(pageNum-1)*pageSize}}</td>
+                    <td><input type="checkbox" name="checkName" :value="genTable.id" onclick="checkboxUtils.changeAllType('checkAll','checkName')" >{{(index+1)+(pageNum-1)*pageSize}}</td>
                     <td>
 						{{genTable.name}}
                     </td>
@@ -134,6 +134,9 @@
                         $.modal.msgSuccess(data.data)
                     });
                 },
+                delBatch: function () {
+                    $.operate.delBatch('/gen/genTable/delBatch',laypage,layer,app);
+                }
             },
             filters: {
                 formatDate: function (value) {

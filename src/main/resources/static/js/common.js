@@ -525,6 +525,29 @@
                         layer.close(index);
                     })
                 });
+            },
+            // 共用删除事件
+            delBatch:function (url,laypage,layer,app,msg) {
+                var ids =checkboxUtils.getAllCheckValue("checkName");
+                if (ids.length < 1) {
+                    $.modal.msgError("至少选中一条记录！")
+                    return
+                }
+                if ($.common.isEmpty(msg)){
+                    msg = "确定要删除选中的记录吗？"
+                }
+                layer.confirm(msg, function (index) {
+                    $.operate.post(url, ids, function (data) {
+                        if (app.$data.pageNum!=1){
+                            var lastSize = app.$data.page.total-(app.$data.pageNum-1)*app.$data.pageSize;
+                            if (lastSize == ids.length){
+                                app.$data.pageNum --;
+                            }
+                        }
+                        $.operate.getPageData(laypage,app);
+                        layer.close(index);
+                    })
+                });
             }
         }
     })

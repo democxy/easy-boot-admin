@@ -49,4 +49,9 @@ public class BaseServiceImpl<D extends BaseDao<T,F>, T,F extends BaseFiled<F>> i
     public List<T> findList(F entity) {
         return dao.findList(entity);
     }
+
+    @Override
+    public int deleteBatch(List<String> ids){
+        return dao.deleteBatch(ids);
+    }
 }

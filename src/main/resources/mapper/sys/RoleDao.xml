@@ -89,4 +89,11 @@
     <delete id="delMenuIdByRole">
         delete from sys_menu_role where role_id = #{roleId}
     </delete>
+
+    <delete id="deleteBatch" parameterType="String">
+        delete from sys_menu_role where role_id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

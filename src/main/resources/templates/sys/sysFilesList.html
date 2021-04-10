@@ -36,8 +36,9 @@
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <button type="button" class="layui-btn layui-btn-primary" v-on:click="getData(1)"><i class="layui-icon"></i> 搜 索</button>
-                            <button type="button"  th:if="${@permission.check('sys:sysFiles:add')}" class="layui-btn" v-on:click="add()"><i class="layui-icon"></i> 添 加</button>
+                            <button type="button" class="layui-btn layui-btn-primary" @click="getData(1)"><i class="layui-icon"></i> 搜 索</button>
+                            <button type="button"  th:if="${@permission.check('sys:sysFiles:add')}" class="layui-btn" @click="add()"><i class="layui-icon"></i> 添 加</button>
+                            <button type="button" class="layui-btn layui-btn-danger" @click="delBatch()" >删 除</button>
                         </div>
                     </div>
                 </form>
@@ -48,7 +49,7 @@
             <table class="layui-table" >
                 <thead>
                 <tr>
-                    <th>序号</th>
+                    <th><input type="checkbox" name="checkAll" onclick="checkboxUtils.jsCheckAll('checkAll','checkName')">序号</th>
 					<th>文件路径</th>
 					<!--<th>文件名称</th>-->
 					<th>文件名称</th>
@@ -63,7 +64,7 @@
                 </thead>
                 <tbody>
                 <tr v-for="(sysFiles,index) in page.list">
-                    <td>{{(index+1)+(pageNum-1)*pageSize}}</td>
+                    <td><input type="checkbox" name="checkName" :value="sysFiles.id" onclick="checkboxUtils.changeAllType('checkAll','checkName')" >{{(index+1)+(pageNum-1)*pageSize}}</td>
                     <td>
 						{{sysFiles.filePath}}
                     </td>
@@ -141,6 +142,9 @@
                 },
                 del:function (id) {
                     $.operate.del('/sys/sysFiles/del/'+id,laypage,layer,app);
+                },
+                delBatch: function () {
+                    $.operate.delBatch('/sys/sysFiles/delBatch',laypage,layer,app);
                 }
             }
         });
