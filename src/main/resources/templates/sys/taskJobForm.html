@@ -39,18 +39,18 @@
             <label class="layui-form-label">cron表达式</label>
             <div class="layui-input-block">
                 <input type="text" name="cronType" v-model="taskJob.cronType" placeholder="请输入数据范围" class="layui-input">
+                <button id="cronType" style="position: absolute;top: 0;right: 0px;
+                        cursor: pointer;" type="button" class="layui-btn">生成 </button>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">状态</label>
             <div class="layui-input-block">
-                <div class="layui-input-block">
-                    <select id="taskStatus" lay-verify="required" name="taskStatus" v-model="taskJob.taskStatus" class="layui-input">
-                        <option value="">请选择</option>
-                        <option value="1">启用</option>
-                        <option value="0">禁用</option>
-                    </select>
-                </div>
+                <select id="taskStatus" lay-verify="required" name="taskStatus" v-model="taskJob.taskStatus" class="layui-input">
+                    <option value="">请选择</option>
+                    <option value="1">启用</option>
+                    <option value="0">禁用</option>
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
@@ -79,10 +79,25 @@
 
 
 
-    layui.use(['form'], function () {
+    layui.config({
+        base: '/js/lay-module/'
+    }).extend({
+        cron: "cron/cron",
+    }).use(['element', 'form', "cron"], function () {
         var form = layui.form,
             layer = layui.layer,
+            cron = layui.cron,
             $ = layui.jquery;
+
+        cron.render({
+            elem: "#cronType", // 绑定元素
+            url: "https://www.fastmock.site/mock/58329c0ee61b03d6ce3ba0c1e2f13691/world/cron", // 获取最近运行时间的接口
+            value: app.$data.taskJob.cronType, // 默认值
+            done: function (cronStr) {
+                console.log("___"+cronStr);
+                app.$data.taskJob.cronType = cronStr
+            },
+        });
 
         //监听提交
         form.on('submit(saveBtn)', function (data) {
