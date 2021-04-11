@@ -4,15 +4,21 @@ import com.democxy.common.global.BaseController;
 import com.democxy.common.global.ResponeData;
 import com.democxy.common.runtime.CronTaskRegistrar;
 import com.democxy.common.runtime.SchedulingRunnable;
+import com.democxy.common.utils.DateUtils;
 import com.democxy.modules.sys.entity.TaskJob;
 import com.democxy.modules.sys.entity.field.TaskJobField;
 import com.democxy.modules.sys.service.TaskJobService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.support.CronSequenceGenerator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author shiling_deng
@@ -46,6 +52,29 @@ public class TaskJobController extends BaseController<TaskJobService, TaskJob, T
             service.update(getField(taskJob));
             return new ResponeData<>("任务已启用！");
         }
+    }
+
+    @RequestMapping("getLatestExeTime")
+    public ResponeData<List> getLatestExeTime(String cron) {
+        ArrayList arrayList = new ArrayList();
+        Date date = new Date();
+        CronSequenceGenerator cronSequenceGenerator = new CronSequenceGenerator(cron);
+        //下次执行时间
+        Date time1 = cronSequenceGenerator.next(date);
+        arrayList.add(DateUtils.formatDateTime(time1));
+
+        Date time2 = cronSequenceGenerator.next(time1);
+        arrayList.add(DateUtils.formatDateTime(time2));
+
+        Date time3 = cronSequenceGenerator.next(time2);
+        arrayList.add(DateUtils.formatDateTime(time3));
+
+        Date time4 = cronSequenceGenerator.next(time3);
+        arrayList.add(DateUtils.formatDateTime(time4));
+
+        Date time5 = cronSequenceGenerator.next(time4);
+        arrayList.add(DateUtils.formatDateTime(time5));
+        return new ResponeData<>(arrayList);
     }
 
     private TaskJobField getField(TaskJob taskJob) {

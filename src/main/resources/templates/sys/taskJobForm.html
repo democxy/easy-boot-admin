@@ -91,7 +91,7 @@
 
         cron.render({
             elem: "#cronType", // 绑定元素
-            url: "https://www.fastmock.site/mock/58329c0ee61b03d6ce3ba0c1e2f13691/world/cron", // 获取最近运行时间的接口
+            url: "/admin/taskJob/getLatestExeTime", // 获取最近运行时间的接口
             value: app.$data.taskJob.cronType, // 默认值
             done: function (cronStr) {
                 console.log("___"+cronStr);
