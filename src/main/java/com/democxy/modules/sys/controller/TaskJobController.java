@@ -1,5 +1,6 @@
 package com.democxy.modules.sys.controller;
 
+import com.democxy.common.config.SystemConstant;
 import com.democxy.common.global.BaseController;
 import com.democxy.common.global.ResponeData;
 import com.democxy.common.runtime.CronTaskRegistrar;
@@ -40,12 +41,12 @@ public class TaskJobController extends BaseController<TaskJobService, TaskJob, T
     @GetMapping("execTask")
     public ResponeData<String> startOrStop(String id){
         TaskJob taskJob = service.getById(id);
-        if ("1".equals(taskJob.getTaskStatus())) {
+        if (SystemConstant.TASK_JOB_START.equals(taskJob.getTaskStatus())) {
             // 停止
             SchedulingRunnable task = new SchedulingRunnable(taskJob.getTaskName(), taskJob.getMethodName(), taskJob.getMethodParams());
             cronTaskRegistrar.removeCronTask(task);
             logger.info("定时任务"+taskJob.getTaskName()+"-"+taskJob.getMethodName()+"停止执行...");
-            taskJob.setTaskStatus("0");
+            taskJob.setTaskStatus(SystemConstant.TASK_JOB_STOP);
             service.update(getField(taskJob));
             return new ResponeData<>("任务已停止！");
         } else {
@@ -53,13 +54,11 @@ public class TaskJobController extends BaseController<TaskJobService, TaskJob, T
             SchedulingRunnable task = new SchedulingRunnable(taskJob.getTaskName(), taskJob.getMethodName(), taskJob.getMethodParams());
             cronTaskRegistrar.addCronTask(task, taskJob.getCronType());
             logger.info("定时任务"+taskJob.getTaskName()+"-"+taskJob.getMethodName()+"启动成功...");
-            taskJob.setTaskStatus("1");
+            taskJob.setTaskStatus(SystemConstant.TASK_JOB_START);
             service.update(getField(taskJob));
             return new ResponeData<>("任务已启用！");
         }
     }
-
-
 
     /**
      * 获取最近5次执行时间
