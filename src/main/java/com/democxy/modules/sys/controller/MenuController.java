@@ -106,8 +106,8 @@ public class MenuController extends BaseController<MenuService, Menu, MenuField>
     @RequestMapping(value = "add",method = RequestMethod.POST)
     @Permission(value = "sys:dict:add")
     @Override
-    public ResponeData<String> addUser(@Valid @RequestBody MenuField f ){
-        return super.addUser(f);
+    public ResponeData<String> add(@Valid @RequestBody MenuField f ){
+        return super.add(f);
     }
 
     @ResponseBody

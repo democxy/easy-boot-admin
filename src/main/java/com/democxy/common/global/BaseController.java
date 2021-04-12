@@ -39,7 +39,7 @@ public class BaseController<S extends BaseService<T, F>, T, F extends BaseFiled<
      */
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
-    public ResponeData<String> addUser(@Valid @RequestBody F f ){
+    public ResponeData<String> add(@Valid @RequestBody F f ){
         //调用业务逻辑，处理业务
         service.insert(f);
         return new ResponeData<>("添加成功");

@@ -32,6 +32,11 @@ public class TaskJobController extends BaseController<TaskJobService, TaskJob, T
     @Autowired
     CronTaskRegistrar cronTaskRegistrar;
 
+    /**
+     * 执行停止定时任务
+     * @param id
+     * @return
+     */
     @GetMapping("execTask")
     public ResponeData<String> startOrStop(String id){
         TaskJob taskJob = service.getById(id);
@@ -54,6 +59,13 @@ public class TaskJobController extends BaseController<TaskJobService, TaskJob, T
         }
     }
 
+
+
+    /**
+     * 获取最近5次执行时间
+     * @param cron
+     * @return
+     */
     @RequestMapping("getLatestExeTime")
     public ResponeData<List> getLatestExeTime(String cron) {
         ArrayList arrayList = new ArrayList();

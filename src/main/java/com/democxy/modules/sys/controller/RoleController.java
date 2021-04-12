@@ -27,6 +27,7 @@ public class RoleController extends BaseController<RoleService, Role, RoleField>
      * @param f
      * @return
      */
+    @Override
     @ResponseBody
     @RequestMapping(value = "save",method = RequestMethod.POST)
     @Permission(value = "sys:role:add")
@@ -41,13 +42,15 @@ public class RoleController extends BaseController<RoleService, Role, RoleField>
      * @param f
      * @return
      */
+    @Override
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
     @Permission(value = "sys:role:add")
-    public ResponeData<String> addUser(@Valid @RequestBody RoleField f ){
-        return super.addUser(f);
+    public ResponeData<String> add(@Valid @RequestBody RoleField f ){
+        return super.add(f);
     }
 
+    @Override
     @ResponseBody
     @RequestMapping(value = "del/{id}",method = RequestMethod.GET)
     @Permission(value = "sys:role:del")
@@ -55,6 +58,7 @@ public class RoleController extends BaseController<RoleService, Role, RoleField>
         return super.delById(id);
     }
 
+    @Override
     @ResponseBody
     @RequestMapping(value = "update",method = RequestMethod.POST)
     @Permission(value = "sys:role:edit")
@@ -63,18 +67,21 @@ public class RoleController extends BaseController<RoleService, Role, RoleField>
     }
 
 
+    @Override
     @ResponseBody
     @RequestMapping(value = "list",method = RequestMethod.POST)
     public ResponeData<List> findList(RoleField f){
         return super.findList(f);
     }
 
+    @Override
     @ResponseBody
     @RequestMapping(value = "page",method = RequestMethod.POST)
     public ResponeData<PageInfo> findPage(@RequestBody BasePageQuery<RoleField> basePageQuery){
         return super.findPage(basePageQuery);
     }
 
+    @Override
     @ResponseBody
     @RequestMapping(value = "get/{id}",method = RequestMethod.GET)
     @Permission(value = "sys:role:view")

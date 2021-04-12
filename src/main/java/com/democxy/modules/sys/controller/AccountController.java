@@ -143,8 +143,8 @@ public class AccountController extends BaseController<AccountService, Account,Ac
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
     @Permission(value = "sys:dict:add")
-    public ResponeData<String> addUser(@Valid @RequestBody AccountField f ){
-        return super.addUser(f);
+    public ResponeData<String> add(@Valid @RequestBody AccountField f ){
+        return super.add(f);
     }
 
     @Override

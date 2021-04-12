@@ -46,8 +46,8 @@ public class DictController extends BaseController<DictService, Dict, DictField>
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
     @Permission(value = "sys:dict:add")
-    public ResponeData<String> addUser(@Valid @RequestBody DictField f ){
-        return super.addUser(f);
+    public ResponeData<String> add(@Valid @RequestBody DictField f ){
+        return super.add(f);
     }
 
     @Override
