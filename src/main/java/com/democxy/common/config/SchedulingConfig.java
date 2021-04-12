@@ -6,6 +6,7 @@ import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 /**
+ * 定时任务调度
  * @author shiling_deng
  */
 @Configuration
