@@ -16,6 +16,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -31,6 +32,8 @@ public class SysLogAspect {
 
     @Autowired
     SysLogService sysLogService;
+    @Autowired
+    ThreadPoolTaskScheduler taskScheduler;
 
     /**
      * 切入点  这里我们使用注解的形式
@@ -106,8 +109,9 @@ public class SysLogAspect {
             // 处理设置注解上的参数
             getControllerMethodDescription(controllerLog, operLog,joinPoint);
             // 保存数据库
-//            AsyncManager.me().execute(AsyncFactory.recordOper(operLog));
-            sysLogService.save(operLog);
+            taskScheduler.execute(() -> {
+                sysLogService.save(operLog);
+            });
         }
         catch (Exception exp)
         {
