@@ -42,10 +42,7 @@
                 AND a.menu_name like concat('%', #{menuName}, '%')
             </if>
         </where>
-        <choose>
-            <otherwise>
-            </otherwise>
-        </choose>
+        order by a.order_num
     </select>
 
     <select id="findByRoleId" resultType="com.democxy.modules.sys.entity.Menu">
