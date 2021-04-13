@@ -165,12 +165,12 @@
             // 禁用按钮
             disable: function () {
                 var doc = window.top == window.parent ? window.document : window.parent.document;
-                $("a[class*=layui-layer-btn]", doc).addClass("layer-disabled");
+                $("a[class*=layui-btn]", doc).addClass("layer-disabled");
             },
             // 启用按钮
             enable: function () {
                 var doc = window.top == window.parent ? window.document : window.parent.document;
-                $("a[class*=layui-layer-btn]", doc).removeClass("layer-disabled");
+                $("a[class*=layui-btn]", doc).removeClass("layer-disabled");
             },
             // 重新加载
             reload: function () {
@@ -377,7 +377,7 @@
                     contentType: "application/json",
                     data: JSON.stringify(data),
                     // beforeSend: function () {
-                    //     $.modal.loading("正在处理中，请稍后...");
+                    //     layer.load(1)
                     //     $.modal.disable();
                     // },
                     success: function(result) {
@@ -415,10 +415,10 @@
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(data),
-                    // beforeSend: function () {
-                    //     $.modal.loading("正在处理中，请稍后...");
-                    //     $.modal.disable();
-                    // },
+                    beforeSend: function () {
+                        layer.load(1)
+                        $.modal.disable();
+                    },
                     success: function(result) {
                         if (result.code == 4040){
                             if ("auto" == result.data){
