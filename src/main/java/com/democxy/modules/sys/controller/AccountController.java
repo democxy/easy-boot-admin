@@ -15,9 +15,13 @@ import com.democxy.common.utils.*;
 import com.democxy.common.utils.redis.RedisUtil;
 import com.democxy.modules.sys.entity.Account;
 import com.democxy.modules.sys.entity.field.AccountField;
+import com.democxy.modules.sys.entity.field.LoginField;
 import com.democxy.modules.sys.service.AccountService;
 import com.github.pagehelper.PageInfo;
 import io.jsonwebtoken.Claims;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +39,7 @@ import java.util.Map;
 @CrossOrigin
 @Controller
 @RequestMapping("/admin/account")
+@Api(value="系统账号模块",tags={"系统账号操作相关接口"})
 public class AccountController extends BaseController<AccountService, Account,AccountField > {
 
     @Autowired
@@ -69,7 +74,8 @@ public class AccountController extends BaseController<AccountService, Account,Ac
     @ResponseBody
     @RequestMapping(value = "login",method = RequestMethod.POST)
     @PassLogin
-    public ResponeData<Map<String,Object>> login(@Valid @RequestBody AccountField accountField, HttpServletRequest request){
+    @ApiOperation(value = "系统登录", notes = "系统登录方法")
+    public ResponeData<Map<String,Object>> login(@Valid @RequestBody LoginField accountField, HttpServletRequest request){
         Object loginCode = request.getSession().getAttribute("loginCode");
         if (loginCode != null) {
             if (loginCode.toString().equals(accountField.getCode())) {
@@ -143,6 +149,7 @@ public class AccountController extends BaseController<AccountService, Account,Ac
     @ResponseBody
     @RequestMapping(value = "add",method = RequestMethod.POST)
     @Permission(value = "sys:dict:add")
+    @ApiOperation(value = "系统账号添加", notes = "添加系统账号，传入JSON对象")
     public ResponeData<String> add(@Valid @RequestBody AccountField f ){
         return super.add(f);
     }

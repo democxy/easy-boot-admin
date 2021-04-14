@@ -3,6 +3,7 @@ package com.democxy.modules.sys.dao;
 import com.democxy.common.global.BaseDao;
 import com.democxy.modules.sys.entity.Account;
 import com.democxy.modules.sys.entity.field.AccountField;
+import com.democxy.modules.sys.entity.field.LoginField;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -16,5 +17,5 @@ public interface AccountDao extends BaseDao<Account,AccountField> {
      * @param accountField
      * @return 登录对象
      */
-    Account login(AccountField accountField);
+    Account login(LoginField accountField);
 }
