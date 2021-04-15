@@ -30,6 +30,8 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
         //解析旧网站数据
         registry.addResourceHandler("/userfiles/**").addResourceLocations("file:"+basepath+"userfiles/");
+        // 解决swagger-ui js 404问题
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
     /**
