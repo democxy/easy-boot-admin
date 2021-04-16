@@ -38,8 +38,9 @@
                     </#if>
                 </#list>
                         <div class="layui-inline">
-                            <button type="button" class="layui-btn layui-btn-primary" v-on:click="getData(1)"><i class="layui-icon"></i> 搜 索</button>
-                            <button type="button"  th:if="${"$"}{${"@"}permission.check('${moduleName}:${className}:add')}" class="layui-btn" v-on:click="add()"><i class="layui-icon"></i> 添 加</button>
+                            <button type="button" class="layui-btn layui-btn-primary" @click="getData(1)"><i class="layui-icon"></i> 搜 索</button>
+                            <button type="button"  th:if="${"$"}{${"@"}permission.check('${moduleName}:${className}:add')}" class="layui-btn" @click="add()"><i class="layui-icon"></i> 添 加</button>
+                            <button type="button" class="layui-btn layui-btn-danger" @click="delBatch()" >删 除</button>
                         </div>
                     </div>
                 </form>
@@ -50,7 +51,7 @@
             <table class="layui-table" >
                 <thead>
                 <tr>
-                    <th>序号</th>
+                    <th><input type="checkbox" name="checkAll" onclick="checkboxUtils.jsCheckAll('checkAll','checkName')">序号</th>
             <#list table.columnList as c>
                 <#if c.isList?string('1','0') == "1">
                     <th>${c.comments}</th>
@@ -61,7 +62,7 @@
                 </thead>
                 <tbody>
                 <tr v-for="(${className},index) in page.list">
-                    <td>{{(index+1)+(pageNum-1)*pageSize}}</td>
+                    <td><input type="checkbox" name="checkName" :value="${className}.id" onclick="checkboxUtils.changeAllType('checkAll','checkName')" >{{(index+1)+(pageNum-1)*pageSize}}</td>
             <#list table.columnList as c>
                 <#if c.isList?string('1','0') == "1">
                     <td>
