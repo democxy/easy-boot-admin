@@ -145,7 +145,7 @@ layui.define(["form"], function (exports) {
       }
     }
 
-    console.log("绑定事件.");
+    // console.log("绑定事件.");
     that.events();
   };
 
@@ -1046,7 +1046,7 @@ layui.define(["form"], function (exports) {
               options.url,
               { cron: cronStr },
               function (res) {
-                if (res.code == 0) {
+                if (res.code == 200) {
                   $("#run-list").empty().append(res.data.join("<br>"));
                 } else {
                   layer.alert(res.msg, { icon: 2, title: "错误" });
