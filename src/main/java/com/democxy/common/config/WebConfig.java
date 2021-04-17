@@ -54,7 +54,7 @@ public class WebConfig implements WebMvcConfigurer {
 //                .excludePathPatterns("/admin/account/login","/admin/account/logout");
 
         // 基于注解配置拦截，只需要注册拦截器，不在需要指定拦截方法
-        registry.addInterceptor(authenticationInterceptor());
+        registry.addInterceptor(authenticationInterceptor()).excludePathPatterns("/swagger-resources/**");
     }
 
 }

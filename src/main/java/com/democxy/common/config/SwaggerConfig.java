@@ -1,10 +1,10 @@
 package com.democxy.common.config;
 
+import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -19,28 +19,26 @@ import java.util.ArrayList;
  * @author shiling_deng
  * @version 2021/04/15
  */
-@Slf4j
 @Configuration
 @EnableSwagger2
-@ConditionalOnClass(Contact.class)
+@EnableSwaggerBootstrapUI
 public class SwaggerConfig {
 
     @Bean
-    public Docket docker(){
-        log.info("Read document configuration information");
+    public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
-                .groupName("")
-                .enable(true)
                 .select()
-//                .apis(RequestHandlerSelectors.basePackage("com.democxy"))
+                // 根据包名扫描接口，容易暴露不想公开的接口
+                // .apis(RequestHandlerSelectors.basePackage("com.democxy"))
+                // 根据注解扫描，建议使用这种方式，灵活性更高
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+                .paths(PathSelectors.any())
                 .build();
     }
-
-    private ApiInfo apiInfo(){
+    private ApiInfo apiInfo() {
         return new ApiInfo(
-                "EASYBOOT-ADMIN",
+                "EASYBOOT-ADMIN接口文档",
                 "springboot简易开发平台" ,
                 "V1.0.0",
                 "https://gitee.com/shuangerduo",new Contact("shiling_deng", "", ""),

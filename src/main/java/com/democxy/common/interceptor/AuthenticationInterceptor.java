@@ -38,7 +38,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             Method method = handlerMethod.getMethod();
             // 接口是否有@PassLogin注解, 没有则需要判断是否登录
-            log.info("accept request={}", request.getRequestURI());
+//            log.info("accept request={}", request.getRequestURI());
             boolean annotationPresent = method.isAnnotationPresent(PassLogin.class);
             if (!annotationPresent) {
                 // 验证是否登录
@@ -59,6 +59,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                     // 后台管理端登录，判断session是否过期，session过期重新设置
                     Object perms = ServletUtils.getSession().getAttribute("login");
                     if (Objects.isNull(perms)) {
+                        log.info("session time out....");
                         //如果不是ajax请求，则直接重定向
                         String type = request.getHeader("X-Requested-With") == null ? "" : request.getHeader("X-Requested-With");
                         if ("XMLHttpRequest".equals(type)) {
