@@ -1,7 +1,7 @@
 # easy-boot-admin
 
 #### 介绍
-easy-boot-admin是一个基于springboot快速构建轻量级后台管理平台，由来主要是想搭建一个属于自己的简易框架（尽可能不引入过多的maven依赖），寂寞消遣之作，仅供参考，同时欢迎指点错误与不足。
+easy-boot-admin是一个基于springboot+mybatis+Thymeleaf +vue + Layui快速构建轻量级后台管理平台，由来主要是想搭建一个属于自己的简易框架（尽可能不引入过多的maven依赖），寂寞消遣之作，仅供参考，同时欢迎指点错误与不足。
 - 感谢 [layuimi后台管理模板](https://gitee.com/zhongshaofa/layuimini/tree/v2).
 - 项目正在逐步优化完善，欢迎关注。
 
@@ -68,3 +68,4 @@ idea(eclipse)/jdk1.8/maven/redis/mysql5.5+
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0323/005751_c826047d_1208466.png "定时任务.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0323/005807_b4c8dd09_1208466.png "代码生成预览.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0323/005818_53e845fc_1208466.png "SQL监控.png")
+![image-20210417100616350](https://gitee.com/xiaoshihi/images/raw/master/blog/20210417100756.png)
